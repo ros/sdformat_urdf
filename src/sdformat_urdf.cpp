@@ -429,7 +429,11 @@ sdformat_urdf::convert_geometry(const sdf::Geometry & sdf_geometry, sdf::Errors 
     urdf_box->dim.z = box->Size().Z();
     return urdf_box;
   } else if (sdf_geometry.CylinderShape()) {
-    // TODO
+    const sdf::Cylinder * cylinder = sdf_geometry.CylinderShape();
+    auto urdf_cylinder = std::make_shared<urdf::Cylinder>();
+    urdf_cylinder->length = cylinder->Length();
+    urdf_cylinder->radius = cylinder->Radius();
+    return urdf_cylinder;
   } else if (sdf_geometry.SphereShape()) {
     const sdf::Sphere * sphere = sdf_geometry.SphereShape();
     auto urdf_sphere = std::make_shared<urdf::Sphere>();
