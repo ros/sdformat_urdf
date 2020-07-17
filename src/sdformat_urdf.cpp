@@ -33,6 +33,9 @@ convert_joint(const sdf::Joint & sdf_joint, sdf::Errors & errors);
 
 urdf::Pose
 convert_pose(const ignition::math::Pose3d & sdf_pose);
+
+urdf::GeometrySharedPtr
+convert_geometry(const sdf::Geometry & sdf_geometry, sdf::Errors & errors);
 }  // namespace sdformat_urdf
 
 urdf::ModelInterfaceSharedPtr
@@ -250,9 +253,101 @@ sdformat_urdf::convert_link(const sdf::Link & sdf_link, sdf::Errors & errors)
   // TODO(sloretz) inertial pose
   // TODO(sloretz) ixx, ixy, ixz, iyy, iyz, izz
 
-  // TODO(sloretz) visual
+  for (uint64_t vi = 0; vi < sdf_link.VisualCount(); ++vi) {
+    const sdf::Visual * sdf_visual = sdf_link.VisualByIndex(vi);
+    if (!sdf_visual) {
+      errors.emplace_back(
+        sdf::ErrorCode::STRING_READ,
+        "Failed to get visual on lilnk [" + sdf_link.Name() + "]");
+      return nullptr;
+    }
 
-  // TODO(sloretz) collision
+    auto urdf_visual = std::make_shared<urdf::Visual>();
+
+    urdf_visual->name = sdf_visual->Name();
+
+    // URDF visual is relative to link origin
+    ignition::math::Pose3d visual_pose;
+    sdf::Errors pose_errors = sdf_visual->SemanticPose().Resolve(visual_pose, sdf_link.Name());
+    if (!pose_errors.empty()) {
+      errors.insert(errors.end(), pose_errors.begin(), pose_errors.end());
+      errors.emplace_back(
+        sdf::ErrorCode::STRING_READ,
+        "Failed to get transfrom from visual [" + sdf_visual->Name()
+        + "] to link [" + sdf_link.Name() + "]");
+      return nullptr;
+    }
+    urdf_visual->origin = convert_pose(visual_pose);
+
+    urdf_visual->geometry = convert_geometry(*sdf_visual->Geom(), errors);
+    if (!urdf_visual->geometry) {
+      errors.emplace_back(
+        sdf::ErrorCode::STRING_READ,
+        "Failed to convert geometry on visual [" + sdf_visual->Name()+ "]");
+      return nullptr;
+    }
+
+    const sdf::Material * sdf_material = sdf_visual->Material();
+    if (sdf_material) {
+      // TODO(sloretz) textures
+      // TODO(sloretz) error if any file names we can't resolve are given
+      auto urdf_material = std::make_shared<urdf::Material>();
+      // sdf materials don't have names, so assign it the visual's name and hope that's unique enough
+      urdf_material->name = sdf_visual->Name();
+      // Color support is pretty limited in urdf, just take the ambient (color when no light applied)
+      urdf_material->color.r = sdf_material->Ambient().R();
+      urdf_material->color.g = sdf_material->Ambient().G();
+      urdf_material->color.b = sdf_material->Ambient().B();
+      urdf_material->color.a = sdf_material->Ambient().A();
+
+      urdf_visual->material = urdf_material;
+    }
+
+    if (0u == vi) {
+      urdf_link->visual = urdf_visual;
+    }
+    urdf_link->visual_array.push_back(urdf_visual);
+  }
+
+  for (uint64_t vi = 0; vi < sdf_link.CollisionCount(); ++vi) {
+    const sdf::Collision * sdf_collision = sdf_link.CollisionByIndex(vi);
+    if (!sdf_collision) {
+      errors.emplace_back(
+        sdf::ErrorCode::STRING_READ,
+        "Failed to get collision on lilnk [" + sdf_link.Name() + "]");
+      return nullptr;
+    }
+
+    auto urdf_collision = std::make_shared<urdf::Collision>();
+
+    urdf_collision->name = sdf_collision->Name();
+
+    // URDF collision is relative to link origin
+    ignition::math::Pose3d collision_pose;
+    sdf::Errors pose_errors = sdf_collision->SemanticPose().Resolve(collision_pose, sdf_link.Name());
+    if (!pose_errors.empty()) {
+      errors.insert(errors.end(), pose_errors.begin(), pose_errors.end());
+      errors.emplace_back(
+        sdf::ErrorCode::STRING_READ,
+        "Failed to get transfrom from collision [" + sdf_collision->Name()
+        + "] to link [" + sdf_link.Name() + "]");
+      return nullptr;
+    }
+    urdf_collision->origin = convert_pose(collision_pose);
+
+    urdf_collision->geometry = convert_geometry(*sdf_collision->Geom(), errors);
+    if (!urdf_collision->geometry) {
+      errors.emplace_back(
+        sdf::ErrorCode::STRING_READ,
+        "Failed to convert geometry on collision [" + sdf_collision->Name()+ "]");
+      return nullptr;
+    }
+
+    if (0u == vi) {
+      urdf_link->collision = urdf_collision;
+    }
+    urdf_link->collision_array.push_back(urdf_collision);
+  }
 
   return urdf_link;
 }
@@ -321,4 +416,33 @@ sdformat_urdf::convert_pose(const ignition::math::Pose3d & sdf_pose)
   pose.rotation.w = sdf_pose.Rot().W();
 
   return pose;
+}
+
+urdf::GeometrySharedPtr
+sdformat_urdf::convert_geometry(const sdf::Geometry & sdf_geometry, sdf::Errors & errors)
+{
+  if (sdf_geometry.BoxShape()) {
+    const sdf::Box * box = sdf_geometry.BoxShape();
+    auto urdf_box = std::make_shared<urdf::Box>();
+    urdf_box->dim.x = box->Size().X();
+    urdf_box->dim.y = box->Size().Y();
+    urdf_box->dim.z = box->Size().Z();
+    return urdf_box;
+  } else if (sdf_geometry.CylinderShape()) {
+    // TODO
+  } else if (sdf_geometry.SphereShape()) {
+    // TODO
+  } else if (sdf_geometry.PlaneShape()) {
+    errors.emplace_back(
+      sdf::ErrorCode::STRING_READ,
+      "Plane geometry cannot be converted to urdf C++ structures");
+    return nullptr;
+  } else if (sdf_geometry.MeshShape()) {
+    // TODO
+  }
+
+  errors.emplace_back(
+    sdf::ErrorCode::STRING_READ,
+    "Unknown geometry shape");
+  return nullptr;
 }
