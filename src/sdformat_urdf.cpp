@@ -431,7 +431,10 @@ sdformat_urdf::convert_geometry(const sdf::Geometry & sdf_geometry, sdf::Errors 
   } else if (sdf_geometry.CylinderShape()) {
     // TODO
   } else if (sdf_geometry.SphereShape()) {
-    // TODO
+    const sdf::Sphere * sphere = sdf_geometry.SphereShape();
+    auto urdf_sphere = std::make_shared<urdf::Sphere>();
+    urdf_sphere->radius = sphere->Radius();
+    return urdf_sphere;
   } else if (sdf_geometry.PlaneShape()) {
     errors.emplace_back(
       sdf::ErrorCode::STRING_READ,
