@@ -18,6 +18,7 @@
 #include <string>
 #include <vector>
 
+#include <resource_retriever/retriever.h>
 #include <sdf/sdf.hh>
 #include <urdf_world/types.h>
 #include <urdf_model/model.h>
@@ -445,7 +446,17 @@ sdformat_urdf::convert_geometry(const sdf::Geometry & sdf_geometry, sdf::Errors 
       "Plane geometry cannot be converted to urdf C++ structures");
     return nullptr;
   } else if (sdf_geometry.MeshShape()) {
-    // TODO
+    const std::string & uri = sdf_geometry.MeshShape()->Uri();
+    const std::string local_path = resource_retriever::Retriever().resolve(uri);
+    if (local_path.empty()) {
+      errors.emplace_back(
+        sdf::ErrorCode::STRING_READ,
+        "Unable to resolve uri [" + uri + "]");
+    }
+    auto urdf_mesh = std::make_shared<urdf::Mesh>();
+    urdf_mesh->filename = "file://" + local_path;
+    // TODO(sloretz) scale
+    return urdf_mesh;
   }
 
   errors.emplace_back(
