@@ -108,7 +108,8 @@ sdformat_urdf::convert_model(const sdf::Model & sdf_model, sdf::Errors & errors)
     }
   }
 
-  // sdf canonical link -> urdf root link
+  // Assume sdf canonical link is urdf root link
+  // TODO(osrf/sdformat#273) In future use API for getting kinematic root link
   const sdf::Link * sdf_canonical_link = sdf_model.CanonicalLink();
   if (!sdf_canonical_link) {
     errors.emplace_back(
