@@ -367,18 +367,12 @@ sdformat_urdf::convert_joint(const sdf::Joint & sdf_joint, sdf::Errors & errors)
     case sdf::JointType::PRISMATIC:
       urdf_joint->type = urdf::Joint::PRISMATIC;
       break;
-    case sdf::JointType::INVALID:
-      // fall through
-    case sdf::JointType::BALL:
-      // fall through
-    case sdf::JointType::GEARBOX:
-      // fall through
-    case sdf::JointType::REVOLUTE2:
-      // fall through
-    case sdf::JointType::SCREW:
-      // fall through
-    case sdf::JointType::UNIVERSAL:
-      // fall through
+    case sdf::JointType::INVALID:     // Unsupported: fall through to default
+    case sdf::JointType::BALL:        //  |
+    case sdf::JointType::GEARBOX:     //  |
+    case sdf::JointType::REVOLUTE2:   //  |
+    case sdf::JointType::SCREW:       //  |
+    case sdf::JointType::UNIVERSAL:   //  V
     default:
       errors.emplace_back(
         sdf::ErrorCode::STRING_READ,
