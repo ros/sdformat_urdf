@@ -154,14 +154,7 @@ sdformat_urdf::convert_model(const sdf::Model & sdf_model, sdf::Errors & errors)
     }
   }
 
-  // Start with root link (sdf canonical frame) and recurse this function:
-  //  
-  // TODO what about coordinate frames?
-  // Link pose in URDF is relative to link reference frame
-  //  Link reference frame is parent joint - joint in which this frame is the child link
-  //  Or if root, link reference frame is the model, where the model itself in sdf may be offset
-  // Seems like need to build tree of joints and links starting with root link
-
+  // Start with root link and resolve the poses one joint at a time depth-first
   std::vector<const sdf::Link *> visited_links_;
   std::vector<const sdf::Link *> link_stack{sdf_canonical_link};
   while (!link_stack.empty()) {
