@@ -440,14 +440,14 @@ sdformat_urdf::convert_geometry(const sdf::Geometry & sdf_geometry, sdf::Errors 
     return nullptr;
   } else if (sdf_geometry.MeshShape()) {
     const std::string & uri = sdf_geometry.MeshShape()->Uri();
-    const std::string local_path = resource_retriever::Retriever().resolve(uri);
-    if (local_path.empty()) {
-      errors.emplace_back(
-        sdf::ErrorCode::STRING_READ,
-        "Unable to resolve uri [" + uri + "]");
-    }
-    auto urdf_mesh = std::make_shared<urdf::Mesh>();
-    urdf_mesh->filename = "file://" + local_path;
+
+    // The only example in ROS that I've found using urdf_mesh->filename is
+    // the RobotModel plugin in RViz. This plugin uses resource retriever to
+    // resolve the filename - which may be a URI - to the mesh resource.
+    // Pass it here unmodified, ignoring that SDFormat relative paths may not
+    // be resolvable this way.
+    urdf_mesh->filename = uri;
+
     // TODO(sloretz) scale
     return urdf_mesh;
   }
