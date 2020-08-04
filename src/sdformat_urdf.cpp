@@ -435,7 +435,7 @@ sdformat_urdf::convert_geometry(const sdf::Geometry & sdf_geometry, sdf::Errors 
     return nullptr;
   } else if (sdf_geometry.MeshShape()) {
     const std::string & uri = sdf_geometry.MeshShape()->Uri();
-
+    auto urdf_mesh = std::make_shared<urdf::Mesh>();
     // The only example in ROS that I've found using urdf_mesh->filename is
     // the RobotModel plugin in RViz. This plugin uses resource retriever to
     // resolve the filename - which may be a URI - to the mesh resource.
