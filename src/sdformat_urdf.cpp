@@ -449,7 +449,9 @@ sdformat_urdf::convert_geometry(const sdf::Geometry & sdf_geometry, sdf::Errors 
     // be resolvable this way.
     urdf_mesh->filename = uri;
 
-    // TODO(sloretz) scale
+    urdf_mesh->scale.x = sdf_geometry.MeshShape()->Scale().X();
+    urdf_mesh->scale.y = sdf_geometry.MeshShape()->Scale().Y();
+    urdf_mesh->scale.z = sdf_geometry.MeshShape()->Scale().Z();
     return urdf_mesh;
   }
 
