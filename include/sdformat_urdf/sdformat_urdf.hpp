@@ -18,16 +18,21 @@
 #include <urdf_world/types.h>
 #include <urdf_model/types.h>
 
+#include <sdformat_urdf/visibility_control.hpp>
+
 namespace sdformat_urdf {
 /// \brief Parse an SDFormat XML string and return URDF C++ structures
+SDFORMAT_URDF_PUBLIC
 urdf::ModelInterfaceSharedPtr
 parse(const std::string & data, sdf::Errors & errors);
 
 /// \brief Convert SDFormat C++ structures to URDF C++ structures
+SDFORMAT_URDF_PUBLIC
 urdf::ModelInterfaceSharedPtr
 sdf_to_urdf(const sdf::Root & sdf_dom, sdf::Errors & errors);
 
 /// \brief Convert SDFormat Model to URDF Model
+SDFORMAT_URDF_PUBLIC
 urdf::ModelInterfaceSharedPtr
 convert_model(const sdf::Model & sdf_model, sdf::Errors & errors);
 }  // namespace sdformat_urdf
