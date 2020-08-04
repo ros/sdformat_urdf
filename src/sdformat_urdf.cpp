@@ -236,6 +236,7 @@ sdformat_urdf::convert_link(const sdf::Link & sdf_link, sdf::Errors & errors)
 
   urdf_link->name = sdf_link.Name();
 
+  const ignition::math::Inertiald sdf_inertia = sdf_link.Inertial();
   urdf_link->inertial = std::make_shared<urdf::Inertial>();
   if (!urdf_link->inertial) {
     errors.emplace_back(
@@ -243,10 +244,15 @@ sdformat_urdf::convert_link(const sdf::Link & sdf_link, sdf::Errors & errors)
       "Failed to create inertial for link [" + sdf_link.Name() + "]");
     return nullptr;
   }
-  urdf_link->inertial->mass = sdf_link.Inertial().MassMatrix().Mass();
-
-  // TODO(sloretz) inertial pose
-  // TODO(sloretz) ixx, ixy, ixz, iyy, iyz, izz
+  urdf_link->inertial->mass = sdf_inertia.MassMatrix().Mass();
+  // Inertial Pose is relative to link origin
+  urdf_link->inertial->origin = convert_pose(sdf_inertia.Pose());
+  urdf_link->inertial->ixx = sdf_inertia.MassMatrix().Ixx();
+  urdf_link->inertial->ixy = sdf_inertia.MassMatrix().Ixy();
+  urdf_link->inertial->ixz = sdf_inertia.MassMatrix().Ixz();
+  urdf_link->inertial->iyy = sdf_inertia.MassMatrix().Iyy();
+  urdf_link->inertial->iyz = sdf_inertia.MassMatrix().Iyz();
+  urdf_link->inertial->izz = sdf_inertia.MassMatrix().Izz();
 
   for (uint64_t vi = 0; vi < sdf_link.VisualCount(); ++vi) {
     const sdf::Visual * sdf_visual = sdf_link.VisualByIndex(vi);
