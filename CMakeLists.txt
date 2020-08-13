@@ -14,7 +14,6 @@ find_package(ament_cmake_ros REQUIRED)
 
 find_package(pluginlib REQUIRED)
 find_package(rcutils REQUIRED)
-find_package(resource_retriever REQUIRED)
 find_package(sdformat9 REQUIRED)
 find_package(urdfdom_headers REQUIRED)
 find_package(urdf_parser_plugin REQUIRED)
@@ -26,10 +25,6 @@ add_library(sdformat_urdf SHARED
 target_link_libraries(sdformat_urdf
   PUBLIC
     sdformat9::sdformat9
-)
-target_link_libraries(sdformat_urdf
-  PRIVATE
-    resource_retriever::resource_retriever
 )
 target_include_directories(sdformat_urdf
   PUBLIC

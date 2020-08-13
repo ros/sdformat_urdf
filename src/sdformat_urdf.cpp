@@ -18,7 +18,6 @@
 #include <string>
 #include <vector>
 
-#include <resource_retriever/retriever.h>
 #include <sdf/sdf.hh>
 #include <urdf_world/types.h>
 #include <urdf_model/model.h>
