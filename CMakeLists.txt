@@ -17,6 +17,8 @@ find_package(rcutils REQUIRED)
 find_package(sdformat9 REQUIRED)
 find_package(urdfdom_headers REQUIRED)
 find_package(urdf_parser_plugin REQUIRED)
+find_package(tinyxml2_vendor REQUIRED)
+find_package(TinyXML2 REQUIRED)
 
 # Add sdformat_urdf shared library
 add_library(sdformat_urdf SHARED
@@ -43,6 +45,7 @@ target_link_libraries(sdformat_urdf_plugin PUBLIC
 ament_target_dependencies(sdformat_urdf_plugin PUBLIC
   "pluginlib"
   "rcutils"
+  "TinyXML2"
   "urdf_parser_plugin"
 )
 

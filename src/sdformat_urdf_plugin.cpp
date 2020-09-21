@@ -12,9 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include <limits>
 
 #include <rcutils/logging_macros.h>
 #include "sdformat_urdf/sdformat_urdf.hpp"
+#include <tinyxml2.h>
 #include <urdf_parser_plugin/parser.h>
 
 namespace sdformat_urdf {
@@ -49,6 +51,21 @@ public:
   size_t
   might_handle(const std::string & data) override
   {
+    tinyxml2::XMLDocument doc;
+    const tinyxml2::XMLError error = doc.Parse(data.c_str());
+    if (error == tinyxml2::XML_SUCCESS) {
+      // Since it's an XML document it must have `<sdf>` as the first tag
+      const tinyxml2::XMLElement * root = doc.RootElement();
+      if (std::string("sdf") != root->Name()) {
+        std::cout << "'" << root->Name() << "'\n";
+        return std::numeric_limits<size_t>::max();
+      }
+    }
+
+    // Possiblities:
+    //  1) It is not an XML based robot description
+    //  2) It is an XML based robot description, but there's an XML syntax error
+    //  3) It is an SDFormat XML with correct XML syntax
     return data.find("<sdf");
   }
 };
