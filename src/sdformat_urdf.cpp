@@ -18,6 +18,7 @@
 #include <string>
 #include <vector>
 
+#include <ignition/math/Pose3.hh>
 #include <sdf/sdf.hh>
 #include <urdf_world/types.h>
 #include <urdf_model/model.h>
