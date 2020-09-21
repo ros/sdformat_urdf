@@ -19,12 +19,12 @@
 
 namespace sdformat_urdf {
 
-class SDFormatURDFParser : public urdf::URDFParser
+class SDFormatURDFParser final : public urdf::URDFParser
 {
 public:
 
   SDFormatURDFParser() = default;
-  virtual ~SDFormatURDFParser() = default;
+  ~SDFormatURDFParser() = default;
 
   urdf::ModelInterfaceSharedPtr
   parse(const std::string & data) override
