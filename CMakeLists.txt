@@ -68,4 +68,9 @@ ament_export_targets(sdformat_urdf-export)
 
 pluginlib_export_plugin_description_file(urdf_parser_plugin "sdformat_urdf_plugin.xml")
 
+if(BUILD_TESTING)
+  find_package(ament_lint_auto REQUIRED)
+  ament_lint_auto_find_test_dependencies()
+endif()
+
 ament_package()
