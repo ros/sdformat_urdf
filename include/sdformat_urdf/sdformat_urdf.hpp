@@ -12,13 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include <string>
+#ifndef SDFORMAT_URDF__SDFORMAT_URDF_HPP_
+#define SDFORMAT_URDF__SDFORMAT_URDF_HPP_
 
 #include <sdf/sdf.hh>
 #include <urdf_world/types.h>
 #include <urdf_model/types.h>
 
-#include <sdformat_urdf/visibility_control.hpp>
+#include <string>
+
+#include "sdformat_urdf/visibility_control.hpp"
 
 namespace sdformat_urdf
 {
@@ -37,3 +40,5 @@ SDFORMAT_URDF_PUBLIC
 urdf::ModelInterfaceSharedPtr
 convert_model(const sdf::Model & sdf_model, sdf::Errors & errors);
 }  // namespace sdformat_urdf
+
+#endif  // SDFORMAT_URDF__SDFORMAT_URDF_HPP_

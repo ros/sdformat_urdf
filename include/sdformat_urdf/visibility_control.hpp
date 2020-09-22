@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef SDFORMAT_URDF__VISIBILITY_CONTROL_H_
-#define SDFORMAT_URDF__VISIBILITY_CONTROL_H_
+#ifndef SDFORMAT_URDF__VISIBILITY_CONTROL_HPP_
+#define SDFORMAT_URDF__VISIBILITY_CONTROL_HPP_
 
 #ifdef __cplusplus
 extern "C"
@@ -55,4 +55,4 @@ extern "C"
 }
 #endif
 
-#endif  // SDFORMAT_URDF__VISIBILITY_CONTROL_H_
+#endif  // SDFORMAT_URDF__VISIBILITY_CONTROL_HPP_

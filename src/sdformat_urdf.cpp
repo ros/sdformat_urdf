@@ -12,16 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "sdformat_urdf/sdformat_urdf.hpp"
-
-#include <algorithm>
-#include <string>
-#include <vector>
-
 #include <ignition/math/Pose3.hh>
 #include <sdf/sdf.hh>
 #include <urdf_world/types.h>
 #include <urdf_model/model.h>
+
+#include <algorithm>
+#include <memory>
+#include <string>
+#include <vector>
+
+#include "sdformat_urdf/sdformat_urdf.hpp"
 
 namespace sdformat_urdf
 {
@@ -296,9 +297,9 @@ sdformat_urdf::convert_link(const sdf::Link & sdf_link, sdf::Errors & errors)
       // TODO(sloretz) textures
       // TODO(sloretz) error if any file names we can't resolve are given
       auto urdf_material = std::make_shared<urdf::Material>();
-      // sdf materials don't have names, so assign it the visual's name and hope that's unique enough
+      // sdf materials don't have names, so assign it the visual's name and hope that's unique
       urdf_material->name = sdf_visual->Name();
-      // Color support is pretty limited in urdf, just take the ambient (color when no light applied)
+      // Color support is pretty limited in urdf, just take the ambient (color with no light)
       urdf_material->color.r = sdf_material->Ambient().R();
       urdf_material->color.g = sdf_material->Ambient().G();
       urdf_material->color.b = sdf_material->Ambient().B();

@@ -12,12 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include <limits>
-
 #include <rcutils/logging_macros.h>
-#include "sdformat_urdf/sdformat_urdf.hpp"
 #include <tinyxml2.h>
 #include <urdf_parser_plugin/parser.h>
+
+#include <limits>
+#include <string>
+
+#include "sdformat_urdf/sdformat_urdf.hpp"
 
 namespace sdformat_urdf
 {
