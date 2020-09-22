@@ -23,7 +23,8 @@
 #include <urdf_world/types.h>
 #include <urdf_model/model.h>
 
-namespace sdformat_urdf {
+namespace sdformat_urdf
+{
 /// \brief Convert SDFormat Link to URDF Link
 urdf::LinkSharedPtr
 convert_link(const sdf::Link & sdf_link, sdf::Errors & errors);
@@ -164,7 +165,9 @@ sdformat_urdf::convert_model(const sdf::Model & sdf_model, sdf::Errors & errors)
     link_stack.pop_back();
 
     // Check if there is a kinematic loop
-    if (visited_links_.end() != std::find(visited_links_.begin(), visited_links_.end(), sdf_parent_link) ) {
+    if (visited_links_.end() !=
+      std::find(visited_links_.begin(), visited_links_.end(), sdf_parent_link))
+    {
       errors.emplace_back(
         sdf::ErrorCode::STRING_READ,
         "Not a tree because link [" + sdf_parent_link->Name() + "] was visited twice");
@@ -197,8 +200,8 @@ sdformat_urdf::convert_model(const sdf::Model & sdf_model, sdf::Errors & errors)
           errors.insert(errors.end(), pose_errors.begin(), pose_errors.end());
           errors.emplace_back(
             sdf::ErrorCode::STRING_READ,
-            "Failed to get transfrom from joint [" + sdf_joint->Name()
-            + "] to link [" + sdf_parent_link->Name() + "]");
+            "Failed to get transfrom from joint [" + sdf_joint->Name() +
+            "] to link [" + sdf_parent_link->Name() + "]");
           return nullptr;
         }
         urdf_joint->parent_to_joint_origin_transform = convert_pose(joint_pose);
@@ -274,8 +277,8 @@ sdformat_urdf::convert_link(const sdf::Link & sdf_link, sdf::Errors & errors)
       errors.insert(errors.end(), pose_errors.begin(), pose_errors.end());
       errors.emplace_back(
         sdf::ErrorCode::STRING_READ,
-        "Failed to get transfrom from visual [" + sdf_visual->Name()
-        + "] to link [" + sdf_link.Name() + "]");
+        "Failed to get transfrom from visual [" + sdf_visual->Name() +
+        "] to link [" + sdf_link.Name() + "]");
       return nullptr;
     }
     urdf_visual->origin = convert_pose(visual_pose);
@@ -284,7 +287,7 @@ sdformat_urdf::convert_link(const sdf::Link & sdf_link, sdf::Errors & errors)
     if (!urdf_visual->geometry) {
       errors.emplace_back(
         sdf::ErrorCode::STRING_READ,
-        "Failed to convert geometry on visual [" + sdf_visual->Name()+ "]");
+        "Failed to convert geometry on visual [" + sdf_visual->Name() + "]");
       return nullptr;
     }
 
@@ -325,13 +328,14 @@ sdformat_urdf::convert_link(const sdf::Link & sdf_link, sdf::Errors & errors)
 
     // URDF collision is relative to link origin
     ignition::math::Pose3d collision_pose;
-    sdf::Errors pose_errors = sdf_collision->SemanticPose().Resolve(collision_pose, sdf_link.Name());
+    sdf::Errors pose_errors =
+      sdf_collision->SemanticPose().Resolve(collision_pose, sdf_link.Name());
     if (!pose_errors.empty()) {
       errors.insert(errors.end(), pose_errors.begin(), pose_errors.end());
       errors.emplace_back(
         sdf::ErrorCode::STRING_READ,
-        "Failed to get transfrom from collision [" + sdf_collision->Name()
-        + "] to link [" + sdf_link.Name() + "]");
+        "Failed to get transfrom from collision [" + sdf_collision->Name() +
+        "] to link [" + sdf_link.Name() + "]");
       return nullptr;
     }
     urdf_collision->origin = convert_pose(collision_pose);
@@ -340,7 +344,7 @@ sdformat_urdf::convert_link(const sdf::Link & sdf_link, sdf::Errors & errors)
     if (!urdf_collision->geometry) {
       errors.emplace_back(
         sdf::ErrorCode::STRING_READ,
-        "Failed to convert geometry on collision [" + sdf_collision->Name()+ "]");
+        "Failed to convert geometry on collision [" + sdf_collision->Name() + "]");
       return nullptr;
     }
 
@@ -390,7 +394,7 @@ sdformat_urdf::convert_joint(const sdf::Joint & sdf_joint, sdf::Errors & errors)
         sdf::ErrorCode::STRING_READ,
         "Unsupported joint type on joint [" + sdf_joint.Name() + "]");
       return nullptr;
-  };
+  }
 
   // Supported joints have at most one axis
   if (1 == num_axes) {
@@ -403,8 +407,8 @@ sdformat_urdf::convert_joint(const sdf::Joint & sdf_joint, sdf::Errors & errors)
       errors.insert(errors.end(), axis_errors.begin(), axis_errors.end());
       errors.emplace_back(
         sdf::ErrorCode::STRING_READ,
-        "Failed to get transfrom of joint axis in frame [" + sdf_axis->XyzExpressedIn()
-        + "] to joint [" + sdf_joint.Name() + "]");
+        "Failed to get transfrom of joint axis in frame [" + sdf_axis->XyzExpressedIn() +
+        "] to joint [" + sdf_joint.Name() + "]");
       return nullptr;
     }
 

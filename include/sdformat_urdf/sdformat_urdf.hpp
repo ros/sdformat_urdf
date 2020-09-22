@@ -20,7 +20,8 @@
 
 #include <sdformat_urdf/visibility_control.hpp>
 
-namespace sdformat_urdf {
+namespace sdformat_urdf
+{
 /// \brief Parse an SDFormat XML string and return URDF C++ structures
 SDFORMAT_URDF_PUBLIC
 urdf::ModelInterfaceSharedPtr

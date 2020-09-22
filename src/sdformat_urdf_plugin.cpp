@@ -19,12 +19,11 @@
 #include <tinyxml2.h>
 #include <urdf_parser_plugin/parser.h>
 
-namespace sdformat_urdf {
-
+namespace sdformat_urdf
+{
 class SDFormatURDFParser final : public urdf::URDFParser
 {
 public:
-
   SDFormatURDFParser() = default;
   ~SDFormatURDFParser() = default;
 
