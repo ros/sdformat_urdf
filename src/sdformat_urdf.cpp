@@ -240,6 +240,19 @@ sdformat_urdf::convert_link(const sdf::Link & sdf_link, sdf::Errors & errors)
 
   urdf_link->name = sdf_link.Name();
 
+  // Link pose is by default relative to the model
+  ignition::math::Pose3d link_pose;
+  {
+    sdf::Errors pose_errors = sdf_link.SemanticPose().Resolve(link_pose);
+    if (!pose_errors.empty()) {
+      errors.insert(errors.end(), pose_errors.begin(), pose_errors.end());
+      errors.emplace_back(
+        sdf::ErrorCode::STRING_READ,
+        "Failed to get transform of link [" + sdf_link.Name() + "]");
+      return nullptr;
+    }
+  }
+
   const ignition::math::Inertiald sdf_inertia = sdf_link.Inertial();
   urdf_link->inertial = std::make_shared<urdf::Inertial>();
   if (!urdf_link->inertial) {
@@ -249,8 +262,8 @@ sdformat_urdf::convert_link(const sdf::Link & sdf_link, sdf::Errors & errors)
     return nullptr;
   }
   urdf_link->inertial->mass = sdf_inertia.MassMatrix().Mass();
-  // Inertial Pose is relative to link origin
-  urdf_link->inertial->origin = convert_pose(sdf_inertia.Pose());
+  // URDF doesn't have link pose concept, so add SDF link pose to inertial
+  urdf_link->inertial->origin = convert_pose(link_pose + sdf_inertia.Pose());
   urdf_link->inertial->ixx = sdf_inertia.MassMatrix().Ixx();
   urdf_link->inertial->ixy = sdf_inertia.MassMatrix().Ixy();
   urdf_link->inertial->ixz = sdf_inertia.MassMatrix().Ixz();
@@ -282,7 +295,8 @@ sdformat_urdf::convert_link(const sdf::Link & sdf_link, sdf::Errors & errors)
         "] to link [" + sdf_link.Name() + "]");
       return nullptr;
     }
-    urdf_visual->origin = convert_pose(visual_pose);
+    // URDF doesn't have link pose concept, so add SDF link pose to visual
+    urdf_visual->origin = convert_pose(link_pose + visual_pose);
 
     urdf_visual->geometry = convert_geometry(*sdf_visual->Geom(), errors);
     if (!urdf_visual->geometry) {
@@ -339,7 +353,8 @@ sdformat_urdf::convert_link(const sdf::Link & sdf_link, sdf::Errors & errors)
         "] to link [" + sdf_link.Name() + "]");
       return nullptr;
     }
-    urdf_collision->origin = convert_pose(collision_pose);
+    // URDF doesn't have link pose concept, so add SDF link pose to collision
+    urdf_collision->origin = convert_pose(link_pose + collision_pose);
 
     urdf_collision->geometry = convert_geometry(*sdf_collision->Geom(), errors);
     if (!urdf_collision->geometry) {
