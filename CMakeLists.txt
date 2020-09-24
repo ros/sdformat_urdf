@@ -76,12 +76,15 @@ if(BUILD_TESTING)
   sdformat_test_files_get_model_sdf("pose_collision_path_to_sdf" "pose_collision")
   sdformat_test_files_get_model_sdf("pose_inertial_path_to_sdf" "pose_inertial")
   sdformat_test_files_get_model_sdf("pose_link_path_to_sdf" "pose_link")
+  sdformat_test_files_get_model_sdf("pose_model_path_to_sdf" "pose_model")
   sdformat_test_files_get_model_sdf("pose_visual_path_to_sdf" "pose_visual")
   configure_file("test/sdf_paths.hpp.in" "${CMAKE_CURRENT_BINARY_DIR}/generated_includes/sdf_paths.hpp" @ONLY)
 
   ament_add_gtest(sdf_pose_tests "test/sdf_pose_tests.cpp")
   target_link_libraries(sdf_pose_tests sdformat_urdf)
-  target_include_directories(sdf_pose_tests PRIVATE "${CMAKE_CURRENT_BINARY_DIR}/generated_includes")
+  target_include_directories(sdf_pose_tests PRIVATE
+    "${CMAKE_CURRENT_SOURCE_DIR}/test/include"
+    "${CMAKE_CURRENT_BINARY_DIR}/generated_includes")
 
 endif()
 

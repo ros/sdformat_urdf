@@ -21,27 +21,14 @@
 #include <urdf_model/types.h>
 
 #include "sdf_paths.hpp"
-
-
-#define EXPECT_POSE(expected_ign, actual_urdf) \
-  do { \
-    const auto actual_ign = ignition::math::Pose3d{ \
-      actual_urdf.position.x, \
-      actual_urdf.position.y, \
-      actual_urdf.position.z, \
-      actual_urdf.rotation.w, \
-      actual_urdf.rotation.x, \
-      actual_urdf.rotation.y, \
-      actual_urdf.rotation.z}; \
-    EXPECT_EQ(expected_ign, actual_ign); \
-  } while (false)
+#include "test_tools.hpp"
 
 TEST(Pose, pose_collision)
 {
   sdf::Errors errors;
   urdf::ModelInterfaceSharedPtr model = sdformat_urdf::parse(
     get_file(POSE_COLLISION_PATH_TO_SDF), errors);
-  EXPECT_TRUE(errors.empty());
+  EXPECT_TRUE(errors.empty()) << errors;
   ASSERT_TRUE(model);
   EXPECT_EQ("pose_collision", model->getName());
 
@@ -62,7 +49,7 @@ TEST(Pose, pose_inertial)
   sdf::Errors errors;
   urdf::ModelInterfaceSharedPtr model = sdformat_urdf::parse(
     get_file(POSE_INERTIAL_PATH_TO_SDF), errors);
-  EXPECT_TRUE(errors.empty());
+  EXPECT_TRUE(errors.empty()) << errors;
   ASSERT_TRUE(model);
   EXPECT_EQ("pose_inertial", model->getName());
 
@@ -83,7 +70,7 @@ TEST(Pose, pose_link)
   sdf::Errors errors;
   urdf::ModelInterfaceSharedPtr model = sdformat_urdf::parse(
     get_file(POSE_LINK_PATH_TO_SDF), errors);
-  EXPECT_TRUE(errors.empty());
+  EXPECT_TRUE(errors.empty()) << errors;
   ASSERT_TRUE(model);
   EXPECT_EQ("pose_link", model->getName());
 
@@ -100,12 +87,21 @@ TEST(Pose, pose_link)
   EXPECT_POSE(expected_pose, link->collision->origin);
 }
 
+TEST(Pose, pose_model)
+{
+  sdf::Errors errors;
+  urdf::ModelInterfaceSharedPtr model = sdformat_urdf::parse(
+    get_file(POSE_MODEL_PATH_TO_SDF), errors);
+  EXPECT_FALSE(errors.empty());
+  ASSERT_FALSE(model);
+}
+
 TEST(Pose, pose_visual)
 {
   sdf::Errors errors;
   urdf::ModelInterfaceSharedPtr model = sdformat_urdf::parse(
     get_file(POSE_VISUAL_PATH_TO_SDF), errors);
-  EXPECT_TRUE(errors.empty());
+  EXPECT_TRUE(errors.empty()) << errors;
   ASSERT_TRUE(model);
   EXPECT_EQ("pose_visual", model->getName());
 

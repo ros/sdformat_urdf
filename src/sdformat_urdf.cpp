@@ -80,6 +80,14 @@ sdformat_urdf::convert_model(const sdf::Model & sdf_model, sdf::Errors & errors)
   // copy name
   urdf_model->name_ = sdf_model.Name();
 
+  // TODO(sloretz) what is a model's pose? What does it resolve relative to?
+  if ("" != sdf_model.PoseRelativeTo() || ignition::math::Pose3d{} != sdf_model.RawPose()) {
+    errors.emplace_back(
+      sdf::ErrorCode::STRING_READ,
+      "<model> tags with <pose> are not currently supported by sdformat_urdf");
+    return nullptr;
+  }
+
   // create matching links
   for (uint64_t l = 0; l < sdf_model.LinkCount(); ++l) {
     const sdf::Link * sdf_link = sdf_model.LinkByIndex(l);
