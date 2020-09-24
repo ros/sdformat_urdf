@@ -14,13 +14,27 @@
 
 
 #include <gtest/gtest.h>
-#include <urdf_model/model.h>
-#include <urdf_model/types.h>
+#include <ignition/math/Pose3.hh>
 #include <sdf/sdf.hh>
 #include <sdformat_urdf/sdformat_urdf.hpp>
+#include <urdf_model/model.h>
+#include <urdf_model/types.h>
 
 #include "sdf_paths.hpp"
 
+
+#define EXPECT_POSE(expected_ign, actual_urdf) \
+  do { \
+    const auto actual_ign = ignition::math::Pose3d{ \
+      actual_urdf.position.x, \
+      actual_urdf.position.y, \
+      actual_urdf.position.z, \
+      actual_urdf.rotation.w, \
+      actual_urdf.rotation.x, \
+      actual_urdf.rotation.y, \
+      actual_urdf.rotation.z}; \
+    EXPECT_EQ(expected_ign, actual_ign); \
+  } while (false)
 
 TEST(Pose, pose_link)
 {
@@ -29,10 +43,17 @@ TEST(Pose, pose_link)
     get_file(POSE_LINK_PATH_TO_SDF), errors);
   EXPECT_TRUE(errors.empty());
   ASSERT_TRUE(model);
-
-  EXPECT_EQ(1u, model->links_.size());
-  EXPECT_EQ(0u, model->joints_.size());
-  EXPECT_EQ(0u, model->materials_.size());
   EXPECT_EQ("pose_link", model->getName());
-  EXPECT_EQ(model->getRoot(), model->getLink("pose_link_link"));
+
+  ASSERT_EQ(1u, model->links_.size());
+  urdf::LinkConstSharedPtr link = model->getRoot();
+  ASSERT_NE(nullptr, link);
+
+  // URDF link C++ structure does not have an origin - instead the pose of the
+  // link should be added to the visual, collision, and inertial members.
+  const ignition::math::Pose3d expected_pose(0.05, 0.1, 0.2, 0.1, 0.2, 0.3);
+
+  EXPECT_POSE(expected_pose, link->inertial->origin);
+  EXPECT_POSE(expected_pose, link->visual->origin);
+  EXPECT_POSE(expected_pose, link->collision->origin);
 }
