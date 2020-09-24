@@ -16,6 +16,7 @@
 #define SDFORMAT_URDF__TEST__SDF_PATHS_HPP_
 
 #define POSE_LINK_PATH_TO_SDF "@pose_link_path_to_sdf@"
+#define POSE_VISUAL_PATH_TO_SDF "@pose_visual_path_to_sdf@"
 
 #include <string>
 #include <fstream>

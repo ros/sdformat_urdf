@@ -74,6 +74,7 @@ if(BUILD_TESTING)
   ament_lint_auto_find_test_dependencies()
 
   sdformat_test_files_get_model_sdf("pose_link_path_to_sdf" "pose_link")
+  sdformat_test_files_get_model_sdf("pose_visual_path_to_sdf" "pose_visual")
   configure_file("test/sdf_paths.hpp.in" "${CMAKE_CURRENT_BINARY_DIR}/generated_includes/sdf_paths.hpp" @ONLY)
 
   ament_add_gtest(sdf_pose_tests "test/sdf_pose_tests.cpp")

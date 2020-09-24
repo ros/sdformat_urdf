@@ -57,3 +57,24 @@ TEST(Pose, pose_link)
   EXPECT_POSE(expected_pose, link->visual->origin);
   EXPECT_POSE(expected_pose, link->collision->origin);
 }
+
+TEST(Pose, pose_visual)
+{
+  sdf::Errors errors;
+  urdf::ModelInterfaceSharedPtr model = sdformat_urdf::parse(
+    get_file(POSE_VISUAL_PATH_TO_SDF), errors);
+  EXPECT_TRUE(errors.empty());
+  ASSERT_TRUE(model);
+  EXPECT_EQ("pose_visual", model->getName());
+
+  ASSERT_EQ(1u, model->links_.size());
+  urdf::LinkConstSharedPtr link = model->getRoot();
+  ASSERT_NE(nullptr, link);
+
+  const ignition::math::Pose3d expected_visual_pose(0.05, 0.1, 0.2, 0.1, 0.2, 0.3);
+  const ignition::math::Pose3d expected_other_pose(0, 0, 0, 0, 0, 0);
+
+  EXPECT_POSE(expected_other_pose, link->inertial->origin);
+  EXPECT_POSE(expected_visual_pose, link->visual->origin);
+  EXPECT_POSE(expected_other_pose, link->collision->origin);
+}
