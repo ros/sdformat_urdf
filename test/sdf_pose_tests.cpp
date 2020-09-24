@@ -57,6 +57,27 @@ TEST(Pose, pose_collision)
   EXPECT_POSE(expected_collision_pose, link->collision->origin);
 }
 
+TEST(Pose, pose_inertial)
+{
+  sdf::Errors errors;
+  urdf::ModelInterfaceSharedPtr model = sdformat_urdf::parse(
+    get_file(POSE_INERTIAL_PATH_TO_SDF), errors);
+  EXPECT_TRUE(errors.empty());
+  ASSERT_TRUE(model);
+  EXPECT_EQ("pose_inertial", model->getName());
+
+  ASSERT_EQ(1u, model->links_.size());
+  urdf::LinkConstSharedPtr link = model->getRoot();
+  ASSERT_NE(nullptr, link);
+
+  const ignition::math::Pose3d expected_inertial_pose(0.05, 0.1, 0.2, 0.1, 0.2, 0.3);
+  const ignition::math::Pose3d expected_other_pose(0, 0, 0, 0, 0, 0);
+
+  EXPECT_POSE(expected_inertial_pose, link->inertial->origin);
+  EXPECT_POSE(expected_other_pose, link->visual->origin);
+  EXPECT_POSE(expected_other_pose, link->collision->origin);
+}
+
 TEST(Pose, pose_link)
 {
   sdf::Errors errors;
