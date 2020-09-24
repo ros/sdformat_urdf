@@ -70,7 +70,16 @@ pluginlib_export_plugin_description_file(urdf_parser_plugin "sdformat_urdf_plugi
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
+  find_package(sdformat_test_files 0.1 REQUIRED)
   ament_lint_auto_find_test_dependencies()
+
+  sdformat_test_files_get_model_sdf("pose_link_path_to_sdf" "pose_link")
+  configure_file("test/sdf_paths.hpp.in" "${CMAKE_CURRENT_BINARY_DIR}/generated_includes/sdf_paths.hpp" @ONLY)
+
+  ament_add_gtest(sdf_pose_tests "test/sdf_pose_tests.cpp")
+  target_link_libraries(sdf_pose_tests sdformat_urdf)
+  target_include_directories(sdf_pose_tests PRIVATE "${CMAKE_CURRENT_BINARY_DIR}/generated_includes")
+
 endif()
 
 ament_package()
