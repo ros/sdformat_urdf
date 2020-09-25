@@ -80,7 +80,8 @@ sdformat_urdf::convert_model(const sdf::Model & sdf_model, sdf::Errors & errors)
   // copy name
   urdf_model->name_ = sdf_model.Name();
 
-  // TODO(sloretz) what is a model's pose? What does it resolve relative to?
+  // A model's pose is the location of the model in a larger context, like a world or parent model
+  // It doesn't make sense in the context of a robot description.
   if ("" != sdf_model.PoseRelativeTo() || ignition::math::Pose3d{} != sdf_model.RawPose()) {
     errors.emplace_back(
       sdf::ErrorCode::STRING_READ,
