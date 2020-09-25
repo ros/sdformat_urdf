@@ -80,6 +80,7 @@ if(BUILD_TESTING)
   sdformat_test_files_get_model_sdf("pose_link_in_frame_path_to_sdf" "pose_link_in_frame")
   sdformat_test_files_get_model_sdf("pose_link_path_to_sdf" "pose_link")
   sdformat_test_files_get_model_sdf("pose_model_path_to_sdf" "pose_model")
+  sdformat_test_files_get_model_sdf("pose_visual_in_frame_path_to_sdf" "pose_visual_in_frame")
   sdformat_test_files_get_model_sdf("pose_visual_path_to_sdf" "pose_visual")
   configure_file("test/sdf_paths.hpp.in" "${CMAKE_CURRENT_BINARY_DIR}/generated_includes/sdf_paths.hpp" @ONLY)
 

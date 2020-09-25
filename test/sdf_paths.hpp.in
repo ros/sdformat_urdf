@@ -22,6 +22,7 @@
 #define POSE_LINK_IN_FRAME_PATH_TO_SDF "@pose_link_in_frame_path_to_sdf@"
 #define POSE_LINK_PATH_TO_SDF "@pose_link_path_to_sdf@"
 #define POSE_MODEL_PATH_TO_SDF "@pose_model_path_to_sdf@"
+#define POSE_VISUAL_IN_FRAME_PATH_TO_SDF "@pose_visual_in_frame_path_to_sdf@"
 #define POSE_VISUAL_PATH_TO_SDF "@pose_visual_path_to_sdf@"
 
 #endif  // SDFORMAT_URDF__TEST__SDF_PATHS_HPP_
