@@ -30,7 +30,7 @@ TEST(Pose, pose_collision)
     get_file(POSE_COLLISION_PATH_TO_SDF), errors);
   EXPECT_TRUE(errors.empty()) << errors;
   ASSERT_TRUE(model);
-  EXPECT_EQ("pose_collision", model->getName());
+  ASSERT_EQ("pose_collision", model->getName());
 
   ASSERT_EQ(1u, model->links_.size());
   urdf::LinkConstSharedPtr link = model->getRoot();
@@ -51,7 +51,7 @@ TEST(Pose, pose_inertial)
     get_file(POSE_INERTIAL_PATH_TO_SDF), errors);
   EXPECT_TRUE(errors.empty()) << errors;
   ASSERT_TRUE(model);
-  EXPECT_EQ("pose_inertial", model->getName());
+  ASSERT_EQ("pose_inertial", model->getName());
 
   ASSERT_EQ(1u, model->links_.size());
   urdf::LinkConstSharedPtr link = model->getRoot();
@@ -72,7 +72,7 @@ TEST(Pose, pose_link)
     get_file(POSE_LINK_PATH_TO_SDF), errors);
   EXPECT_TRUE(errors.empty()) << errors;
   ASSERT_TRUE(model);
-  EXPECT_EQ("pose_link", model->getName());
+  ASSERT_EQ("pose_link", model->getName());
 
   ASSERT_EQ(1u, model->links_.size());
   urdf::LinkConstSharedPtr link = model->getRoot();
@@ -94,7 +94,7 @@ TEST(Pose, pose_link_all)
     get_file(POSE_LINK_ALL_PATH_TO_SDF), errors);
   EXPECT_TRUE(errors.empty()) << errors;
   ASSERT_TRUE(model);
-  EXPECT_EQ("pose_link_all", model->getName());
+  ASSERT_EQ("pose_link_all", model->getName());
 
   ASSERT_EQ(1u, model->links_.size());
   urdf::LinkConstSharedPtr link = model->getRoot();
@@ -131,7 +131,7 @@ TEST(Pose, pose_visual)
     get_file(POSE_VISUAL_PATH_TO_SDF), errors);
   EXPECT_TRUE(errors.empty()) << errors;
   ASSERT_TRUE(model);
-  EXPECT_EQ("pose_visual", model->getName());
+  ASSERT_EQ("pose_visual", model->getName());
 
   ASSERT_EQ(1u, model->links_.size());
   urdf::LinkConstSharedPtr link = model->getRoot();
