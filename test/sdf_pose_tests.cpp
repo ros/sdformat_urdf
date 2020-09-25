@@ -87,6 +87,34 @@ TEST(Pose, pose_link)
   EXPECT_POSE(expected_pose, link->collision->origin);
 }
 
+TEST(Pose, pose_link_all)
+{
+  sdf::Errors errors;
+  urdf::ModelInterfaceSharedPtr model = sdformat_urdf::parse(
+    get_file(POSE_LINK_ALL_PATH_TO_SDF), errors);
+  EXPECT_TRUE(errors.empty()) << errors;
+  ASSERT_TRUE(model);
+  EXPECT_EQ("pose_link_all", model->getName());
+
+  ASSERT_EQ(1u, model->links_.size());
+  urdf::LinkConstSharedPtr link = model->getRoot();
+  ASSERT_NE(nullptr, link);
+
+  // URDF link C++ structure does not have an origin - instead the pose of the
+  // link should be added to the visual, collision, and inertial members.
+  const ignition::math::Pose3d link_pose(0.05, 0.1, 0.2, 0.1, 0.2, 0.3);
+  const ignition::math::Pose3d expected_inertial_pose =
+    link_pose + ignition::math::Pose3d{0.05, 0.1, 0.2, 0.4, 0.5, 0.6};
+  const ignition::math::Pose3d expected_collision_pose =
+    link_pose + ignition::math::Pose3d{0.04, 0.8, 0.16, 0.3, 0.4, 0.5};
+  const ignition::math::Pose3d expected_visual_pose =
+    link_pose + ignition::math::Pose3d{0.03, 0.6, 0.12, 0.2, 0.3, 0.4};
+
+  EXPECT_POSE(expected_inertial_pose, link->inertial->origin);
+  EXPECT_POSE(expected_visual_pose, link->visual->origin);
+  EXPECT_POSE(expected_collision_pose, link->collision->origin);
+}
+
 TEST(Pose, pose_model)
 {
   sdf::Errors errors;
