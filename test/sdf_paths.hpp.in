@@ -15,6 +15,7 @@
 #ifndef SDFORMAT_URDF__TEST__SDF_PATHS_HPP_
 #define SDFORMAT_URDF__TEST__SDF_PATHS_HPP_
 
+#define POSE_COLLISION_IN_FRAME_PATH_TO_SDF "@pose_collision_in_frame_path_to_sdf@"
 #define POSE_COLLISION_PATH_TO_SDF "@pose_collision_path_to_sdf@"
 #define POSE_INERTIAL_PATH_TO_SDF "@pose_inertial_path_to_sdf@"
 #define POSE_LINK_ALL_PATH_TO_SDF "@pose_link_all_path_to_sdf@"
