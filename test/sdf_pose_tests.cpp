@@ -126,8 +126,6 @@ TEST(Pose, pose_joint)
   ASSERT_EQ(1u, model->joints_.size());
   urdf::JointConstSharedPtr joint = model->joints_.begin()->second;
   ASSERT_NE(nullptr, joint);
-  urdf::LinkConstSharedPtr parent_link = model->getLink(joint->parent_link_name);
-  ASSERT_NE(nullptr, parent_link);
   urdf::LinkConstSharedPtr child_link = model->getLink(joint->child_link_name);
   ASSERT_NE(nullptr, child_link);
 
@@ -136,6 +134,7 @@ TEST(Pose, pose_joint)
   const ignition::math::Pose3d model_to_parent_in_model(0, 0, 0, 0, 0, 0);
   const ignition::math::Pose3d model_to_child_in_model(0, 0, 0, 0, 0, 0);
   const ignition::math::Pose3d model_to_joint_in_model(0.05, 0.1, 0.2, 0.1, 0.2, 0.3);
+
   const ignition::math::Pose3d parent_to_joint_in_parent =
     model_to_joint_in_model - model_to_parent_in_model;
   const ignition::math::Pose3d joint_to_child_in_joint =
