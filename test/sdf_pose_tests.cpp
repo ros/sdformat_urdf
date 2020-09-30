@@ -27,7 +27,7 @@ TEST(Pose, pose_collision)
 {
   sdf::Errors errors;
   urdf::ModelInterfaceSharedPtr model = sdformat_urdf::parse(
-    get_file(POSE_COLLISION_PATH_TO_SDF), errors);
+    get_file(PATH_TO_SDF_POSE_COLLISION), errors);
   EXPECT_TRUE(errors.empty()) << errors;
   ASSERT_TRUE(model);
   ASSERT_EQ("pose_collision", model->getName());
@@ -48,7 +48,7 @@ TEST(Pose, pose_collision_in_frame)
 {
   sdf::Errors errors;
   urdf::ModelInterfaceSharedPtr model = sdformat_urdf::parse(
-    get_file(POSE_COLLISION_IN_FRAME_PATH_TO_SDF), errors);
+    get_file(PATH_TO_SDF_POSE_COLLISION_IN_FRAME), errors);
   EXPECT_TRUE(errors.empty()) << errors;
   ASSERT_TRUE(model);
   ASSERT_EQ("pose_collision_in_frame", model->getName());
@@ -71,7 +71,7 @@ TEST(Pose, pose_inertial)
 {
   sdf::Errors errors;
   urdf::ModelInterfaceSharedPtr model = sdformat_urdf::parse(
-    get_file(POSE_INERTIAL_PATH_TO_SDF), errors);
+    get_file(PATH_TO_SDF_POSE_INERTIAL), errors);
   EXPECT_TRUE(errors.empty()) << errors;
   ASSERT_TRUE(model);
   ASSERT_EQ("pose_inertial", model->getName());
@@ -94,7 +94,7 @@ TEST(Pose, pose_inertial_in_frame)
 
   sdf::Errors errors;
   urdf::ModelInterfaceSharedPtr model = sdformat_urdf::parse(
-    get_file(POSE_INERTIAL_IN_FRAME_PATH_TO_SDF), errors);
+    get_file(PATH_TO_SDF_POSE_INERTIAL_IN_FRAME), errors);
   EXPECT_TRUE(errors.empty()) << errors;
   ASSERT_TRUE(model);
   ASSERT_EQ("pose_inertial_in_frame", model->getName());
@@ -117,7 +117,7 @@ TEST(Pose, pose_joint)
 {
   sdf::Errors errors;
   urdf::ModelInterfaceSharedPtr model = sdformat_urdf::parse(
-    get_file(POSE_JOINT_PATH_TO_SDF), errors);
+    get_file(PATH_TO_SDF_POSE_JOINT), errors);
   EXPECT_TRUE(errors.empty()) << errors;
   ASSERT_TRUE(model);
   ASSERT_EQ("pose_joint", model->getName());
@@ -153,7 +153,7 @@ TEST(Pose, pose_joint_in_frame)
 {
   sdf::Errors errors;
   urdf::ModelInterfaceSharedPtr model = sdformat_urdf::parse(
-    get_file(POSE_JOINT_IN_FRAME_PATH_TO_SDF), errors);
+    get_file(PATH_TO_SDF_POSE_JOINT_IN_FRAME), errors);
   EXPECT_TRUE(errors.empty()) << errors;
   ASSERT_TRUE(model);
   ASSERT_EQ("pose_joint_in_frame", model->getName());
@@ -192,7 +192,7 @@ TEST(Pose, pose_link)
 {
   sdf::Errors errors;
   urdf::ModelInterfaceSharedPtr model = sdformat_urdf::parse(
-    get_file(POSE_LINK_PATH_TO_SDF), errors);
+    get_file(PATH_TO_SDF_POSE_LINK), errors);
   EXPECT_TRUE(errors.empty()) << errors;
   ASSERT_TRUE(model);
   ASSERT_EQ("pose_link", model->getName());
@@ -214,7 +214,7 @@ TEST(Pose, pose_link_all)
 {
   sdf::Errors errors;
   urdf::ModelInterfaceSharedPtr model = sdformat_urdf::parse(
-    get_file(POSE_LINK_ALL_PATH_TO_SDF), errors);
+    get_file(PATH_TO_SDF_POSE_LINK_ALL), errors);
   EXPECT_TRUE(errors.empty()) << errors;
   ASSERT_TRUE(model);
   ASSERT_EQ("pose_link_all", model->getName());
@@ -242,7 +242,7 @@ TEST(Pose, pose_link_in_frame)
 {
   sdf::Errors errors;
   urdf::ModelInterfaceSharedPtr model = sdformat_urdf::parse(
-    get_file(POSE_LINK_IN_FRAME_PATH_TO_SDF), errors);
+    get_file(PATH_TO_SDF_POSE_LINK_IN_FRAME), errors);
   EXPECT_TRUE(errors.empty()) << errors;
   ASSERT_TRUE(model);
   ASSERT_EQ("pose_link_in_frame", model->getName());
@@ -263,7 +263,7 @@ TEST(Pose, pose_model)
 {
   sdf::Errors errors;
   urdf::ModelInterfaceSharedPtr model = sdformat_urdf::parse(
-    get_file(POSE_MODEL_PATH_TO_SDF), errors);
+    get_file(PATH_TO_SDF_POSE_MODEL), errors);
   EXPECT_FALSE(errors.empty());
   ASSERT_FALSE(model);
 }
@@ -272,7 +272,7 @@ TEST(Pose, pose_visual)
 {
   sdf::Errors errors;
   urdf::ModelInterfaceSharedPtr model = sdformat_urdf::parse(
-    get_file(POSE_VISUAL_PATH_TO_SDF), errors);
+    get_file(PATH_TO_SDF_POSE_VISUAL), errors);
   EXPECT_TRUE(errors.empty()) << errors;
   ASSERT_TRUE(model);
   ASSERT_EQ("pose_visual", model->getName());
@@ -293,7 +293,7 @@ TEST(Pose, pose_visual_in_frame)
 {
   sdf::Errors errors;
   urdf::ModelInterfaceSharedPtr model = sdformat_urdf::parse(
-    get_file(POSE_VISUAL_IN_FRAME_PATH_TO_SDF), errors);
+    get_file(PATH_TO_SDF_POSE_VISUAL_IN_FRAME), errors);
   EXPECT_TRUE(errors.empty()) << errors;
   ASSERT_TRUE(model);
   ASSERT_EQ("pose_visual_in_frame", model->getName());
