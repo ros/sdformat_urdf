@@ -19,6 +19,8 @@
 
   <build_export_depend>urdf</build_export_depend>
 
+  <depend>sdformat</depend>
+
   <build_depend>liburdfdom-headers-dev</build_depend>
   <build_depend>pluginlib</build_depend>
   <build_depend>tinyxml2_vendor</build_depend>
