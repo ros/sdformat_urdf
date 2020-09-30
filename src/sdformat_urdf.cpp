@@ -27,8 +27,12 @@
 namespace sdformat_urdf
 {
 /// \brief Convert SDFormat Link to URDF Link
+/// \param[in] sdf_link the SDFormat link instance to convert
+/// \param[in] joint_frame the name of the only joint who has this link as a child, or empty string
+///   if no such joint exists.
+/// \param[out] errors any errors encountered while trying to convert the link
 urdf::LinkSharedPtr
-convert_link(const sdf::Link & sdf_link, sdf::Errors & errors);
+convert_link(const sdf::Link & sdf_link, const std::string & joint_frame, sdf::Errors & errors);
 
 /// \brief Convert SDFormat Joint to URDF Joint
 urdf::JointSharedPtr
@@ -100,7 +104,19 @@ sdformat_urdf::convert_model(const sdf::Model & sdf_model, sdf::Errors & errors)
       return nullptr;
     }
 
-    auto pair = urdf_model->links_.emplace(sdf_link->Name(), convert_link(*sdf_link, errors));
+    // URDF link pose is either relative to  __model__ or to a joint
+    std::string relative_joint_name{""};
+    for (uint64_t j = 0; j < sdf_model.JointCount(); ++j) {
+      const sdf::Joint * sdf_joint = sdf_model.JointByIndex(j);
+      if (sdf_joint && sdf_joint->ChildLinkName() == sdf_link->Name()) {
+        relative_joint_name = sdf_joint->Name();
+        break;
+      }
+    }
+
+    auto pair = urdf_model->links_.emplace(
+      sdf_link->Name(),
+      convert_link(*sdf_link, relative_joint_name, errors));
 
     if (!pair.second) {
       errors.emplace_back(
@@ -243,16 +259,18 @@ sdformat_urdf::convert_model(const sdf::Model & sdf_model, sdf::Errors & errors)
 }
 
 urdf::LinkSharedPtr
-sdformat_urdf::convert_link(const sdf::Link & sdf_link, sdf::Errors & errors)
+sdformat_urdf::convert_link(
+  const sdf::Link & sdf_link, const std::string & relative_joint_name, sdf::Errors & errors)
 {
   urdf::LinkSharedPtr urdf_link = std::make_shared<urdf::Link>();
 
   urdf_link->name = sdf_link.Name();
 
-  // Link pose is by default relative to the model
+  // SDFormat Link pose is by default relative to the model, but in URDF it is relative
+  // to either the model or to a joint having it as a child
   ignition::math::Pose3d link_pose;
   {
-    sdf::Errors pose_errors = sdf_link.SemanticPose().Resolve(link_pose);
+    sdf::Errors pose_errors = sdf_link.SemanticPose().Resolve(link_pose, relative_joint_name);
     if (!pose_errors.empty()) {
       errors.insert(errors.end(), pose_errors.begin(), pose_errors.end());
       errors.emplace_back(
