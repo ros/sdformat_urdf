@@ -113,6 +113,43 @@ TEST(Pose, pose_inertial_in_frame)
   EXPECT_POSE(expected_other_pose, link->collision->origin);
 }
 
+TEST(Pose, pose_joint)
+{
+  sdf::Errors errors;
+  urdf::ModelInterfaceSharedPtr model = sdformat_urdf::parse(
+    get_file(POSE_JOINT_PATH_TO_SDF), errors);
+  EXPECT_TRUE(errors.empty()) << errors;
+  ASSERT_TRUE(model);
+  ASSERT_EQ("pose_joint", model->getName());
+
+  ASSERT_EQ(2u, model->links_.size());
+  ASSERT_EQ(1u, model->joints_.size());
+  urdf::JointConstSharedPtr joint = model->joints_.begin()->second;
+  ASSERT_NE(nullptr, joint);
+  urdf::LinkConstSharedPtr parent_link = model->getLink(joint->parent_link_name);
+  ASSERT_NE(nullptr, parent_link);
+  urdf::LinkConstSharedPtr child_link = model->getLink(joint->child_link_name);
+  ASSERT_NE(nullptr, child_link);
+
+  // In URDF joint is in parent link frame
+  // The child link in URDF lives in the joint frame
+  const ignition::math::Pose3d model_to_parent_in_model(0, 0, 0, 0, 0, 0);
+  const ignition::math::Pose3d model_to_child_in_model(0, 0, 0, 0, 0, 0);
+  const ignition::math::Pose3d model_to_joint_in_model(0.05, 0.1, 0.2, 0.1, 0.2, 0.3);
+  const ignition::math::Pose3d parent_to_joint_in_parent =
+    model_to_joint_in_model - model_to_parent_in_model;
+  const ignition::math::Pose3d joint_to_child_in_joint =
+    model_to_child_in_model - model_to_joint_in_model;
+
+  EXPECT_POSE(parent_to_joint_in_parent, joint->parent_to_joint_origin_transform);
+
+  // URDF link C++ structure does not have an origin - instead the pose of the
+  // link should be added to the visual, collision, and inertial members.
+  EXPECT_POSE(joint_to_child_in_joint, child_link->inertial->origin);
+  EXPECT_POSE(joint_to_child_in_joint, child_link->visual->origin);
+  EXPECT_POSE(joint_to_child_in_joint, child_link->collision->origin);
+}
+
 TEST(Pose, pose_link)
 {
   sdf::Errors errors;
