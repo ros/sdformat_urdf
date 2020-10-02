@@ -275,17 +275,14 @@ TEST(Pose, pose_link)
   ASSERT_TRUE(model);
   ASSERT_EQ("pose_link", model->getName());
 
-  ASSERT_EQ(1u, model->links_.size());
   urdf::LinkConstSharedPtr link = model->getRoot();
   ASSERT_NE(nullptr, link);
 
-  // URDF link C++ structure does not have an origin - instead the pose of the
-  // link should be added to the visual, collision, and inertial members.
-  const ignition::math::Pose3d expected_pose(0.05, 0.1, 0.2, 0.1, 0.2, 0.3);
-
-  EXPECT_POSE(expected_pose, link->inertial->origin);
-  EXPECT_POSE(expected_pose, link->visual->origin);
-  EXPECT_POSE(expected_pose, link->collision->origin);
+  // URDF link C++ structure does not have an origin - root link members should be unaffected
+  // by root link pose
+  EXPECT_POSE(ignition::math::Pose3d::Zero, link->inertial->origin);
+  EXPECT_POSE(ignition::math::Pose3d::Zero, link->visual->origin);
+  EXPECT_POSE(ignition::math::Pose3d::Zero, link->collision->origin);
 }
 
 TEST(Pose, pose_link_all)
@@ -297,23 +294,18 @@ TEST(Pose, pose_link_all)
   ASSERT_TRUE(model);
   ASSERT_EQ("pose_link_all", model->getName());
 
-  ASSERT_EQ(1u, model->links_.size());
   urdf::LinkConstSharedPtr link = model->getRoot();
   ASSERT_NE(nullptr, link);
 
-  // URDF link C++ structure does not have an origin - instead the pose of the
-  // link should be added to the visual, collision, and inertial members.
-  const ignition::math::Pose3d link_pose(0.05, 0.1, 0.2, 0.1, 0.2, 0.3);
-  const ignition::math::Pose3d expected_inertial_pose =
-    link_pose + ignition::math::Pose3d{0.05, 0.1, 0.2, 0.4, 0.5, 0.6};
-  const ignition::math::Pose3d expected_collision_pose =
-    link_pose + ignition::math::Pose3d{0.04, 0.8, 0.16, 0.3, 0.4, 0.5};
-  const ignition::math::Pose3d expected_visual_pose =
-    link_pose + ignition::math::Pose3d{0.03, 0.6, 0.12, 0.2, 0.3, 0.4};
+  // URDF link C++ structure does not have an origin - root link members should be unaffected
+  // by root link pose
+  const ignition::math::Pose3d link_to_inertial_in_link{0.05, 0.1, 0.2, 0.4, 0.5, 0.6};
+  const ignition::math::Pose3d link_to_collision_in_link{0.04, 0.8, 0.16, 0.3, 0.4, 0.5};
+  const ignition::math::Pose3d link_to_visual_in_link{0.03, 0.6, 0.12, 0.2, 0.3, 0.4};
 
-  EXPECT_POSE(expected_inertial_pose, link->inertial->origin);
-  EXPECT_POSE(expected_visual_pose, link->visual->origin);
-  EXPECT_POSE(expected_collision_pose, link->collision->origin);
+  EXPECT_POSE(link_to_inertial_in_link, link->inertial->origin);
+  EXPECT_POSE(link_to_visual_in_link, link->visual->origin);
+  EXPECT_POSE(link_to_collision_in_link, link->collision->origin);
 }
 
 TEST(Pose, pose_link_in_frame)
@@ -325,16 +317,14 @@ TEST(Pose, pose_link_in_frame)
   ASSERT_TRUE(model);
   ASSERT_EQ("pose_link_in_frame", model->getName());
 
-  ASSERT_EQ(1u, model->links_.size());
   urdf::LinkConstSharedPtr link = model->getRoot();
   ASSERT_NE(nullptr, link);
 
-  const ignition::math::Pose3d frame_pose(0.05, 0.1, 0.2, 0.1, 0.2, 0.3);
-  const ignition::math::Pose3d expected_pose =
-    ignition::math::Pose3d{0.2, 0.4, 0.8, 0.2, 0.3, 0.4} + frame_pose;
-  EXPECT_POSE(expected_pose, link->inertial->origin);
-  EXPECT_POSE(expected_pose, link->visual->origin);
-  EXPECT_POSE(expected_pose, link->collision->origin);
+  // URDF link C++ structure does not have an origin - root link members should be unaffected
+  // by root link pose
+  EXPECT_POSE(ignition::math::Pose3d::Zero, link->inertial->origin);
+  EXPECT_POSE(ignition::math::Pose3d::Zero, link->visual->origin);
+  EXPECT_POSE(ignition::math::Pose3d::Zero, link->collision->origin);
 }
 
 TEST(Pose, pose_model)
