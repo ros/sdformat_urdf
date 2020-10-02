@@ -113,15 +113,13 @@ TEST(Pose, pose_collision)
   ASSERT_TRUE(model);
   ASSERT_EQ("pose_collision", model->getName());
 
-  ASSERT_EQ(1u, model->links_.size());
   urdf::LinkConstSharedPtr link = model->getRoot();
   ASSERT_NE(nullptr, link);
 
-  const ignition::math::Pose3d expected_collision_pose(0.05, 0.1, 0.2, 0.1, 0.2, 0.3);
-  const ignition::math::Pose3d expected_other_pose(0, 0, 0, 0, 0, 0);
+  const ignition::math::Pose3d expected_collision_pose{0.05, 0.1, 0.2, 0.1, 0.2, 0.3};
 
-  EXPECT_POSE(expected_other_pose, link->inertial->origin);
-  EXPECT_POSE(expected_other_pose, link->visual->origin);
+  EXPECT_POSE(ignition::math::Pose3d::Zero, link->inertial->origin);
+  EXPECT_POSE(ignition::math::Pose3d::Zero, link->visual->origin);
   EXPECT_POSE(expected_collision_pose, link->collision->origin);
 }
 
