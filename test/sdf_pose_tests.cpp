@@ -238,8 +238,6 @@ TEST(Pose, pose_joint_in_frame)
   ASSERT_TRUE(model);
   ASSERT_EQ("pose_joint_in_frame", model->getName());
 
-  ASSERT_EQ(2u, model->links_.size());
-  ASSERT_EQ(1u, model->joints_.size());
   urdf::JointConstSharedPtr joint = model->joints_.begin()->second;
   ASSERT_NE(nullptr, joint);
   urdf::LinkConstSharedPtr child_link = model->getLink(joint->child_link_name);
