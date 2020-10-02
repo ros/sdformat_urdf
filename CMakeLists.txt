@@ -88,7 +88,7 @@ if(BUILD_TESTING)
   sdformat_test_files_get_model_sdf("path_to_sdf_pose_visual_in_frame" "pose_visual_in_frame")
   configure_file("test/sdf_paths.hpp.in" "${CMAKE_CURRENT_BINARY_DIR}/generated_includes/sdf_paths.hpp" @ONLY)
 
-  ament_add_gtest(sdf_pose_tests "test/sdf_pose_tests.cpp")
+  ament_add_gtest(sdf_pose_tests "test/pose_tests.cpp")
   target_link_libraries(sdf_pose_tests sdformat_urdf)
   target_include_directories(sdf_pose_tests PRIVATE
     "${CMAKE_CURRENT_SOURCE_DIR}/test/include"
