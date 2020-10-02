@@ -210,9 +210,9 @@ TEST(Pose, pose_joint)
 
   // In URDF joint is in parent link frame
   // The child link in URDF lives in the joint frame
-  const ignition::math::Pose3d model_to_parent_in_model(0, 0, 0, 0, 0, 0);
-  const ignition::math::Pose3d model_to_child_in_model(0, 0, 0, 0, 0, 0);
-  const ignition::math::Pose3d child_to_joint_in_child(0.05, 0.1, 0.2, 0.1, 0.2, 0.3);
+  const ignition::math::Pose3d model_to_parent_in_model{0, 0, 0, 0, 0, 0};
+  const ignition::math::Pose3d model_to_child_in_model{0, 0, 0, 0, 0, 0};
+  const ignition::math::Pose3d child_to_joint_in_child{0.05, 0.1, 0.2, 0.1, 0.2, 0.3};
 
   const ignition::math::Pose3d parent_to_child_in_parent =
     model_to_child_in_model - model_to_parent_in_model;
