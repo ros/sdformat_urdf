@@ -23,6 +23,87 @@
 #include "sdf_paths.hpp"
 #include "test_tools.hpp"
 
+TEST(Pose, pose_chain)
+{
+  sdf::Errors errors;
+  urdf::ModelInterfaceSharedPtr model = sdformat_urdf::parse(
+    get_file(PATH_TO_SDF_POSE_CHAIN), errors);
+  EXPECT_TRUE(errors.empty()) << errors;
+  ASSERT_TRUE(model);
+  ASSERT_EQ("pose_chain", model->getName());
+
+  ASSERT_EQ(4u, model->links_.size());
+  ASSERT_EQ(3u, model->joints_.size());
+
+  urdf::LinkConstSharedPtr link_1 = model->getLink("pose_chain_link_1");
+  ASSERT_NE(nullptr, link_1);
+  urdf::LinkConstSharedPtr link_2 = model->getLink("pose_chain_link_2");
+  ASSERT_NE(nullptr, link_2);
+  urdf::LinkConstSharedPtr link_3 = model->getLink("pose_chain_link_3");
+  ASSERT_NE(nullptr, link_3);
+  urdf::LinkConstSharedPtr link_4 = model->getLink("pose_chain_link_4");
+  ASSERT_NE(nullptr, link_4);
+
+  urdf::JointConstSharedPtr joint_1 = model->getJoint("joint_1");
+  ASSERT_NE(nullptr, joint_1);
+  urdf::JointConstSharedPtr joint_2 = model->getJoint("joint_2");
+  ASSERT_NE(nullptr, joint_2);
+  urdf::JointConstSharedPtr joint_3 = model->getJoint("joint_3");
+  ASSERT_NE(nullptr, joint_3);
+
+  const ignition::math::Pose3d model_to_link_1_in_model{0.1, 0.2, 0.3, 0.4, 0.5, 0.6};
+  const ignition::math::Pose3d model_to_link_2_in_model{0.2, 0.3, 0.4, 0.5, 0.6, 0.7};
+  const ignition::math::Pose3d model_to_link_3_in_model{0.3, 0.4, 0.5, 0.6, 0.7, 0.8};
+  const ignition::math::Pose3d model_to_link_4_in_model{0.4, 0.5, 0.6, 0.7, 0.8, 0.9};
+  const ignition::math::Pose3d link_2_to_joint_1_in_link_2 {0.9, 0.8, 0.7, 0.6, 0.5, 0.4};
+  const ignition::math::Pose3d link_3_to_joint_2_in_link_3{0.8, 0.7, 0.6, 0.5, 0.4, 0.3};
+  const ignition::math::Pose3d link_4_to_joint_3_in_link_4{0.7, 0.6, 0.5, 0.4, 0.3, 0.2};
+
+  const ignition::math::Pose3d model_to_joint_1_in_model =
+    link_2_to_joint_1_in_link_2 + model_to_link_2_in_model;
+  const ignition::math::Pose3d model_to_joint_2_in_model =
+    link_3_to_joint_2_in_link_3 + model_to_link_3_in_model;
+  const ignition::math::Pose3d model_to_joint_3_in_model =
+    link_4_to_joint_3_in_link_4 + model_to_link_4_in_model;
+
+  const ignition::math::Pose3d link_1_to_joint_1_in_link_1 =
+    model_to_joint_1_in_model - model_to_link_1_in_model;
+  const ignition::math::Pose3d joint_1_to_link_2_in_joint_1 =
+    model_to_link_2_in_model - model_to_joint_1_in_model;
+  const ignition::math::Pose3d joint_2_to_link_3_in_joint_2 =
+    model_to_link_3_in_model - model_to_joint_2_in_model;
+  const ignition::math::Pose3d joint_3_to_link_4_in_joint_3 =
+    model_to_link_4_in_model - model_to_joint_3_in_model;
+
+  const ignition::math::Pose3d joint_1_to_joint_2_in_joint_1 =
+    model_to_joint_2_in_model - model_to_joint_1_in_model;
+  const ignition::math::Pose3d joint_2_to_joint_3_in_joint_2 =
+    model_to_joint_3_in_model - model_to_joint_2_in_model;
+
+  EXPECT_POSE(ignition::math::Pose3d::Zero, link_1->inertial->origin);
+  EXPECT_POSE(ignition::math::Pose3d::Zero, link_1->visual->origin);
+  EXPECT_POSE(ignition::math::Pose3d::Zero, link_1->collision->origin);
+
+  EXPECT_POSE(link_1_to_joint_1_in_link_1, joint_1->parent_to_joint_origin_transform);
+
+  EXPECT_POSE(joint_1_to_link_2_in_joint_1, link_2->inertial->origin);
+  EXPECT_POSE(joint_1_to_link_2_in_joint_1, link_2->visual->origin);
+  EXPECT_POSE(joint_1_to_link_2_in_joint_1, link_2->collision->origin);
+
+  EXPECT_POSE(joint_1_to_joint_2_in_joint_1, joint_2->parent_to_joint_origin_transform);
+
+  EXPECT_POSE(joint_2_to_link_3_in_joint_2, link_3->inertial->origin);
+  EXPECT_POSE(joint_2_to_link_3_in_joint_2, link_3->visual->origin);
+  EXPECT_POSE(joint_2_to_link_3_in_joint_2, link_3->collision->origin);
+
+  EXPECT_POSE(joint_2_to_joint_3_in_joint_2, joint_3->parent_to_joint_origin_transform);
+
+  EXPECT_POSE(joint_3_to_link_4_in_joint_3, link_4->inertial->origin);
+  EXPECT_POSE(joint_3_to_link_4_in_joint_3, link_4->visual->origin);
+  EXPECT_POSE(joint_3_to_link_4_in_joint_3, link_4->collision->origin);
+}
+
+
 TEST(Pose, pose_collision)
 {
   sdf::Errors errors;

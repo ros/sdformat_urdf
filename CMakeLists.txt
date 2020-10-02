@@ -73,6 +73,7 @@ if(BUILD_TESTING)
   find_package(sdformat_test_files 0.1 REQUIRED)
   ament_lint_auto_find_test_dependencies()
 
+  sdformat_test_files_get_model_sdf("path_to_sdf_pose_chain" "pose_chain")
   sdformat_test_files_get_model_sdf("path_to_sdf_pose_collision" "pose_collision")
   sdformat_test_files_get_model_sdf("path_to_sdf_pose_collision_in_frame" "pose_collision_in_frame")
   sdformat_test_files_get_model_sdf("path_to_sdf_pose_inertial" "pose_inertial")
