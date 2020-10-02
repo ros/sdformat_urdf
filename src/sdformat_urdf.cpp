@@ -219,9 +219,16 @@ sdformat_urdf::convert_model(const sdf::Model & sdf_model, sdf::Errors & errors)
         // Append to child joints
         urdf_parent_link->child_joints.push_back(urdf_joint);
 
-        // Set the joint origin to the transform from the joint to the parent link
+        // SDFormat joint pose is relative to the child sdformat link
+        // URDF joint pose is relative to the parent urdf link, which is the the frame of the
+        // previous urdf joint
+        std::string parent_frame_name{sdf_parent_link->Name()};
+        if (urdf_parent_link->parent_joint) {
+          parent_frame_name = urdf_parent_link->parent_joint->name;
+        }
+
         ignition::math::Pose3d joint_pose;
-        pose_errors = sdf_joint->SemanticPose().Resolve(joint_pose, sdf_parent_link->Name());
+        pose_errors = sdf_joint->SemanticPose().Resolve(joint_pose, parent_frame_name);
         if (!pose_errors.empty()) {
           errors.insert(errors.end(), pose_errors.begin(), pose_errors.end());
           errors.emplace_back(
@@ -266,10 +273,11 @@ sdformat_urdf::convert_link(
 
   urdf_link->name = sdf_link.Name();
 
-  // SDFormat Link pose is by default relative to the model, but in URDF it is relative
-  // to either the model or to a joint having it as a child
+  // joint to link in joint if this is not the root link, else identity
+  // The pose of the root link does not matter because there is no equivalent in URDF
   ignition::math::Pose3d link_pose;
-  {
+  if (!relative_joint_name.empty()) {
+    // urdf link pose is the location of the joint having it as a child
     sdf::Errors pose_errors = sdf_link.SemanticPose().Resolve(link_pose, relative_joint_name);
     if (!pose_errors.empty()) {
       errors.insert(errors.end(), pose_errors.begin(), pose_errors.end());
