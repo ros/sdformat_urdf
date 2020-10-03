@@ -22,20 +22,20 @@
 #include "sdf_paths.hpp"
 #include "test_tools.hpp"
 
-TEST(Graph, graph_loop)
-{
-  sdf::Errors errors;
-  urdf::ModelInterfaceSharedPtr model = sdformat_urdf::parse(
-    get_file(PATH_TO_SDF_GRAPH_LOOP), errors);
-  EXPECT_FALSE(errors.empty());
-  ASSERT_FALSE(model);
-}
-
 TEST(Graph, graph_four_bar)
 {
   sdf::Errors errors;
   urdf::ModelInterfaceSharedPtr model = sdformat_urdf::parse(
     get_file(PATH_TO_SDF_GRAPH_FOUR_BAR), errors);
+  EXPECT_FALSE(errors.empty());
+  ASSERT_FALSE(model);
+}
+
+TEST(Graph, graph_loop)
+{
+  sdf::Errors errors;
+  urdf::ModelInterfaceSharedPtr model = sdformat_urdf::parse(
+    get_file(PATH_TO_SDF_GRAPH_LOOP), errors);
   EXPECT_FALSE(errors.empty());
   ASSERT_FALSE(model);
 }
