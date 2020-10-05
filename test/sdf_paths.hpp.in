@@ -18,6 +18,7 @@
 #define PATH_TO_SDF_GEOMETRY_BOX "@path_to_sdf_geometry_box@"
 #define PATH_TO_SDF_GEOMETRY_CYLINDER "@path_to_sdf_geometry_cylinder@"
 #define PATH_TO_SDF_GEOMETRY_PLANE "@path_to_sdf_geometry_plane@"
+#define PATH_TO_SDF_GEOMETRY_SPHERE "@path_to_sdf_geometry_sphere@"
 #define PATH_TO_SDF_GRAPH_CHAIN "@path_to_sdf_graph_chain@"
 #define PATH_TO_SDF_GRAPH_CHAIN_NON_CANONICAL_ROOT "@path_to_sdf_graph_chain_non_canonical_root@"
 #define PATH_TO_SDF_GRAPH_FOUR_BAR "@path_to_sdf_graph_four_bar@"

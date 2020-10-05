@@ -92,3 +92,32 @@ TEST(Geometry, geometry_plane)
   EXPECT_FALSE(errors.empty());
   ASSERT_FALSE(model);
 }
+
+TEST(Geometry, geometry_sphere)
+{
+  sdf::Errors errors;
+  urdf::ModelInterfaceSharedPtr model = sdformat_urdf::parse(
+    get_file(PATH_TO_SDF_GEOMETRY_SPHERE), errors);
+  EXPECT_TRUE(errors.empty()) << errors;
+  ASSERT_TRUE(model);
+  ASSERT_EQ("geometry_sphere", model->getName());
+
+  urdf::LinkConstSharedPtr link = model->getRoot();
+  ASSERT_NE(nullptr, link);
+  ASSERT_NE(nullptr, link->visual);
+  ASSERT_NE(nullptr, link->collision);
+
+  ASSERT_EQ(urdf::Geometry::SPHERE, link->visual->geometry->type);
+  {
+    urdf::SphereConstSharedPtr sphere =
+      std::dynamic_pointer_cast<urdf::Sphere>(link->visual->geometry);
+    EXPECT_DOUBLE_EQ(0.125, sphere->radius);
+  }
+
+  ASSERT_EQ(urdf::Geometry::SPHERE, link->collision->geometry->type);
+  {
+    urdf::SphereConstSharedPtr sphere =
+      std::dynamic_pointer_cast<urdf::Sphere>(link->collision->geometry);
+    EXPECT_DOUBLE_EQ(0.125, sphere->radius);
+  }
+}
