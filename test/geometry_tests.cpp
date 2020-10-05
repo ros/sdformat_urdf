@@ -151,6 +151,35 @@ TEST(Geometry, geometry_mesh_obj)
   }
 }
 
+TEST(Geometry, geometry_mesh_stl)
+{
+  sdf::Errors errors;
+  urdf::ModelInterfaceSharedPtr model = sdformat_urdf::parse(
+    get_file(PATH_TO_SDF_GEOMETRY_MESH_STL), errors);
+  EXPECT_TRUE(errors.empty()) << errors;
+  ASSERT_TRUE(model);
+  ASSERT_EQ("geometry_mesh_stl", model->getName());
+
+  urdf::LinkConstSharedPtr link = model->getRoot();
+  ASSERT_NE(nullptr, link);
+  ASSERT_NE(nullptr, link->visual);
+  ASSERT_NE(nullptr, link->collision);
+
+  ASSERT_EQ(urdf::Geometry::MESH, link->visual->geometry->type);
+  {
+    urdf::MeshConstSharedPtr mesh =
+      std::dynamic_pointer_cast<urdf::Mesh>(link->visual->geometry);
+    EXPECT_EQ("model://geometry_mesh_stl/torus.stl", mesh->filename);
+  }
+
+  ASSERT_EQ(urdf::Geometry::MESH, link->collision->geometry->type);
+  {
+    urdf::MeshConstSharedPtr mesh =
+      std::dynamic_pointer_cast<urdf::Mesh>(link->collision->geometry);
+    EXPECT_EQ("model://geometry_mesh_stl/torus.stl", mesh->filename);
+  }
+}
+
 TEST(Geometry, geometry_plane)
 {
   sdf::Errors errors;
