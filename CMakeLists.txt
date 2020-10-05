@@ -73,6 +73,7 @@ if(BUILD_TESTING)
   find_package(sdformat_test_files 0.1 REQUIRED)
   ament_lint_auto_find_test_dependencies()
 
+  sdformat_test_files_get_model_sdf("path_to_sdf_geometry_plane" "geometry_plane")
   sdformat_test_files_get_model_sdf("path_to_sdf_graph_chain" "graph_chain")
   sdformat_test_files_get_model_sdf("path_to_sdf_graph_chain_non_canonical_root" "graph_chain_non_canonical_root")
   sdformat_test_files_get_model_sdf("path_to_sdf_graph_four_bar" "graph_four_bar")
@@ -93,6 +94,12 @@ if(BUILD_TESTING)
   sdformat_test_files_get_model_sdf("path_to_sdf_pose_visual" "pose_visual")
   sdformat_test_files_get_model_sdf("path_to_sdf_pose_visual_in_frame" "pose_visual_in_frame")
   configure_file("test/sdf_paths.hpp.in" "${CMAKE_CURRENT_BINARY_DIR}/generated_includes/sdf_paths.hpp" @ONLY)
+
+  ament_add_gtest(sdf_geometry_tests "test/geometry_tests.cpp")
+  target_link_libraries(sdf_geometry_tests sdformat_urdf)
+  target_include_directories(sdf_geometry_tests PRIVATE
+    "${CMAKE_CURRENT_SOURCE_DIR}/test/include"
+    "${CMAKE_CURRENT_BINARY_DIR}/generated_includes")
 
   ament_add_gtest(sdf_graph_tests "test/graph_tests.cpp")
   target_link_libraries(sdf_graph_tests sdformat_urdf)
