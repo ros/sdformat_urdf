@@ -183,40 +183,33 @@ sdformat_urdf::convert_model(const sdf::Model & sdf_model, sdf::Errors & errors)
   }
 
   // Start with root link and resolve the poses one joint at a time depth-first
-  std::vector<const sdf::Link *> visited_links_;
+  std::vector<const sdf::Link *> visited_links;
   std::vector<const sdf::Link *> link_stack{sdf_canonical_link};
+  std::vector<const sdf::Joint *> joints_to_visit(sdf_model.JointCount(), nullptr);
+  for (size_t j = 0; j < joints_to_visit.size(); ++j) {
+    joints_to_visit[j] = sdf_model.JointByIndex(j);
+    if (!joints_to_visit[j]) {
+      errors.emplace_back(
+        sdf::ErrorCode::STRING_READ,
+        "Failed to get sdf joint");
+      return nullptr;
+    }
+  }
   while (!link_stack.empty()) {
     const sdf::Link * sdf_parent_link = link_stack.back();
     urdf::LinkSharedPtr & urdf_parent_link = urdf_model->links_.at(sdf_parent_link->Name());
     link_stack.pop_back();
+    visited_links.emplace_back(sdf_parent_link);
 
-    // Check if there is a kinematic loop
-    if (visited_links_.end() !=
-      std::find(visited_links_.begin(), visited_links_.end(), sdf_parent_link))
-    {
-      errors.emplace_back(
-        sdf::ErrorCode::STRING_READ,
-        "Not a tree because link [" + sdf_parent_link->Name() + "] was visited twice");
-      return nullptr;
-    }
-    visited_links_.emplace_back(sdf_parent_link);
-
-    sdf::Errors pose_errors;
-
-    // Look for joints attached to this link
-    for (uint64_t j = 0; j < sdf_model.JointCount(); ++j) {
-      const sdf::Joint * sdf_joint = sdf_model.JointByIndex(j);
-
-      if (!sdf_joint) {
-        errors.emplace_back(
-          sdf::ErrorCode::STRING_READ,
-          "Failed to get sdf joint");
-        return nullptr;
-      }
-
+    auto joint_iter = joints_to_visit.begin();
+    // Fix poses and check for tree structure issues
+    while (joint_iter != joints_to_visit.end()) {
+      const sdf::Joint * sdf_joint = *joint_iter;
       if (sdf_joint->ParentLinkName() == sdf_parent_link->Name()) {
+        // Visited parent link of this joint - don't look at it again
+        joint_iter = joints_to_visit.erase(joint_iter);
+
         urdf::JointSharedPtr & urdf_joint = urdf_model->joints_.at(sdf_joint->Name());
-        // Append to child joints
         urdf_parent_link->child_joints.push_back(urdf_joint);
 
         // SDFormat joint pose is relative to the child sdformat link
@@ -228,7 +221,7 @@ sdformat_urdf::convert_model(const sdf::Model & sdf_model, sdf::Errors & errors)
         }
 
         ignition::math::Pose3d joint_pose;
-        pose_errors = sdf_joint->SemanticPose().Resolve(joint_pose, parent_frame_name);
+        sdf::Errors pose_errors = sdf_joint->SemanticPose().Resolve(joint_pose, parent_frame_name);
         if (!pose_errors.empty()) {
           errors.insert(errors.end(), pose_errors.begin(), pose_errors.end());
           errors.emplace_back(
@@ -239,7 +232,6 @@ sdformat_urdf::convert_model(const sdf::Model & sdf_model, sdf::Errors & errors)
         }
         urdf_joint->parent_to_joint_origin_transform = convert_pose(joint_pose);
 
-        // get child link
         const std::string & child_link_name = urdf_joint->child_link_name;
         const sdf::Link * sdf_child_link = sdf_model.LinkByName(child_link_name);
         if (!sdf_child_link) {
@@ -258,8 +250,43 @@ sdformat_urdf::convert_model(const sdf::Model & sdf_model, sdf::Errors & errors)
 
         // Explore this child link later
         link_stack.push_back(sdf_child_link);
+      } else if (sdf_joint->ChildLinkName() == sdf_parent_link->Name()) {
+        // Something is wrong here
+        if (sdf_parent_link == sdf_canonical_link) {
+          // The canonical link can't be a child of a joint
+          errors.emplace_back(
+            sdf::ErrorCode::STRING_READ,
+            "Canonical link must not be a child of a joint [" + sdf_parent_link->Name() + "]");
+        } else {
+          // This link must be a child of two joints - kinematic loop :(
+          errors.emplace_back(
+            sdf::ErrorCode::STRING_READ,
+            "Link can only be a child of one joint [" + sdf_parent_link->Name() + "]");
+        }
+        return nullptr;
+      } else {
+        // Not interested in this joint yet, look at the next one
+        ++joint_iter;
       }
     }
+  }
+  if (visited_links.size() < sdf_model.LinkCount()) {
+    // Must be multiple roots
+    errors.emplace_back(
+      sdf::ErrorCode::STRING_READ,
+      "Found multiple root links - must only have one link not a child of any joint");
+    return nullptr;
+  } else if (visited_links.size() > sdf_model.LinkCount()) {
+    errors.emplace_back(
+      sdf::ErrorCode::STRING_READ,
+      "Algorithm error - visited more links than exist, please file a bug report");
+    return nullptr;
+  }
+  if (!joints_to_visit.empty()) {
+    errors.emplace_back(
+      sdf::ErrorCode::STRING_READ,
+      "Algorithm error - did not visit all joints, please file a bug report");
+    return nullptr;
   }
 
   return urdf_model;
