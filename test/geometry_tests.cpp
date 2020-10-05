@@ -53,6 +53,37 @@ TEST(Geometry, geometry_box)
   }
 }
 
+TEST(Geometry, geometry_cylinder)
+{
+  sdf::Errors errors;
+  urdf::ModelInterfaceSharedPtr model = sdformat_urdf::parse(
+    get_file(PATH_TO_SDF_GEOMETRY_CYLINDER), errors);
+  EXPECT_TRUE(errors.empty()) << errors;
+  ASSERT_TRUE(model);
+  ASSERT_EQ("geometry_cylinder", model->getName());
+
+  urdf::LinkConstSharedPtr link = model->getRoot();
+  ASSERT_NE(nullptr, link);
+  ASSERT_NE(nullptr, link->visual);
+  ASSERT_NE(nullptr, link->collision);
+
+  ASSERT_EQ(urdf::Geometry::CYLINDER, link->visual->geometry->type);
+  {
+    urdf::CylinderConstSharedPtr cylinder =
+      std::dynamic_pointer_cast<urdf::Cylinder>(link->visual->geometry);
+    EXPECT_DOUBLE_EQ(0.2, cylinder->length);
+    EXPECT_DOUBLE_EQ(0.125, cylinder->radius);
+  }
+
+  ASSERT_EQ(urdf::Geometry::CYLINDER, link->collision->geometry->type);
+  {
+    urdf::CylinderConstSharedPtr cylinder =
+      std::dynamic_pointer_cast<urdf::Cylinder>(link->collision->geometry);
+    EXPECT_DOUBLE_EQ(0.2, cylinder->length);
+    EXPECT_DOUBLE_EQ(0.125, cylinder->radius);
+  }
+}
+
 TEST(Geometry, geometry_plane)
 {
   sdf::Errors errors;
