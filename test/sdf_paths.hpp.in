@@ -15,6 +15,7 @@
 #ifndef SDFORMAT_URDF__TEST__SDF_PATHS_HPP_
 #define SDFORMAT_URDF__TEST__SDF_PATHS_HPP_
 
+#define PATH_TO_SDF_GEOMETRY_BOX "@path_to_sdf_geometry_box@"
 #define PATH_TO_SDF_GEOMETRY_PLANE "@path_to_sdf_geometry_plane@"
 #define PATH_TO_SDF_GRAPH_CHAIN "@path_to_sdf_graph_chain@"
 #define PATH_TO_SDF_GRAPH_CHAIN_NON_CANONICAL_ROOT "@path_to_sdf_graph_chain_non_canonical_root@"

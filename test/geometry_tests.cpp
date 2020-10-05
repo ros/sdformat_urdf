@@ -22,6 +22,37 @@
 #include "sdf_paths.hpp"
 #include "test_tools.hpp"
 
+TEST(Geometry, geometry_box)
+{
+  sdf::Errors errors;
+  urdf::ModelInterfaceSharedPtr model = sdformat_urdf::parse(
+    get_file(PATH_TO_SDF_GEOMETRY_BOX), errors);
+  EXPECT_TRUE(errors.empty()) << errors;
+  ASSERT_TRUE(model);
+  ASSERT_EQ("geometry_box", model->getName());
+
+  urdf::LinkConstSharedPtr link = model->getRoot();
+  ASSERT_NE(nullptr, link);
+  ASSERT_NE(nullptr, link->visual);
+  ASSERT_NE(nullptr, link->collision);
+
+  ASSERT_EQ(urdf::Geometry::BOX, link->visual->geometry->type);
+  {
+    urdf::BoxConstSharedPtr box = std::dynamic_pointer_cast<urdf::Box>(link->visual->geometry);
+    EXPECT_DOUBLE_EQ(0.1, box->dim.x);
+    EXPECT_DOUBLE_EQ(0.2, box->dim.y);
+    EXPECT_DOUBLE_EQ(0.4, box->dim.z);
+  }
+
+  ASSERT_EQ(urdf::Geometry::BOX, link->collision->geometry->type);
+  {
+    urdf::BoxConstSharedPtr box = std::dynamic_pointer_cast<urdf::Box>(link->collision->geometry);
+    EXPECT_DOUBLE_EQ(0.1, box->dim.x);
+    EXPECT_DOUBLE_EQ(0.2, box->dim.y);
+    EXPECT_DOUBLE_EQ(0.4, box->dim.z);
+  }
+}
+
 TEST(Geometry, geometry_plane)
 {
   sdf::Errors errors;
