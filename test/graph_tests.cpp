@@ -22,6 +22,63 @@
 #include "sdf_paths.hpp"
 #include "test_tools.hpp"
 
+TEST(Graph, graph_chain)
+{
+  sdf::Errors errors;
+  urdf::ModelInterfaceSharedPtr model = sdformat_urdf::parse(
+    get_file(PATH_TO_SDF_GRAPH_CHAIN), errors);
+  EXPECT_TRUE(errors.empty()) << errors;
+  ASSERT_TRUE(model);
+  ASSERT_EQ("graph_chain", model->getName());
+
+  EXPECT_EQ(3u, model->links_.size());
+  EXPECT_EQ(2u, model->joints_.size());
+
+  ASSERT_NE(nullptr, model->getRoot());
+  EXPECT_EQ("link_1", model->getRoot()->name);
+
+  { // link_1
+    urdf::LinkConstSharedPtr link = model->getLink("link_1");
+    ASSERT_NE(nullptr, link);
+    EXPECT_EQ(nullptr, link->parent_joint);
+    EXPECT_EQ(nullptr, link->getParent());
+    EXPECT_NAMES(link->child_joints, "joint_1");
+    EXPECT_NAMES(link->child_links, "link_2");
+  }
+
+  { // link_2
+    urdf::LinkConstSharedPtr link = model->getLink("link_2");
+    ASSERT_NE(nullptr, link);
+    EXPECT_EQ(model->getJoint("joint_1"), link->parent_joint);
+    EXPECT_EQ(model->getLink("link_1"), link->getParent());
+    EXPECT_NAMES(link->child_joints, "joint_2");
+    EXPECT_NAMES(link->child_links, "link_3");
+  }
+
+  { // link_3
+    urdf::LinkConstSharedPtr link = model->getLink("link_3");
+    ASSERT_NE(nullptr, link);
+    EXPECT_EQ(model->getJoint("joint_2"), link->parent_joint);
+    EXPECT_EQ(model->getLink("link_2"), link->getParent());
+    EXPECT_TRUE(link->child_joints.empty());
+    EXPECT_TRUE(link->child_links.empty());
+  }
+
+  { // joint_1
+    urdf::JointConstSharedPtr joint = model->getJoint("joint_1");
+    ASSERT_NE(nullptr, joint);
+    EXPECT_EQ("link_1", joint->parent_link_name);
+    EXPECT_EQ("link_2", joint->child_link_name);
+  }
+
+  { // joint_2
+    urdf::JointConstSharedPtr joint = model->getJoint("joint_2");
+    ASSERT_NE(nullptr, joint);
+    EXPECT_EQ("link_2", joint->parent_link_name);
+    EXPECT_EQ("link_3", joint->child_link_name);
+  }
+}
+
 TEST(Graph, graph_four_bar)
 {
   sdf::Errors errors;

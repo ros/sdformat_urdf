@@ -15,6 +15,7 @@
 #ifndef SDFORMAT_URDF__TEST__SDF_PATHS_HPP_
 #define SDFORMAT_URDF__TEST__SDF_PATHS_HPP_
 
+#define PATH_TO_SDF_GRAPH_CHAIN "@path_to_sdf_graph_chain@"
 #define PATH_TO_SDF_GRAPH_FOUR_BAR "@path_to_sdf_graph_four_bar@"
 #define PATH_TO_SDF_GRAPH_LOOP "@path_to_sdf_graph_loop@"
 #define PATH_TO_SDF_GRAPH_TREE "@path_to_sdf_graph_tree@"
