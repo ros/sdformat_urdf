@@ -74,6 +74,7 @@ if(BUILD_TESTING)
   ament_lint_auto_find_test_dependencies()
 
   sdformat_test_files_get_model_sdf("path_to_sdf_graph_chain" "graph_chain")
+  sdformat_test_files_get_model_sdf("path_to_sdf_graph_chain_non_canonical_root" "graph_chain_non_canonical_root")
   sdformat_test_files_get_model_sdf("path_to_sdf_graph_four_bar" "graph_four_bar")
   sdformat_test_files_get_model_sdf("path_to_sdf_graph_loop" "graph_loop")
   sdformat_test_files_get_model_sdf("path_to_sdf_graph_tree" "graph_tree")
