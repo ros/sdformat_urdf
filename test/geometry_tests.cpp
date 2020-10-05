@@ -93,6 +93,35 @@ TEST(Geometry, geometry_heightmap)
   ASSERT_FALSE(model);
 }
 
+TEST(Geometry, geometry_mesh_collada)
+{
+  sdf::Errors errors;
+  urdf::ModelInterfaceSharedPtr model = sdformat_urdf::parse(
+    get_file(PATH_TO_SDF_GEOMETRY_MESH_COLLADA), errors);
+  EXPECT_TRUE(errors.empty()) << errors;
+  ASSERT_TRUE(model);
+  ASSERT_EQ("geometry_mesh_collada", model->getName());
+
+  urdf::LinkConstSharedPtr link = model->getRoot();
+  ASSERT_NE(nullptr, link);
+  ASSERT_NE(nullptr, link->visual);
+  ASSERT_NE(nullptr, link->collision);
+
+  ASSERT_EQ(urdf::Geometry::MESH, link->visual->geometry->type);
+  {
+    urdf::MeshConstSharedPtr mesh =
+      std::dynamic_pointer_cast<urdf::Mesh>(link->visual->geometry);
+    EXPECT_EQ("model://geometry_mesh_collada/torus.dae", mesh->filename);
+  }
+
+  ASSERT_EQ(urdf::Geometry::MESH, link->collision->geometry->type);
+  {
+    urdf::MeshConstSharedPtr mesh =
+      std::dynamic_pointer_cast<urdf::Mesh>(link->collision->geometry);
+    EXPECT_EQ("model://geometry_mesh_collada/torus.dae", mesh->filename);
+  }
+}
+
 TEST(Geometry, geometry_plane)
 {
   sdf::Errors errors;
