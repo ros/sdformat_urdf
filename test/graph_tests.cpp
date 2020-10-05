@@ -39,3 +39,12 @@ TEST(Graph, graph_loop)
   EXPECT_FALSE(errors.empty());
   ASSERT_FALSE(model);
 }
+
+TEST(Graph, graph_tree_non_canonical_root)
+{
+  sdf::Errors errors;
+  urdf::ModelInterfaceSharedPtr model = sdformat_urdf::parse(
+    get_file(PATH_TO_SDF_GRAPH_TREE_NON_CANONICAL_ROOT), errors);
+  EXPECT_FALSE(errors.empty());
+  ASSERT_FALSE(model);
+}
