@@ -226,7 +226,7 @@ sdformat_urdf::convert_model(const sdf::Model & sdf_model, sdf::Errors & errors)
           errors.insert(errors.end(), pose_errors.begin(), pose_errors.end());
           errors.emplace_back(
             sdf::ErrorCode::STRING_READ,
-            "Failed to get transfrom from joint [" + sdf_joint->Name() +
+            "Failed to get transform from joint [" + sdf_joint->Name() +
             "] to link [" + sdf_parent_link->Name() + "]");
           return nullptr;
         }
@@ -353,7 +353,7 @@ sdformat_urdf::convert_link(
       errors.insert(errors.end(), pose_errors.begin(), pose_errors.end());
       errors.emplace_back(
         sdf::ErrorCode::STRING_READ,
-        "Failed to get transfrom from visual [" + sdf_visual->Name() +
+        "Failed to get transform from visual [" + sdf_visual->Name() +
         "] to link [" + sdf_link.Name() + "]");
       return nullptr;
     }
@@ -411,7 +411,7 @@ sdformat_urdf::convert_link(
       errors.insert(errors.end(), pose_errors.begin(), pose_errors.end());
       errors.emplace_back(
         sdf::ErrorCode::STRING_READ,
-        "Failed to get transfrom from collision [" + sdf_collision->Name() +
+        "Failed to get transform from collision [" + sdf_collision->Name() +
         "] to link [" + sdf_link.Name() + "]");
       return nullptr;
     }
@@ -485,7 +485,7 @@ sdformat_urdf::convert_joint(const sdf::Joint & sdf_joint, sdf::Errors & errors)
       errors.insert(errors.end(), axis_errors.begin(), axis_errors.end());
       errors.emplace_back(
         sdf::ErrorCode::STRING_READ,
-        "Failed to get transfrom of joint axis in frame [" + sdf_axis->XyzExpressedIn() +
+        "Failed to get transform of joint axis in frame [" + sdf_axis->XyzExpressedIn() +
         "] to joint [" + sdf_joint.Name() + "]");
       return nullptr;
     }
