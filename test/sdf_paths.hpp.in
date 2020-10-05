@@ -20,6 +20,7 @@
 #define PATH_TO_SDF_GEOMETRY_HEIGHTMAP "@path_to_sdf_geometry_heightmap@"
 #define PATH_TO_SDF_GEOMETRY_MESH_COLLADA "@path_to_sdf_geometry_mesh_collada@"
 #define PATH_TO_SDF_GEOMETRY_MESH_OBJ "@path_to_sdf_geometry_mesh_obj@"
+#define PATH_TO_SDF_GEOMETRY_MESH_SCALED "@path_to_sdf_geometry_mesh_scaled@"
 #define PATH_TO_SDF_GEOMETRY_MESH_STL "@path_to_sdf_geometry_mesh_stl@"
 #define PATH_TO_SDF_GEOMETRY_PLANE "@path_to_sdf_geometry_plane@"
 #define PATH_TO_SDF_GEOMETRY_SPHERE "@path_to_sdf_geometry_sphere@"

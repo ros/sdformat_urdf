@@ -151,6 +151,41 @@ TEST(Geometry, geometry_mesh_obj)
   }
 }
 
+TEST(Geometry, geometry_mesh_scaled)
+{
+  sdf::Errors errors;
+  urdf::ModelInterfaceSharedPtr model = sdformat_urdf::parse(
+    get_file(PATH_TO_SDF_GEOMETRY_MESH_SCALED), errors);
+  EXPECT_TRUE(errors.empty()) << errors;
+  ASSERT_TRUE(model);
+  ASSERT_EQ("geometry_mesh_scaled", model->getName());
+
+  urdf::LinkConstSharedPtr link = model->getRoot();
+  ASSERT_NE(nullptr, link);
+  ASSERT_NE(nullptr, link->visual);
+  ASSERT_NE(nullptr, link->collision);
+
+  ASSERT_EQ(urdf::Geometry::MESH, link->visual->geometry->type);
+  {
+    urdf::MeshConstSharedPtr mesh =
+      std::dynamic_pointer_cast<urdf::Mesh>(link->visual->geometry);
+    EXPECT_EQ("model://geometry_mesh_scaled/torus.stl", mesh->filename);
+    EXPECT_DOUBLE_EQ(0.1, mesh->scale.x);
+    EXPECT_DOUBLE_EQ(0.2, mesh->scale.y);
+    EXPECT_DOUBLE_EQ(0.4, mesh->scale.z);
+  }
+
+  ASSERT_EQ(urdf::Geometry::MESH, link->collision->geometry->type);
+  {
+    urdf::MeshConstSharedPtr mesh =
+      std::dynamic_pointer_cast<urdf::Mesh>(link->collision->geometry);
+    EXPECT_EQ("model://geometry_mesh_scaled/torus.stl", mesh->filename);
+    EXPECT_DOUBLE_EQ(0.1, mesh->scale.x);
+    EXPECT_DOUBLE_EQ(0.2, mesh->scale.y);
+    EXPECT_DOUBLE_EQ(0.4, mesh->scale.z);
+  }
+}
+
 TEST(Geometry, geometry_mesh_stl)
 {
   sdf::Errors errors;
