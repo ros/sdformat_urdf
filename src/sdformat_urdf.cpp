@@ -251,6 +251,9 @@ sdformat_urdf::convert_model(const sdf::Model & sdf_model, sdf::Errors & errors)
         // child link is attached to parent joint
         urdf_child_link->parent_joint = urdf_joint;
 
+        // Child link keeps weak reference to parent link
+        urdf_child_link->setParent(urdf_parent_link);
+
         // parent link has reference to child link
         urdf_parent_link->child_links.push_back(urdf_child_link);
 
