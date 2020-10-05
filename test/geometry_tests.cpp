@@ -84,6 +84,15 @@ TEST(Geometry, geometry_cylinder)
   }
 }
 
+TEST(Geometry, geometry_heightmap)
+{
+  sdf::Errors errors;
+  urdf::ModelInterfaceSharedPtr model = sdformat_urdf::parse(
+    get_file(PATH_TO_SDF_GEOMETRY_HEIGHTMAP), errors);
+  EXPECT_FALSE(errors.empty());
+  ASSERT_FALSE(model);
+}
+
 TEST(Geometry, geometry_plane)
 {
   sdf::Errors errors;
