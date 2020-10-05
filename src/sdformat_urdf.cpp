@@ -66,6 +66,12 @@ sdformat_urdf::sdf_to_urdf(const sdf::Root & sdf_dom, sdf::Errors & errors)
       "SDFormat xml has a world; but only a single model is supported");
     return nullptr;
   }
+  if (0u == sdf_dom.ModelCount()) {
+    errors.emplace_back(
+      sdf::ErrorCode::STRING_READ,
+      "SDFormat xml has no models; need at least one");
+    return nullptr;
+  }
   if (1u != sdf_dom.ModelCount()) {
     errors.emplace_back(
       sdf::ErrorCode::STRING_READ,
