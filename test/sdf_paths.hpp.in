@@ -17,6 +17,7 @@
 
 #define PATH_TO_SDF_GRAPH_FOUR_BAR "@path_to_sdf_graph_four_bar@"
 #define PATH_TO_SDF_GRAPH_LOOP "@path_to_sdf_graph_loop@"
+#define PATH_TO_SDF_GRAPH_TREE "@path_to_sdf_graph_tree@"
 #define PATH_TO_SDF_GRAPH_TREE_NON_CANONICAL_ROOT "@path_to_sdf_graph_tree_non_canonical_root@"
 #define PATH_TO_SDF_POSE_CHAIN "@path_to_sdf_pose_chain@"
 #define PATH_TO_SDF_POSE_COLLISION "@path_to_sdf_pose_collision@"

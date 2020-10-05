@@ -21,6 +21,7 @@
 #include <fstream>
 #include <iostream>
 #include <sstream>
+#include <vector>
 
 inline
 std::string
@@ -44,6 +45,26 @@ get_file(const char * path)
       actual_urdf.rotation.z}; \
     EXPECT_EQ(expected_ign, actual_ign); \
   } while (false)
+
+#define EXPECT_NAMES(child_ptr_list, ...) \
+  do { \
+    std::vector<std::string> expected_names{__VA_ARGS__}; \
+    ASSERT_EQ(expected_names.size(), child_ptr_list.size()); \
+    for (const auto & child : child_ptr_list) { \
+      bool name_is_expected = false; \
+      auto expected_name_iter = expected_names.begin(); \
+      while (expected_name_iter != expected_names.end()) { \
+        if (* expected_name_iter == child->name) { \
+          name_is_expected = true; \
+          expected_names.erase(expected_name_iter); \
+          break; \
+        } \
+        ++expected_name_iter; \
+      } \
+      ASSERT_TRUE(name_is_expected) << "Unexpected or duplicate name: " << child->name; \
+    } \
+  } while (false)
+
 
 std::ostream & operator<<(std::ostream & os, const sdf::Errors & errors)
 {
