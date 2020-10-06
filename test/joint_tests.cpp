@@ -52,3 +52,23 @@ TEST(Joint, joint_continuous)
   ASSERT_EQ(nullptr, joint->calibration);
   ASSERT_EQ(nullptr, joint->mimic);
 }
+
+TEST(Joint, joint_fixed)
+{
+  sdf::Errors errors;
+  urdf::ModelInterfaceSharedPtr model = sdformat_urdf::parse(
+    get_file(PATH_TO_SDF_JOINT_FIXED), errors);
+  EXPECT_TRUE(errors.empty()) << errors;
+  ASSERT_TRUE(model);
+  ASSERT_EQ("joint_fixed", model->getName());
+
+  urdf::JointConstSharedPtr joint = model->getJoint("joint_fixed");
+
+  EXPECT_EQ("joint_fixed", joint->name);
+  EXPECT_EQ(urdf::Joint::FIXED, joint->type);
+  ASSERT_EQ(nullptr, joint->dynamics);
+  ASSERT_EQ(nullptr, joint->limits);
+  ASSERT_EQ(nullptr, joint->safety);
+  ASSERT_EQ(nullptr, joint->calibration);
+  ASSERT_EQ(nullptr, joint->mimic);
+}
