@@ -31,6 +31,7 @@
 #define PATH_TO_SDF_GRAPH_TREE "@path_to_sdf_graph_tree@"
 #define PATH_TO_SDF_GRAPH_TREE_NON_CANONICAL_ROOT "@path_to_sdf_graph_tree_non_canonical_root@"
 #define PATH_TO_SDF_JOINT_BALL "@path_to_sdf_joint_ball@"
+#define PATH_TO_SDF_JOINT_CONTINUOUS "@path_to_sdf_joint_continuous@"
 #define PATH_TO_SDF_MODEL_TWO_MODELS "@path_to_sdf_model_two_models@"
 #define PATH_TO_SDF_MODEL_ZERO_MODELS "@path_to_sdf_model_zero_models@"
 #define PATH_TO_SDF_POSE_CHAIN "@path_to_sdf_pose_chain@"

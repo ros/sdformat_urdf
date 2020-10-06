@@ -30,3 +30,25 @@ TEST(Joint, joint_ball)
   EXPECT_FALSE(errors.empty());
   ASSERT_FALSE(model);
 }
+
+TEST(Joint, joint_continuous)
+{
+  sdf::Errors errors;
+  urdf::ModelInterfaceSharedPtr model = sdformat_urdf::parse(
+    get_file(PATH_TO_SDF_JOINT_CONTINUOUS), errors);
+  EXPECT_TRUE(errors.empty()) << errors;
+  ASSERT_TRUE(model);
+  ASSERT_EQ("joint_continuous", model->getName());
+
+  urdf::JointConstSharedPtr joint = model->getJoint("joint_continuous");
+
+  EXPECT_EQ("joint_continuous", joint->name);
+  EXPECT_EQ(urdf::Joint::CONTINUOUS, joint->type);
+  ASSERT_NE(nullptr, joint->dynamics);
+  EXPECT_DOUBLE_EQ(0, joint->dynamics->damping);
+  EXPECT_DOUBLE_EQ(0, joint->dynamics->friction);
+  ASSERT_EQ(nullptr, joint->limits);
+  ASSERT_EQ(nullptr, joint->safety);
+  ASSERT_EQ(nullptr, joint->calibration);
+  ASSERT_EQ(nullptr, joint->mimic);
+}
