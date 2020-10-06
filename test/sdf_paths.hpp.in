@@ -30,6 +30,8 @@
 #define PATH_TO_SDF_GRAPH_LOOP "@path_to_sdf_graph_loop@"
 #define PATH_TO_SDF_GRAPH_TREE "@path_to_sdf_graph_tree@"
 #define PATH_TO_SDF_GRAPH_TREE_NON_CANONICAL_ROOT "@path_to_sdf_graph_tree_non_canonical_root@"
+#define PATH_TO_SDF_MODEL_TWO_MODELS "@path_to_sdf_model_two_models@"
+#define PATH_TO_SDF_MODEL_ZERO_MODELS "@path_to_sdf_model_zero_models@"
 #define PATH_TO_SDF_POSE_CHAIN "@path_to_sdf_pose_chain@"
 #define PATH_TO_SDF_POSE_COLLISION "@path_to_sdf_pose_collision@"
 #define PATH_TO_SDF_POSE_COLLISION_IN_FRAME "@path_to_sdf_pose_collision_in_frame@"
