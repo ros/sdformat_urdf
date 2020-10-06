@@ -477,8 +477,8 @@ sdformat_urdf::convert_joint(const sdf::Joint & sdf_joint, sdf::Errors & errors)
       return nullptr;
   }
 
-  // Add axis info for non-fixed joints
   if (urdf::Joint::FIXED != urdf_joint->type) {
+    // Add axis info for non-fixed joints
     const sdf::JointAxis * sdf_axis = sdf_joint.Axis(0);
 
     // URDF expects axis to be expressed in the joint frame
@@ -492,11 +492,16 @@ sdformat_urdf::convert_joint(const sdf::Joint & sdf_joint, sdf::Errors & errors)
         "] to joint [" + sdf_joint.Name() + "]");
       return nullptr;
     }
-
     urdf_joint->axis.x = axis_xyz.X();
     urdf_joint->axis.y = axis_xyz.Y();
     urdf_joint->axis.z = axis_xyz.Z();
+
+    // Add dynamics info for non-fixed joints
+    urdf_joint->dynamics = std::make_shared<urdf::JointDynamics>();
+    urdf_joint->dynamics->damping = sdf_axis->Damping();
+    urdf_joint->dynamics->friction = sdf_axis->Friction();
   }
+
 
   urdf_joint->child_link_name = sdf_joint.ChildLinkName();
   urdf_joint->parent_link_name = sdf_joint.ParentLinkName();
