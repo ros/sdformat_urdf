@@ -88,6 +88,7 @@ if(BUILD_TESTING)
   sdformat_test_files_get_model_sdf("path_to_sdf_graph_loop" "graph_loop")
   sdformat_test_files_get_model_sdf("path_to_sdf_graph_tree" "graph_tree")
   sdformat_test_files_get_model_sdf("path_to_sdf_graph_tree_non_canonical_root" "graph_tree_non_canonical_root")
+  sdformat_test_files_get_model_sdf("path_to_sdf_joint_ball" "joint_ball")
   sdformat_test_files_get_model_sdf("path_to_sdf_model_two_models" "model_two_models")
   sdformat_test_files_get_model_sdf("path_to_sdf_model_zero_models" "model_zero_models")
   sdformat_test_files_get_model_sdf("path_to_sdf_pose_chain" "pose_chain")
@@ -114,6 +115,12 @@ if(BUILD_TESTING)
   ament_add_gtest(sdf_graph_tests "test/graph_tests.cpp")
   target_link_libraries(sdf_graph_tests sdformat_urdf)
   target_include_directories(sdf_graph_tests PRIVATE
+    "${CMAKE_CURRENT_SOURCE_DIR}/test/include"
+    "${CMAKE_CURRENT_BINARY_DIR}/generated_includes")
+
+  ament_add_gtest(sdf_joint_tests "test/joint_tests.cpp")
+  target_link_libraries(sdf_joint_tests sdformat_urdf)
+  target_include_directories(sdf_joint_tests PRIVATE
     "${CMAKE_CURRENT_SOURCE_DIR}/test/include"
     "${CMAKE_CURRENT_BINARY_DIR}/generated_includes")
 
