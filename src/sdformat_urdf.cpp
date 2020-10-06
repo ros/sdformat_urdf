@@ -451,24 +451,18 @@ sdformat_urdf::convert_joint(const sdf::Joint & sdf_joint, sdf::Errors & errors)
 
   urdf_joint->name = sdf_joint.Name();
 
-  size_t num_axes = 0;
-
   switch (sdf_joint.Type()) {
     case sdf::JointType::CONTINUOUS:
       urdf_joint->type = urdf::Joint::CONTINUOUS;
-      num_axes = 1;
       break;
     case sdf::JointType::REVOLUTE:
       urdf_joint->type = urdf::Joint::REVOLUTE;
-      num_axes = 1;
       break;
     case sdf::JointType::FIXED:
       urdf_joint->type = urdf::Joint::FIXED;
-      num_axes = 0;
       break;
     case sdf::JointType::PRISMATIC:
       urdf_joint->type = urdf::Joint::PRISMATIC;
-      num_axes = 1;
       break;
     case sdf::JointType::INVALID:     // Unsupported: fall through to default
     case sdf::JointType::BALL:        //  |
@@ -483,8 +477,8 @@ sdformat_urdf::convert_joint(const sdf::Joint & sdf_joint, sdf::Errors & errors)
       return nullptr;
   }
 
-  // Supported joints have at most one axis
-  if (1 == num_axes) {
+  // Add axis info for non-fixed joints
+  if (urdf::Joint::FIXED != urdf_joint->type) {
     const sdf::JointAxis * sdf_axis = sdf_joint.Axis(0);
 
     // URDF expects axis to be expressed in the joint frame
