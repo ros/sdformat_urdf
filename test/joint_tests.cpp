@@ -44,6 +44,9 @@ TEST(Joint, joint_continuous)
 
   EXPECT_EQ("joint_continuous", joint->name);
   EXPECT_EQ(urdf::Joint::CONTINUOUS, joint->type);
+  EXPECT_DOUBLE_EQ(1, joint->axis.x);
+  EXPECT_DOUBLE_EQ(0, joint->axis.y);
+  EXPECT_DOUBLE_EQ(0, joint->axis.z);
   ASSERT_NE(nullptr, joint->dynamics);
   EXPECT_DOUBLE_EQ(0, joint->dynamics->damping);
   EXPECT_DOUBLE_EQ(0, joint->dynamics->friction);
@@ -86,6 +89,9 @@ TEST(Joint, joint_prismatic)
 
   EXPECT_EQ("joint_prismatic", joint->name);
   EXPECT_EQ(urdf::Joint::PRISMATIC, joint->type);
+  EXPECT_DOUBLE_EQ(0, joint->axis.x);
+  EXPECT_DOUBLE_EQ(1, joint->axis.y);
+  EXPECT_DOUBLE_EQ(0, joint->axis.z);
   ASSERT_NE(nullptr, joint->dynamics);
   EXPECT_DOUBLE_EQ(0, joint->dynamics->damping);
   EXPECT_DOUBLE_EQ(0, joint->dynamics->friction);
