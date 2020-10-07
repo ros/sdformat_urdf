@@ -130,3 +130,12 @@ TEST(Joint, joint_revolute)
   ASSERT_EQ(nullptr, joint->calibration);
   ASSERT_EQ(nullptr, joint->mimic);
 }
+
+TEST(Joint, joint_revolute2)
+{
+  sdf::Errors errors;
+  urdf::ModelInterfaceSharedPtr model = sdformat_urdf::parse(
+    get_file(PATH_TO_SDF_JOINT_REVOLUTE2), errors);
+  EXPECT_FALSE(errors.empty());
+  ASSERT_FALSE(model);
+}
