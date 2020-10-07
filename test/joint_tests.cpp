@@ -148,3 +148,12 @@ TEST(Joint, joint_screw)
   EXPECT_FALSE(errors.empty());
   ASSERT_FALSE(model);
 }
+
+TEST(Joint, joint_universal)
+{
+  sdf::Errors errors;
+  urdf::ModelInterfaceSharedPtr model = sdformat_urdf::parse(
+    get_file(PATH_TO_SDF_JOINT_UNIVERSAL), errors);
+  EXPECT_FALSE(errors.empty());
+  ASSERT_FALSE(model);
+}
