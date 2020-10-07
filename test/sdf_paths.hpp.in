@@ -34,6 +34,7 @@
 #define PATH_TO_SDF_JOINT_CONTINUOUS "@path_to_sdf_joint_continuous@"
 #define PATH_TO_SDF_JOINT_FIXED "@path_to_sdf_joint_fixed@"
 #define PATH_TO_SDF_JOINT_PRISMATIC "@path_to_sdf_joint_prismatic@"
+#define PATH_TO_SDF_JOINT_REVOLUTE "@path_to_sdf_joint_revolute@"
 #define PATH_TO_SDF_MODEL_TWO_MODELS "@path_to_sdf_model_two_models@"
 #define PATH_TO_SDF_MODEL_ZERO_MODELS "@path_to_sdf_model_zero_models@"
 #define PATH_TO_SDF_POSE_CHAIN "@path_to_sdf_pose_chain@"
