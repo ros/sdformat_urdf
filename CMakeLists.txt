@@ -96,6 +96,7 @@ if(BUILD_TESTING)
   sdformat_test_files_get_model_sdf("path_to_sdf_joint_revolute2" "joint_revolute2")
   sdformat_test_files_get_model_sdf("path_to_sdf_joint_screw" "joint_screw")
   sdformat_test_files_get_model_sdf("path_to_sdf_joint_universal" "joint_universal")
+  sdformat_test_files_get_model_sdf("path_to_sdf_link_inertia" "link_inertia")
   sdformat_test_files_get_model_sdf("path_to_sdf_model_two_models" "model_two_models")
   sdformat_test_files_get_model_sdf("path_to_sdf_model_zero_models" "model_zero_models")
   sdformat_test_files_get_model_sdf("path_to_sdf_pose_chain" "pose_chain")
@@ -128,6 +129,12 @@ if(BUILD_TESTING)
   ament_add_gtest(sdf_joint_tests "test/joint_tests.cpp")
   target_link_libraries(sdf_joint_tests sdformat_urdf)
   target_include_directories(sdf_joint_tests PRIVATE
+    "${CMAKE_CURRENT_SOURCE_DIR}/test/include"
+    "${CMAKE_CURRENT_BINARY_DIR}/generated_includes")
+
+  ament_add_gtest(sdf_link_tests "test/link_tests.cpp")
+  target_link_libraries(sdf_link_tests sdformat_urdf)
+  target_include_directories(sdf_link_tests PRIVATE
     "${CMAKE_CURRENT_SOURCE_DIR}/test/include"
     "${CMAKE_CURRENT_BINARY_DIR}/generated_includes")
 
