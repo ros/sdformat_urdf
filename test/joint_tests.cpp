@@ -140,6 +140,24 @@ TEST(Joint, joint_revolute2)
   ASSERT_FALSE(model);
 }
 
+TEST(Joint, joint_revolute_axis)
+{
+  sdf::Errors errors;
+  urdf::ModelInterfaceSharedPtr model = sdformat_urdf::parse(
+    get_file(PATH_TO_SDF_JOINT_REVOLUTE_AXIS), errors);
+  EXPECT_TRUE(errors.empty()) << errors;
+  ASSERT_TRUE(model);
+  ASSERT_EQ("joint_revolute_axis", model->getName());
+
+  urdf::JointConstSharedPtr joint = model->getJoint("joint_revolute");
+
+  EXPECT_EQ("joint_revolute", joint->name);
+  EXPECT_EQ(urdf::Joint::REVOLUTE, joint->type);
+  EXPECT_DOUBLE_EQ(0.1, joint->axis.x);
+  EXPECT_DOUBLE_EQ(1.23, joint->axis.y);
+  EXPECT_DOUBLE_EQ(4.567, joint->axis.z);
+}
+
 TEST(Joint, joint_screw)
 {
   sdf::Errors errors;
