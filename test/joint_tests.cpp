@@ -72,3 +72,29 @@ TEST(Joint, joint_fixed)
   ASSERT_EQ(nullptr, joint->calibration);
   ASSERT_EQ(nullptr, joint->mimic);
 }
+
+TEST(Joint, joint_prismatic)
+{
+  sdf::Errors errors;
+  urdf::ModelInterfaceSharedPtr model = sdformat_urdf::parse(
+    get_file(PATH_TO_SDF_JOINT_PRISMATIC), errors);
+  EXPECT_TRUE(errors.empty()) << errors;
+  ASSERT_TRUE(model);
+  ASSERT_EQ("joint_prismatic", model->getName());
+
+  urdf::JointConstSharedPtr joint = model->getJoint("joint_prismatic");
+
+  EXPECT_EQ("joint_prismatic", joint->name);
+  EXPECT_EQ(urdf::Joint::PRISMATIC, joint->type);
+  ASSERT_NE(nullptr, joint->dynamics);
+  EXPECT_DOUBLE_EQ(0, joint->dynamics->damping);
+  EXPECT_DOUBLE_EQ(0, joint->dynamics->friction);
+  ASSERT_NE(nullptr, joint->limits);
+  EXPECT_DOUBLE_EQ(-0.2, joint->limits->lower);
+  EXPECT_DOUBLE_EQ(0.2, joint->limits->upper);
+  EXPECT_DOUBLE_EQ(-1, joint->limits->effort);  // SDFormat default
+  EXPECT_DOUBLE_EQ(-1, joint->limits->velocity);  // SDFormat default
+  ASSERT_EQ(nullptr, joint->safety);
+  ASSERT_EQ(nullptr, joint->calibration);
+  ASSERT_EQ(nullptr, joint->mimic);
+}
