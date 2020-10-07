@@ -500,6 +500,15 @@ sdformat_urdf::convert_joint(const sdf::Joint & sdf_joint, sdf::Errors & errors)
     urdf_joint->dynamics = std::make_shared<urdf::JointDynamics>();
     urdf_joint->dynamics->damping = sdf_axis->Damping();
     urdf_joint->dynamics->friction = sdf_axis->Friction();
+
+    // Add limits info for non-fixed non-continuous joints
+    if (urdf::Joint::CONTINUOUS != urdf_joint->type) {
+      urdf_joint->limits = std::make_shared<urdf::JointLimits>();
+      urdf_joint->limits->lower = sdf_axis->Lower();
+      urdf_joint->limits->upper = sdf_axis->Upper();
+      urdf_joint->limits->effort = sdf_axis->Effort();
+      urdf_joint->limits->velocity = sdf_axis->MaxVelocity();
+    }
   }
 
 
