@@ -43,3 +43,22 @@ TEST(Link, link_inertia)
   EXPECT_DOUBLE_EQ(-0.007379583694, link->inertial->iyz);
   EXPECT_DOUBLE_EQ(3.683196351726, link->inertial->izz);
 }
+
+TEST(Link, link_multiple_collisions)
+{
+  sdf::Errors errors;
+  urdf::ModelInterfaceSharedPtr model = sdformat_urdf::parse(
+    get_file(PATH_TO_SDF_LINK_MULTIPLE_COLLISIONS), errors);
+  EXPECT_TRUE(errors.empty()) << errors;
+  ASSERT_TRUE(model);
+  ASSERT_EQ("link_multiple_collisions", model->getName());
+
+  urdf::LinkConstSharedPtr link = model->getLink("link");
+
+  EXPECT_EQ("link", link->name);
+  ASSERT_NE(nullptr, link->collision);
+  ASSERT_EQ(2u, link->collision_array.size());
+  ASSERT_EQ(link->collision, link->collision_array[0]);
+  EXPECT_EQ("link_collision_1", link->collision_array[0]->name);
+  EXPECT_EQ("link_collision_2", link->collision_array[1]->name);
+}

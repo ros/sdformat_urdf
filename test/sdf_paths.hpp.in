@@ -40,6 +40,7 @@
 #define PATH_TO_SDF_JOINT_SCREW "@path_to_sdf_joint_screw@"
 #define PATH_TO_SDF_JOINT_UNIVERSAL "@path_to_sdf_joint_universal@"
 #define PATH_TO_SDF_LINK_INERTIA "@path_to_sdf_link_inertia@"
+#define PATH_TO_SDF_LINK_MULTIPLE_COLLISIONS "@path_to_sdf_link_multiple_collisions@"
 #define PATH_TO_SDF_MODEL_TWO_MODELS "@path_to_sdf_model_two_models@"
 #define PATH_TO_SDF_MODEL_ZERO_MODELS "@path_to_sdf_model_zero_models@"
 #define PATH_TO_SDF_POSE_CHAIN "@path_to_sdf_pose_chain@"
