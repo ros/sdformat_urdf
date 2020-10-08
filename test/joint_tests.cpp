@@ -158,6 +158,36 @@ TEST(Joint, joint_revolute_axis)
   EXPECT_DOUBLE_EQ(4.567, joint->axis.z);
 }
 
+TEST(Joint, joint_revolute_axis_in_frame)
+{
+  sdf::Errors errors;
+  urdf::ModelInterfaceSharedPtr model = sdformat_urdf::parse(
+    get_file(PATH_TO_SDF_JOINT_REVOLUTE_AXIS_IN_FRAME), errors);
+  EXPECT_TRUE(errors.empty()) << errors;
+  ASSERT_TRUE(model);
+  ASSERT_EQ("joint_revolute_axis_in_frame", model->getName());
+
+  urdf::JointConstSharedPtr joint = model->getJoint("joint_revolute");
+
+  const ignition::math::Pose3d model_to_frame_in_model{0.05, 0.1, 0.2, 0.1, 0.2, 0.3};
+  const ignition::math::Pose3d model_to_child_in_model{0.1, 0, 0.1, 0, 0, 0};
+  const ignition::math::Pose3d frame_to_child_in_frame =
+    model_to_child_in_model - model_to_frame_in_model;
+  const ignition::math::Pose3d child_to_joint_in_child{0, 0, 0, 0, 0, 0};
+  const ignition::math::Pose3d frame_to_joint_in_frame =
+    child_to_joint_in_child + frame_to_child_in_frame;
+
+  const ignition::math::Vector3d axis_in_frame{0.1, 1.23, 4.567};
+  const ignition::math::Vector3d axis_in_joint =
+    frame_to_joint_in_frame.Inverse().Rot().RotateVector(axis_in_frame);
+
+  EXPECT_EQ("joint_revolute", joint->name);
+  EXPECT_EQ(urdf::Joint::REVOLUTE, joint->type);
+  EXPECT_DOUBLE_EQ(axis_in_joint.X(), joint->axis.x);
+  EXPECT_DOUBLE_EQ(axis_in_joint.Y(), joint->axis.y);
+  EXPECT_DOUBLE_EQ(axis_in_joint.Z(), joint->axis.z);
+}
+
 TEST(Joint, joint_screw)
 {
   sdf::Errors errors;

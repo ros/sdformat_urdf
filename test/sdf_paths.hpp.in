@@ -37,6 +37,7 @@
 #define PATH_TO_SDF_JOINT_REVOLUTE "@path_to_sdf_joint_revolute@"
 #define PATH_TO_SDF_JOINT_REVOLUTE2 "@path_to_sdf_joint_revolute2@"
 #define PATH_TO_SDF_JOINT_REVOLUTE_AXIS "@path_to_sdf_joint_revolute_axis@"
+#define PATH_TO_SDF_JOINT_REVOLUTE_AXIS_IN_FRAME "@path_to_sdf_joint_revolute_axis_in_frame@"
 #define PATH_TO_SDF_JOINT_SCREW "@path_to_sdf_joint_screw@"
 #define PATH_TO_SDF_JOINT_UNIVERSAL "@path_to_sdf_joint_universal@"
 #define PATH_TO_SDF_LINK_INERTIA "@path_to_sdf_link_inertia@"
