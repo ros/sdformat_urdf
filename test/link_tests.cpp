@@ -62,3 +62,22 @@ TEST(Link, link_multiple_collisions)
   EXPECT_EQ("link_collision_1", link->collision_array[0]->name);
   EXPECT_EQ("link_collision_2", link->collision_array[1]->name);
 }
+
+TEST(Link, link_multiple_visuals)
+{
+  sdf::Errors errors;
+  urdf::ModelInterfaceSharedPtr model = sdformat_urdf::parse(
+    get_file(PATH_TO_SDF_LINK_MULTIPLE_VISUALS), errors);
+  EXPECT_TRUE(errors.empty()) << errors;
+  ASSERT_TRUE(model);
+  ASSERT_EQ("link_multiple_visuals", model->getName());
+
+  urdf::LinkConstSharedPtr link = model->getLink("link");
+
+  EXPECT_EQ("link", link->name);
+  ASSERT_NE(nullptr, link->visual);
+  ASSERT_EQ(2u, link->visual_array.size());
+  ASSERT_EQ(link->visual, link->visual_array[0]);
+  EXPECT_EQ("link_visual_1", link->visual_array[0]->name);
+  EXPECT_EQ("link_visual_2", link->visual_array[1]->name);
+}
