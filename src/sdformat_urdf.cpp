@@ -247,6 +247,15 @@ sdformat_urdf::convert_model(const sdf::Model & sdf_model, sdf::Errors & errors)
             "Failed to get child link [" + child_link_name + "]");
           return nullptr;
         }
+
+        // Check for kinematic loops and redundant joints between two links
+        if (link_stack.end() != std::find(link_stack.begin(), link_stack.end(), sdf_child_link)) {
+          errors.emplace_back(
+            sdf::ErrorCode::STRING_READ,
+            "Found kinematic loop at joint [" + sdf_joint->Name() + "]");
+          return nullptr;
+        }
+
         urdf::LinkSharedPtr & urdf_child_link = urdf_model->links_.at(child_link_name);
 
         // child link is attached to parent joint
@@ -271,7 +280,7 @@ sdformat_urdf::convert_model(const sdf::Model & sdf_model, sdf::Errors & errors)
           // This link must be a child of two joints - kinematic loop :(
           errors.emplace_back(
             sdf::ErrorCode::STRING_READ,
-            "Link can only be a child of one joint [" + sdf_parent_link->Name() + "]");
+            "Link [" + sdf_parent_link->Name() + "] must only be a child of one joint");
         }
         return nullptr;
       } else {
