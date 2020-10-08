@@ -188,6 +188,26 @@ TEST(Joint, joint_revolute_axis_in_frame)
   EXPECT_DOUBLE_EQ(axis_in_joint.Z(), joint->axis.z);
 }
 
+TEST(Joint, joint_revolute_default_limits)
+{
+  sdf::Errors errors;
+  urdf::ModelInterfaceSharedPtr model = sdformat_urdf::parse(
+    get_file(PATH_TO_SDF_JOINT_REVOLUTE_DEFAULT_LIMITS), errors);
+  EXPECT_TRUE(errors.empty()) << errors;
+  ASSERT_TRUE(model);
+  ASSERT_EQ("joint_revolute_default_limits", model->getName());
+
+  urdf::JointConstSharedPtr joint = model->getJoint("joint_revolute");
+
+  EXPECT_EQ("joint_revolute", joint->name);
+  EXPECT_EQ(urdf::Joint::REVOLUTE, joint->type);
+  ASSERT_NE(nullptr, joint->limits);
+  EXPECT_DOUBLE_EQ(-1e16, joint->limits->lower);  // SDFormat default
+  EXPECT_DOUBLE_EQ(1e16, joint->limits->upper);  // SDFormat default
+  EXPECT_DOUBLE_EQ(-1, joint->limits->effort);  // SDFormat default
+  EXPECT_DOUBLE_EQ(-1, joint->limits->velocity);  // SDFormat default
+}
+
 TEST(Joint, joint_screw)
 {
   sdf::Errors errors;
