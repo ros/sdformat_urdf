@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include <ignition/math/Pose3.hh>
+#include <rcutils/logging_macros.h>
 #include <sdf/sdf.hh>
 #include <urdf_world/types.h>
 #include <urdf_model/model.h>
@@ -501,6 +502,18 @@ sdformat_urdf::convert_joint(const sdf::Joint & sdf_joint, sdf::Errors & errors)
     urdf_joint->dynamics->damping = sdf_axis->Damping();
     urdf_joint->dynamics->friction = sdf_axis->Friction();
 
+    // Warn about non-default values on unsupported <dynamics> tags
+    if (0.0 != sdf_axis->SpringReference()) {
+      RCUTILS_LOG_WARN_NAMED(
+        "sdformat_urdf", "SDFormat Joint [%s] given non-default value for <spring_reference>,"
+        " but URDF does not support this", sdf_joint.Name().c_str());
+    }
+    if (0.0 != sdf_axis->SpringStiffness()) {
+      RCUTILS_LOG_WARN_NAMED(
+        "sdformat_urdf", "SDFormat Joint [%s] given non-default value for <spring_stiffness>,"
+        " but URDF does not support this", sdf_joint.Name().c_str());
+    }
+
     // Add limits info for non-fixed non-continuous joints
     if (urdf::Joint::CONTINUOUS != urdf_joint->type) {
       urdf_joint->limits = std::make_shared<urdf::JointLimits>();
@@ -508,6 +521,18 @@ sdformat_urdf::convert_joint(const sdf::Joint & sdf_joint, sdf::Errors & errors)
       urdf_joint->limits->upper = sdf_axis->Upper();
       urdf_joint->limits->effort = sdf_axis->Effort();
       urdf_joint->limits->velocity = sdf_axis->MaxVelocity();
+
+      // Warn about non-default values on unsupported <limit> tags
+      if (1.0 != sdf_axis->Dissipation()) {
+        RCUTILS_LOG_WARN_NAMED(
+          "sdformat_urdf", "SDFormat Joint [%s] given non-default value for <dissipation>,"
+          " but URDF does not support this", sdf_joint.Name().c_str());
+      }
+      if (1e8 != sdf_axis->Stiffness()) {
+        RCUTILS_LOG_WARN_NAMED(
+          "sdformat_urdf", "SDFormat Joint [%s] given non-default value for <stiffness>,"
+          " but URDF does not support this", sdf_joint.Name().c_str());
+      }
     }
   }
 

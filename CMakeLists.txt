@@ -34,6 +34,9 @@ target_include_directories(sdformat_urdf
     "$<INSTALL_INTERFACE:include>"
     ${urdfdom_headers_INCLUDE_DIRS}
 )
+ament_target_dependencies(sdformat_urdf PUBLIC
+  "rcutils"
+)
 
 # Add sdformat_urdf_plugin module library
 add_library(sdformat_urdf_plugin MODULE
