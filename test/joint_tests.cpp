@@ -208,6 +208,15 @@ TEST(Joint, joint_revolute_default_limits)
   EXPECT_DOUBLE_EQ(-1, joint->limits->velocity);  // SDFormat default
 }
 
+TEST(Joint, joint_revolute_two_joints_two_links)
+{
+  sdf::Errors errors;
+  urdf::ModelInterfaceSharedPtr model = sdformat_urdf::parse(
+    get_file(PATH_TO_SDF_JOINT_REVOLUTE_TWO_JOINTS_TWO_LINKS), errors);
+  EXPECT_FALSE(errors.empty());
+  ASSERT_FALSE(model);
+}
+
 TEST(Joint, joint_screw)
 {
   sdf::Errors errors;
