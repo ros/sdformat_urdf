@@ -335,12 +335,6 @@ sdformat_urdf::convert_link(
 
   const ignition::math::Inertiald sdf_inertia = sdf_link.Inertial();
   urdf_link->inertial = std::make_shared<urdf::Inertial>();
-  if (!urdf_link->inertial) {
-    errors.emplace_back(
-      sdf::ErrorCode::STRING_READ,
-      "Failed to create inertial for link [" + sdf_link.Name() + "]");
-    return nullptr;
-  }
   urdf_link->inertial->mass = sdf_inertia.MassMatrix().Mass();
   // URDF doesn't have link pose concept, so add SDF link pose to inertial
   urdf_link->inertial->origin = convert_pose(link_pose + sdf_inertia.Pose());
