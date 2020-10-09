@@ -333,6 +333,7 @@ TEST(Pose, pose_model)
   urdf::ModelInterfaceSharedPtr model = sdformat_urdf::parse(
     get_file(PATH_TO_SDF_POSE_MODEL), errors);
   EXPECT_FALSE(errors.empty());
+  EXPECT_NO_ALGORITHM_ERRORS(errors);
   ASSERT_FALSE(model);
 }
 

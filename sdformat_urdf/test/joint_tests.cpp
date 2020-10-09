@@ -28,6 +28,7 @@ TEST(Joint, joint_ball)
   urdf::ModelInterfaceSharedPtr model = sdformat_urdf::parse(
     get_file(PATH_TO_SDF_JOINT_BALL), errors);
   EXPECT_FALSE(errors.empty());
+  EXPECT_NO_ALGORITHM_ERRORS(errors);
   ASSERT_FALSE(model);
 }
 
@@ -137,6 +138,7 @@ TEST(Joint, joint_revolute2)
   urdf::ModelInterfaceSharedPtr model = sdformat_urdf::parse(
     get_file(PATH_TO_SDF_JOINT_REVOLUTE2), errors);
   EXPECT_FALSE(errors.empty());
+  EXPECT_NO_ALGORITHM_ERRORS(errors);
   ASSERT_FALSE(model);
 }
 
@@ -214,6 +216,7 @@ TEST(Joint, joint_revolute_two_joints_two_links)
   urdf::ModelInterfaceSharedPtr model = sdformat_urdf::parse(
     get_file(PATH_TO_SDF_JOINT_REVOLUTE_TWO_JOINTS_TWO_LINKS), errors);
   EXPECT_FALSE(errors.empty());
+  EXPECT_NO_ALGORITHM_ERRORS(errors);
   ASSERT_FALSE(model);
 }
 
@@ -223,6 +226,7 @@ TEST(Joint, joint_screw)
   urdf::ModelInterfaceSharedPtr model = sdformat_urdf::parse(
     get_file(PATH_TO_SDF_JOINT_SCREW), errors);
   EXPECT_FALSE(errors.empty());
+  EXPECT_NO_ALGORITHM_ERRORS(errors);
   ASSERT_FALSE(model);
 }
 
@@ -232,5 +236,6 @@ TEST(Joint, joint_universal)
   urdf::ModelInterfaceSharedPtr model = sdformat_urdf::parse(
     get_file(PATH_TO_SDF_JOINT_UNIVERSAL), errors);
   EXPECT_FALSE(errors.empty());
+  EXPECT_NO_ALGORITHM_ERRORS(errors);
   ASSERT_FALSE(model);
 }

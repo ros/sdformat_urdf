@@ -28,6 +28,7 @@ TEST(Model, model_two_models)
   urdf::ModelInterfaceSharedPtr model = sdformat_urdf::parse(
     get_file(PATH_TO_SDF_MODEL_TWO_MODELS), errors);
   EXPECT_FALSE(errors.empty());
+  EXPECT_NO_ALGORITHM_ERRORS(errors);
   ASSERT_FALSE(model);
 }
 
@@ -37,5 +38,6 @@ TEST(Model, model_zero_models)
   urdf::ModelInterfaceSharedPtr model = sdformat_urdf::parse(
     get_file(PATH_TO_SDF_MODEL_ZERO_MODELS), errors);
   EXPECT_FALSE(errors.empty());
+  EXPECT_NO_ALGORITHM_ERRORS(errors);
   ASSERT_FALSE(model);
 }

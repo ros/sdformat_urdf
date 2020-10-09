@@ -85,6 +85,7 @@ TEST(Graph, graph_chain_non_canonical_root)
   urdf::ModelInterfaceSharedPtr model = sdformat_urdf::parse(
     get_file(PATH_TO_SDF_GRAPH_CHAIN_NON_CANONICAL_ROOT), errors);
   EXPECT_FALSE(errors.empty());
+  EXPECT_NO_ALGORITHM_ERRORS(errors);
   ASSERT_FALSE(model);
 }
 
@@ -94,6 +95,7 @@ TEST(Graph, graph_four_bar)
   urdf::ModelInterfaceSharedPtr model = sdformat_urdf::parse(
     get_file(PATH_TO_SDF_GRAPH_FOUR_BAR), errors);
   EXPECT_FALSE(errors.empty());
+  EXPECT_NO_ALGORITHM_ERRORS(errors);
   ASSERT_FALSE(model);
 }
 
@@ -103,6 +105,7 @@ TEST(Graph, graph_loop)
   urdf::ModelInterfaceSharedPtr model = sdformat_urdf::parse(
     get_file(PATH_TO_SDF_GRAPH_LOOP), errors);
   EXPECT_FALSE(errors.empty());
+  EXPECT_NO_ALGORITHM_ERRORS(errors);
   ASSERT_FALSE(model);
 }
 
@@ -217,5 +220,6 @@ TEST(Graph, graph_tree_non_canonical_root)
   urdf::ModelInterfaceSharedPtr model = sdformat_urdf::parse(
     get_file(PATH_TO_SDF_GRAPH_TREE_NON_CANONICAL_ROOT), errors);
   EXPECT_FALSE(errors.empty());
+  EXPECT_NO_ALGORITHM_ERRORS(errors);
   ASSERT_FALSE(model);
 }

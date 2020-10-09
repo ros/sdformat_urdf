@@ -17,6 +17,7 @@
 
 #include <sdf/sdf.hh>
 
+#include <algorithm>
 #include <string>
 #include <fstream>
 #include <iostream>
@@ -65,6 +66,15 @@ get_file(const char * path)
     } \
   } while (false)
 
+#define EXPECT_NO_ALGORITHM_ERRORS(errors) \
+  do { \
+    for (const auto & error : errors) { \
+      const std::string msg = error.Message(); \
+      if (std::string::npos != msg.find("Algorithm error")) { \
+        EXPECT_TRUE(false) << msg; \
+      } \
+    } \
+  } while (false)
 
 std::ostream & operator<<(std::ostream & os, const sdf::Errors & errors)
 {

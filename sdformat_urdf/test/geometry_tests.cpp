@@ -90,6 +90,7 @@ TEST(Geometry, geometry_heightmap)
   urdf::ModelInterfaceSharedPtr model = sdformat_urdf::parse(
     get_file(PATH_TO_SDF_GEOMETRY_HEIGHTMAP), errors);
   EXPECT_FALSE(errors.empty());
+  EXPECT_NO_ALGORITHM_ERRORS(errors);
   ASSERT_FALSE(model);
 }
 
@@ -221,6 +222,7 @@ TEST(Geometry, geometry_plane)
   urdf::ModelInterfaceSharedPtr model = sdformat_urdf::parse(
     get_file(PATH_TO_SDF_GEOMETRY_PLANE), errors);
   EXPECT_FALSE(errors.empty());
+  EXPECT_NO_ALGORITHM_ERRORS(errors);
   ASSERT_FALSE(model);
 }
 
