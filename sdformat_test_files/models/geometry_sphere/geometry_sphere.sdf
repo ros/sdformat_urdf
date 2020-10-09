@@ -1,15 +1,15 @@
 <?xml version='1.0' encoding='utf-8'?>
 <sdf version="1.7">
   <model name="geometry_sphere">
-    <link name="geometry_sphere_link">
-      <visual name="geometry_sphere_link_visual">
+    <link name="link">
+      <visual name="link_visual">
         <geometry>
           <sphere>
             <radius>0.125</radius>
           </sphere>
         </geometry>
       </visual>
-      <collision name="geometry_sphere_link_collision">
+      <collision name="link_collision">
         <geometry>
           <sphere>
             <radius>0.125</radius>

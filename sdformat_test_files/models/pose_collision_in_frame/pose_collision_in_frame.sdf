@@ -4,15 +4,15 @@
     <frame name="some_frame">
       <pose>0.05 0.1 0.2 0.1 0.2 0.3</pose>
     </frame>
-    <link name="pose_collision_in_frame_link">
-      <visual name="pose_collision_in_frame_link_visual">
+    <link name="link">
+      <visual name="link_visual">
         <geometry>
           <box>
             <size>0.1 0.2 0.4</size>
           </box>
         </geometry>
       </visual>
-      <collision name="pose_collision_in_frame_link_collision">
+      <collision name="link_collision">
         <pose relative_to="some_frame">0.2 0.4 0.8 0.2 0.3 0.4</pose>
         <geometry>
           <box>

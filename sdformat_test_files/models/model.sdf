@@ -1,12 +1,8 @@
 <?xml version='1.0' encoding='utf-8'?>
 <sdf version="1.7">
-  <model name="pose_visual_in_frame">
-    <frame name="some_frame">
-      <pose>0.05 0.1 0.2 0.1 0.2 0.3</pose>
-    </frame>
+  <model name="model_name">
     <link name="link">
       <visual name="link_visual">
-        <pose relative_to="some_frame">0.2 0.4 0.8 0.2 0.3 0.4</pose>
         <geometry>
           <box>
             <size>0.1 0.2 0.4</size>

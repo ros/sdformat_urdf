@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='utf-8'?>
 <sdf version="1.7">
   <model name="geometry_mesh_collada">
-    <link name="geometry_mesh_collada_link">
-      <visual name="geometry_mesh_collada_link_visual">
+    <link name="link">
+      <visual name="link_visual">
         <geometry>
           <mesh>
             <uri>model://geometry_mesh_collada/torus.dae</uri>
@@ -10,7 +10,7 @@
           </mesh>
         </geometry>
       </visual>
-      <collision name="geometry_mesh_collada_link_collision">
+      <collision name="link_collision">
         <geometry>
           <mesh>
             <uri>model://geometry_mesh_collada/torus.dae</uri>

@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='utf-8'?>
 <sdf version="1.7">
   <model name="geometry_heightmap">
-    <link name="geometry_heightmap_link">
-      <visual name="geometry_heightmap_link_visual">
+    <link name="link">
+      <visual name="link_visual">
         <geometry>
           <heightmap>
             <uri>heightmap.png</uri>
@@ -10,7 +10,7 @@
           </heightmap>
         </geometry>
       </visual>
-      <collision name="geometry_heightmap_link_collision">
+      <collision name="link_collision">
         <geometry>
           <heightmap>
             <uri>heightmap.png</uri>

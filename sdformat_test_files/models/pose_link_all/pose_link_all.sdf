@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='utf-8'?>
 <sdf version="1.7">
   <model name="pose_link_all">
-    <link name="pose_link_all_link">
+    <link name="link">
       <pose>0.05 0.1 0.2 0.1 0.2 0.3</pose>
-      <visual name="pose_link_all_link_visual">
+      <visual name="link_visual">
         <pose>0.03 0.6 0.12 0.2 0.3 0.4</pose>
         <geometry>
           <box>
@@ -11,7 +11,7 @@
           </box>
         </geometry>
       </visual>
-      <collision name="pose_link_all_link_collision">
+      <collision name="link_collision">
         <pose>0.04 0.8 0.16 0.3 0.4 0.5</pose>
         <geometry>
           <box>

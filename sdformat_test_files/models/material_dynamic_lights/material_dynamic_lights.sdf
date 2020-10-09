@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='utf-8'?>
 <sdf version="1.7">
   <model name="material_dynamic_lights">
-    <link name="material_dynamic_lights_link">
-      <visual name="material_dynamic_lights_link_visual">
+    <link name="link">
+      <visual name="link_visual">
         <geometry>
           <box>
             <size>0.2 0.2 0.2</size>
@@ -12,7 +12,7 @@
           <lighting>true</lighting>
         </material>
       </visual>
-      <visual name="material_dynamic_lights_link_visual_no_lights">
+      <visual name="link_visual_no_lights">
         <geometry>
           <box>
             <size>0.1 0.1 0.4</size>
@@ -22,14 +22,14 @@
           <lighting>false</lighting>
         </material>
       </visual>
-      <collision name="material_dynamic_lights_link_collision">
+      <collision name="link_collision">
         <geometry>
           <box>
             <size>0.2 0.2 0.2</size>
           </box>
         </geometry>
       </collision>
-      <collision name="material_dynamic_lights_link_collision_no_lights">
+      <collision name="link_collision_no_lights">
         <geometry>
           <box>
             <size>0.1 0.1 0.4</size>

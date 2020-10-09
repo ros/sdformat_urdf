@@ -35,13 +35,13 @@ TEST(Pose, pose_chain)
   ASSERT_EQ(4u, model->links_.size());
   ASSERT_EQ(3u, model->joints_.size());
 
-  urdf::LinkConstSharedPtr link_1 = model->getLink("pose_chain_link_1");
+  urdf::LinkConstSharedPtr link_1 = model->getLink("link_1");
   ASSERT_NE(nullptr, link_1);
-  urdf::LinkConstSharedPtr link_2 = model->getLink("pose_chain_link_2");
+  urdf::LinkConstSharedPtr link_2 = model->getLink("link_2");
   ASSERT_NE(nullptr, link_2);
-  urdf::LinkConstSharedPtr link_3 = model->getLink("pose_chain_link_3");
+  urdf::LinkConstSharedPtr link_3 = model->getLink("link_3");
   ASSERT_NE(nullptr, link_3);
-  urdf::LinkConstSharedPtr link_4 = model->getLink("pose_chain_link_4");
+  urdf::LinkConstSharedPtr link_4 = model->getLink("link_4");
   ASSERT_NE(nullptr, link_4);
 
   urdf::JointConstSharedPtr joint_1 = model->getJoint("joint_1");

@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='utf-8'?>
 <sdf version="1.7">
   <model name="geometry_cylinder">
-    <link name="geometry_cylinder_link">
-      <visual name="geometry_cylinder_link_visual">
+    <link name="link">
+      <visual name="link_visual">
         <geometry>
           <cylinder>
             <length>0.2</length>
@@ -10,7 +10,7 @@
           </cylinder>
         </geometry>
       </visual>
-      <collision name="geometry_cylinder_link_collision">
+      <collision name="link_collision">
         <geometry>
           <cylinder>
             <length>0.2</length>

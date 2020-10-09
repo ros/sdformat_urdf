@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='utf-8'?>
 <sdf version="1.7">
   <model name="geometry_plane">
-    <link name="geometry_plane_link">
-      <visual name="geometry_plane_link_visual">
+    <link name="link">
+      <visual name="link_visual">
         <geometry>
           <plane>
             <normal>0 0 1</normal>
@@ -10,7 +10,7 @@
           </plane>
         </geometry>
       </visual>
-      <collision name="geometry_plane_link_collision">
+      <collision name="link_collision">
         <geometry>
           <plane>
             <normal>0 0 1</normal>
