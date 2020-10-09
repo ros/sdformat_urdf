@@ -451,6 +451,18 @@ sdformat_urdf::convert_link(
     urdf_link->collision_array.push_back(urdf_collision);
   }
 
+  // Warn about unsupported <link> features
+  if (0u != sdf_link.SensorCount()) {
+    RCUTILS_LOG_WARN_NAMED(
+      "sdformat_urdf", "SDFormat link [%s] has a <sensor>,"
+      " but URDF does not support this", sdf_link.Name().c_str());
+  }
+  if (0u != sdf_link.LightCount()) {
+    RCUTILS_LOG_WARN_NAMED(
+      "sdformat_urdf", "SDFormat link [%s] has a <light>,"
+      " but URDF does not support this", sdf_link.Name().c_str());
+  }
+
   return urdf_link;
 }
 
