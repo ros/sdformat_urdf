@@ -57,7 +57,6 @@ sdformat_urdf::parse(const std::string & data, sdf::Errors & errors)
   return nullptr;
 }
 
-
 urdf::ModelInterfaceSharedPtr
 sdformat_urdf::sdf_to_urdf(const sdf::Root & sdf_dom, sdf::Errors & errors)
 {
@@ -556,7 +555,6 @@ sdformat_urdf::convert_joint(const sdf::Joint & sdf_joint, sdf::Errors & errors)
       }
     }
   }
-
 
   urdf_joint->child_link_name = sdf_joint.ChildLinkName();
   urdf_joint->parent_link_name = sdf_joint.ParentLinkName();
