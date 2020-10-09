@@ -401,7 +401,7 @@ sdformat_urdf::convert_link(
           "sdformat_urdf", "SDFormat visual [%s] has <material><lighting>,"
           " but URDF does not support this", sdf_visual->Name().c_str());
       }
-      std::cerr << "has material\n";
+      // TODO(sloretz) warn about materials with ogre scripts, shaders, and pbr
     }
 
     if (0u == vi) {
