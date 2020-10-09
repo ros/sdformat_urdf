@@ -41,3 +41,17 @@ TEST(Material, material_blinn_phong)
   EXPECT_FLOAT_EQ(0, visual->material->color.b);
   EXPECT_FLOAT_EQ(1, visual->material->color.a);
 }
+
+TEST(Material, material_dynamic_lights)
+{
+  GTEST_SKIP() << "https://github.com/osrf/sdformat/issues/384";
+
+  sdf::Errors errors;
+  urdf::ModelInterfaceSharedPtr model = sdformat_urdf::parse(
+    get_file(PATH_TO_SDF_MATERIAL_DYNAMIC_LIGHTS), errors);
+  EXPECT_TRUE(errors.empty()) << errors;
+  ASSERT_TRUE(model);
+  ASSERT_EQ("material_dynamic_lights", model->getName());
+
+  // URDF doesn't support toggling dynamic lights, so a warning is omitted to the console
+}

@@ -48,6 +48,7 @@
 #define PATH_TO_SDF_LINK_MULTIPLE_VISUALS "@path_to_sdf_link_multiple_visuals@"
 #define PATH_TO_SDF_LINK_SENSOR_IMU "@path_to_sdf_link_sensor_imu@"
 #define PATH_TO_SDF_MATERIAL_BLINN_PHONG "@path_to_sdf_material_blinn_phong@"
+#define PATH_TO_SDF_MATERIAL_DYNAMIC_LIGHTS "@path_to_sdf_material_dynamic_lights@"
 #define PATH_TO_SDF_MODEL_TWO_MODELS "@path_to_sdf_model_two_models@"
 #define PATH_TO_SDF_MODEL_ZERO_MODELS "@path_to_sdf_model_zero_models@"
 #define PATH_TO_SDF_POSE_CHAIN "@path_to_sdf_pose_chain@"
