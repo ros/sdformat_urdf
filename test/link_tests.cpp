@@ -53,7 +53,7 @@ TEST(Link, link_light_point)
   ASSERT_TRUE(model);
   ASSERT_EQ("link_light_point", model->getName());
 
-  // Sensors are ignored, but warnings are emitted for their presense
+  // lights are ignored, but warnings are emitted for their presense
 }
 
 TEST(Link, link_multiple_collisions)
