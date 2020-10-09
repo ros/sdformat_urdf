@@ -108,6 +108,7 @@ if(BUILD_TESTING)
   sdformat_test_files_get_model_sdf("path_to_sdf_link_multiple_collisions" "link_multiple_collisions")
   sdformat_test_files_get_model_sdf("path_to_sdf_link_multiple_visuals" "link_multiple_visuals")
   sdformat_test_files_get_model_sdf("path_to_sdf_link_sensor_imu" "link_sensor_imu")
+  sdformat_test_files_get_model_sdf("path_to_sdf_material_blinn_phong" "material_blinn_phong")
   sdformat_test_files_get_model_sdf("path_to_sdf_model_two_models" "model_two_models")
   sdformat_test_files_get_model_sdf("path_to_sdf_model_zero_models" "model_zero_models")
   sdformat_test_files_get_model_sdf("path_to_sdf_pose_chain" "pose_chain")
@@ -146,6 +147,12 @@ if(BUILD_TESTING)
   ament_add_gtest(sdf_link_tests "test/link_tests.cpp")
   target_link_libraries(sdf_link_tests sdformat_urdf)
   target_include_directories(sdf_link_tests PRIVATE
+    "${CMAKE_CURRENT_SOURCE_DIR}/test/include"
+    "${CMAKE_CURRENT_BINARY_DIR}/generated_includes")
+
+  ament_add_gtest(sdf_material_tests "test/material_tests.cpp")
+  target_link_libraries(sdf_material_tests sdformat_urdf)
+  target_include_directories(sdf_material_tests PRIVATE
     "${CMAKE_CURRENT_SOURCE_DIR}/test/include"
     "${CMAKE_CURRENT_BINARY_DIR}/generated_includes")
 
