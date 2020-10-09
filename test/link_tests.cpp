@@ -81,3 +81,15 @@ TEST(Link, link_multiple_visuals)
   EXPECT_EQ("link_visual_1", link->visual_array[0]->name);
   EXPECT_EQ("link_visual_2", link->visual_array[1]->name);
 }
+
+TEST(Link, link_sensor_imu)
+{
+  sdf::Errors errors;
+  urdf::ModelInterfaceSharedPtr model = sdformat_urdf::parse(
+    get_file(PATH_TO_SDF_LINK_SENSOR_IMU), errors);
+  EXPECT_TRUE(errors.empty()) << errors;
+  ASSERT_TRUE(model);
+  ASSERT_EQ("link_sensor_imu", model->getName());
+
+  // Sensors are ignored, but warnings are emitted for their presense
+}
