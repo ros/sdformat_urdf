@@ -32,9 +32,8 @@ public:
   urdf::ModelInterfaceSharedPtr
   parse(const std::string & data) override
   {
-    urdf::ModelInterfaceSharedPtr urdf_cpp;
     sdf::Errors errors;
-    urdf_cpp = sdformat_urdf::parse(data, errors);
+    urdf::ModelInterfaceSharedPtr urdf_cpp = sdformat_urdf::parse(data, errors);
 
     if (urdf_cpp) {
       return urdf_cpp;
