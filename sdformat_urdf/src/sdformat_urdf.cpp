@@ -394,6 +394,14 @@ sdformat_urdf::convert_link(
       urdf_material->color.a = sdf_material->Ambient().A();
 
       urdf_visual->material = urdf_material;
+
+      // Warn about unsupported <material> features
+      if (!sdf_material->Lighting()) {
+        RCUTILS_LOG_WARN_NAMED(
+          "sdformat_urdf", "SDFormat visual [%s] has <material><lighting>,"
+          " but URDF does not support this", sdf_visual->Name().c_str());
+      }
+      std::cerr << "has material\n";
     }
 
     if (0u == vi) {
