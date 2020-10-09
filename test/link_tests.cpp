@@ -44,6 +44,18 @@ TEST(Link, link_inertia)
   EXPECT_DOUBLE_EQ(3.683196351726, link->inertial->izz);
 }
 
+TEST(Link, link_light_point)
+{
+  sdf::Errors errors;
+  urdf::ModelInterfaceSharedPtr model = sdformat_urdf::parse(
+    get_file(PATH_TO_SDF_LINK_LIGHT_POINT), errors);
+  EXPECT_TRUE(errors.empty()) << errors;
+  ASSERT_TRUE(model);
+  ASSERT_EQ("link_light_point", model->getName());
+
+  // Sensors are ignored, but warnings are emitted for their presense
+}
+
 TEST(Link, link_multiple_collisions)
 {
   sdf::Errors errors;
