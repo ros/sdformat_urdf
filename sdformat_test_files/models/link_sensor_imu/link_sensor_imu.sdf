@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='utf-8'?>
+<sdf version="1.7">
+  <model name="link_sensor_imu">
+    <link name="link">
+      <visual name="link_visual">
+        <geometry>
+          <box>
+            <size>0.1 0.2 0.4</size>
+          </box>
+        </geometry>
+      </visual>
+      <collision name="link_collision">
+        <geometry>
+          <box>
+            <size>0.1 0.2 0.4</size>
+          </box>
+        </geometry>
+      </collision>
+      <inertial>
+        <mass>1.23</mass>
+        <inertia>
+          <ixx>0.0205</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>0.017425</iyy>
+          <iyz>0</iyz>
+          <izz>0.005125</izz>
+        </inertia>
+      </inertial>
+      <sensor name="some_imu" type="imu">
+        <imu/>
+      </sensor>
+    </link>
+  </model>
+</sdf>
