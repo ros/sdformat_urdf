@@ -599,11 +599,6 @@ sdformat_urdf::convert_geometry(const sdf::Geometry & sdf_geometry, sdf::Errors 
     auto urdf_sphere = std::make_shared<urdf::Sphere>();
     urdf_sphere->radius = sphere->Radius();
     return urdf_sphere;
-  } else if (sdf_geometry.PlaneShape()) {
-    errors.emplace_back(
-      sdf::ErrorCode::STRING_READ,
-      "Plane geometry cannot be converted to urdf C++ structures");
-    return nullptr;
   } else if (sdf_geometry.MeshShape()) {
     const std::string & uri = sdf_geometry.MeshShape()->Uri();
     auto urdf_mesh = std::make_shared<urdf::Mesh>();
@@ -618,6 +613,11 @@ sdformat_urdf::convert_geometry(const sdf::Geometry & sdf_geometry, sdf::Errors 
     urdf_mesh->scale.y = sdf_geometry.MeshShape()->Scale().Y();
     urdf_mesh->scale.z = sdf_geometry.MeshShape()->Scale().Z();
     return urdf_mesh;
+  } else if (sdf_geometry.PlaneShape()) {
+    errors.emplace_back(
+      sdf::ErrorCode::STRING_READ,
+      "Plane geometry cannot be converted to urdf C++ structures");
+    return nullptr;
   }
 
   errors.emplace_back(
