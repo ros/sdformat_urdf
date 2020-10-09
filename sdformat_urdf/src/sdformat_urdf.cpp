@@ -357,7 +357,7 @@ sdformat_urdf::convert_link(
     if (!sdf_visual) {
       errors.emplace_back(
         sdf::ErrorCode::STRING_READ,
-        "Failed to get visual on lilnk [" + sdf_link.Name() + "]");
+        "Failed to get visual on link [" + sdf_link.Name() + "]");
       return nullptr;
     }
 
@@ -414,7 +414,7 @@ sdformat_urdf::convert_link(
     if (!sdf_collision) {
       errors.emplace_back(
         sdf::ErrorCode::STRING_READ,
-        "Failed to get collision on lilnk [" + sdf_link.Name() + "]");
+        "Failed to get collision on link [" + sdf_link.Name() + "]");
       return nullptr;
     }
 
