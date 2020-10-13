@@ -10,4 +10,4 @@ See the [README in the `sdformat_urdf` package](./sdformat_urdf/README.md) for m
 * [`sdformat_urdf`](./sdformat_urdf/README.md)
   * provides a library and a `urdf_parser_plugin` using that library to convert SDFormat XML to URDF C++ DOM structures
 * [`sdformat_test_files`](./sdformat_test_files/README.md)
-  * provides SDFormat models using different parts of the SDFormat XML specification for testing.
+  * provides SDFormat models using different parts of the SDFormat XML specification for testing
