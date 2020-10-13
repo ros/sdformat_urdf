@@ -40,10 +40,10 @@ If any of these constraints are voilated then the library may issue a console wa
 The warning is issued using an `rcutils` logger with the name `sdformat_urdf`.
 
 #### Joint limitations
-* `<axis>` elements should not use `<initial_position>`
-* `<dynamics>` elements should not use `<spring_reference>` or `<spring_stiffness>`
-* `<limit>` elements should not use `<dissipation>` or `<stiffness>`
-* `<joint>` elements should not use `<sensor>` or `<physics>`
+* `<axis>` should not use `<initial_position>`
+* `<dynamics>` should not use `<spring_reference>` or `<spring_stiffness>`
+* `<limit>` should not use `<dissipation>` or `<stiffness>`
+* `<joint>` should not use `<sensor>` or `<physics>`
 
 #### Link limitations
 * `<link>` should not have any `<light>` or `<sensor>`
