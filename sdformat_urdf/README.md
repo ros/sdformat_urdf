@@ -17,20 +17,20 @@ SDFormat XML used with this plugin must be constructed with the following limita
 This package will error and refuse to convert any SDFormat XML that violates these constraints.
 
 #### Model limitations
-* The XML file must contain a single `<model>` not in a `<world>`.
-* The `<model>` tag must not have a `<pose>` tag.
-* There must not be any nested `<model>` tags.
+* The XML file must contain a single `<model>` not in a `<world>`
+* The `<model>` tag must not have a `<pose>`
+* There must not be any nested `<model>`
 
 #### Geometry limitations
-* The only supported geometry types are `<box>`, `<cylinders>`, `<mesh>`, and `sphere`.
-* The model must not use `<plane>` or `<heightmap>`.
+* The only supported geometry types are `<box>`, `<cylinder>`, `<mesh>`, and `<sphere>`
+* The model must not use `<plane>` or `<heightmap>`
 
 #### Joint limitations
-* The only supported joint types are `continuous`, `fixed`, `prismatic`, and `revolute`.
-* The model must not use `universal`, `screw`, `revolute2`, `gearbox`, or `ball` joints.
+* The only supported joint types are `continuous`, `fixed`, `prismatic`, and `revolute`
+* The model must not use `universal`, `screw`, `revolute2`, `gearbox`, or `ball` joints
 
 #### Kinematic limitations
-*  Starting from the canonical link, the links and joints must form a tree.
+*  Starting from the canonical link, the links and joints must form a tree
 *  No link may be a child of more than 1 joint
 *  The canonical link cannot be a child of any joint
 
@@ -46,11 +46,10 @@ The warning is issued using an `rcutils` logger with the name `sdformat_urdf`.
 * `<joint>` elements should not use `<sensor>` or `<physics>`
 
 #### Link limitations
-* The link should not have any `<light>` tags.
-* The link should not have any `<sensor>` tags.
+* `<link>` should not have any `<light>` or `<sensor>`
 
 #### Material limitations
-* Only solid color materials are supported - the color of the urdf comes from the `<ambient>` tag of the model
+* Only solid color materials are supported - the color of the urdf comes from the `<ambient>` tag of the material
 * The model should not disable dynamic lighting using the `<lighting>`
-* The model should not use materials with `<script>`, `<shader>`, or `<pbr>` tags.
-* The URDF material name assigned the name of the SDFormat `<visual>` containing the material, so `<visual>` names should be unique within the model.
+* The model should not use materials with `<script>`, `<shader>`, or `<pbr>`
+* The URDF material name assigned the name of the SDFormat `<visual>` containing the material, so `<visual>` names should be unique within the model
