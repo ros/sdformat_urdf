@@ -60,7 +60,7 @@ sdformat_urdf::parse(const std::string & data, sdf::Errors & errors)
 urdf::ModelInterfaceSharedPtr
 sdformat_urdf::sdf_to_urdf(const sdf::Root & sdf_dom, sdf::Errors & errors)
 {
-  if (sdf_dom.WorldCount()) {
+  if (sdf_dom.WorldCount() > 0u) {
     errors.emplace_back(
       sdf::ErrorCode::STRING_READ,
       "SDFormat xml has a world; but only a single model is supported");
