@@ -71,13 +71,18 @@ foreach(model ${model_names})
   install(DIRECTORY "models/${model}" DESTINATION "${INSTALL_SHARE_DIR}/models")
 endforeach()
 
+set(_arch_independent "")
+if(${CMAKE_VERSION} VERSION_GREATER_EQUAL "3.14.0")
+  set(_arch_independent "ARCH_INDEPENDENT")
+endif()
+
 # Create projectConfigVersion.cmake
 include(CMakePackageConfigHelpers)
 write_basic_package_version_file(
   "${CMAKE_CURRENT_BINARY_DIR}/sdformat_test_files/sdformat_test_filesConfigVersion.cmake"
   VERSION "${sdformat_test_files_VERSION}"
   COMPATIBILITY SameMajorVersion
-  ARCH_INDEPENDENT)
+  ${_arch_independent})
 
 # Create projectConfig.cmake
 configure_package_config_file("sdformat_test_filesConfig.cmake.in"
