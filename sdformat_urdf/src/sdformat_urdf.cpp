@@ -385,8 +385,8 @@ sdformat_urdf::convert_link(
       // TODO(sloretz) textures
       // TODO(sloretz) error if any file names we can't resolve are given
       auto urdf_material = std::make_shared<urdf::Material>();
-      // sdf materials don't have names, so assign it the visual's name and hope that's unique
-      urdf_material->name = sdf_visual->Name();
+      // sdf materials don't have names, so assign link's + visual's name and hope it's unique
+      urdf_material->name = sdf_link.Name() + sdf_visual->Name();
       // Color support is pretty limited in urdf, just take the ambient (color with no light)
       urdf_material->color.r = sdf_material->Ambient().R();
       urdf_material->color.g = sdf_material->Ambient().G();

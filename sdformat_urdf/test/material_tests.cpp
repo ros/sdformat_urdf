@@ -31,10 +31,11 @@ TEST(Material, material_blinn_phong)
   ASSERT_TRUE(model);
   ASSERT_EQ("material_blinn_phong", model->getName());
 
-  urdf::VisualConstSharedPtr visual = model->getRoot()->visual;
+  urdf::LinkConstSharedPtr link = model->getRoot();
+  urdf::VisualConstSharedPtr visual = link->visual;
   ASSERT_NE(nullptr, visual);
 
-  EXPECT_EQ(visual->name, visual->material->name);
+  EXPECT_EQ(link->name + visual->name, visual->material->name);
   EXPECT_EQ("", visual->material->texture_filename);
   EXPECT_FLOAT_EQ(0.3, visual->material->color.r);
   EXPECT_FLOAT_EQ(0, visual->material->color.g);
