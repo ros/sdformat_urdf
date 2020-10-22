@@ -36,7 +36,7 @@ This package will error and refuse to convert any SDFormat XML that violates the
 
 ### Limitations that may result in Warnings
 
-If any of these constraints are voilated then the library may issue a console warning, but the model is still converted to URDF c++ structures.
+If any of these constraints are violated then the library may issue a console warning, but the model is still converted to URDF c++ structures.
 The warning is issued using an `rcutils` logger with the name `sdformat_urdf`.
 
 #### Joint limitations
