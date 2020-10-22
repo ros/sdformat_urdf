@@ -219,7 +219,7 @@ sdformat_urdf::convert_model(const sdf::Model & sdf_model, sdf::Errors & errors)
         urdf_parent_link->child_joints.push_back(urdf_joint);
 
         // SDFormat joint pose is relative to the child sdformat link
-        // URDF joint pose is relative to the parent urdf link, which is the the frame of the
+        // URDF joint pose is relative to the parent urdf link, which is the frame of the
         // previous urdf joint
         std::string parent_frame_name{sdf_parent_link->Name()};
         if (urdf_parent_link->parent_joint) {
