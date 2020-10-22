@@ -51,7 +51,7 @@ sdformat_urdf::parse(const std::string & data, sdf::Errors & errors)
 {
   auto sdf_dom = std::make_shared<sdf::Root>();
   errors = sdf_dom->LoadSdfString(data);
-  if (sdf_dom) {
+  if (errors.empty()) {
     return sdformat_urdf::sdf_to_urdf(*sdf_dom, errors);
   }
   return nullptr;
