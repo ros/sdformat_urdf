@@ -52,7 +52,12 @@ target_link_libraries(sdformat_urdf_plugin PRIVATE
 ament_export_dependencies(urdfdom_headers)
 ament_export_dependencies(sdformat9)
 
-install(TARGETS sdformat_urdf sdformat_urdf_plugin
+install(TARGETS sdformat_urdf EXPORT sdformat_urdf-export
+  ARCHIVE DESTINATION lib
+  LIBRARY DESTINATION lib
+  RUNTIME DESTINATION bin
+)
+install(TARGETS sdformat_urdf_plugin
   ARCHIVE DESTINATION lib
   LIBRARY DESTINATION lib
   RUNTIME DESTINATION bin
@@ -63,8 +68,7 @@ install(
   DESTINATION include
 )
 
-install(TARGETS sdformat_urdf EXPORT sdformat_urdf-export)
-ament_export_targets(sdformat_urdf-export)
+ament_export_targets(sdformat_urdf-export HAS_LIBRARY_TARGET)
 
 pluginlib_export_plugin_description_file(urdf_parser_plugin "sdformat_urdf_plugin.xml")
 
