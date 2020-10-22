@@ -61,6 +61,12 @@
       <parent>link_1</parent>
       <child>link_2</child>
       <pose>0 0 0.1 0 0 0</pose>
+      <axis>
+        <xyz>1 0 0</xyz>
+      </axis>
+      <axis2>
+        <xyz>0 0 1</xyz>
+      </axis2>
     </joint>
   </model>
 </sdf>
