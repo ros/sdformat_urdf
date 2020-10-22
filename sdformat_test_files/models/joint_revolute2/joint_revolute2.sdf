@@ -67,14 +67,14 @@
           <upper>1.5</upper>
         </limit>
       </axis>
-      <axis>
+      <axis2>
         <!-- TODO(sloretz) why does gazebo 9 mistakenly treat this as 0 0 1 -->
         <xyz>0.707 0 0.707</xyz>
         <limit>
           <lower>-1.5</lower>
           <upper>1.5</upper>
         </limit>
-      </axis>
+      </axis2>
     </joint>
   </model>
 </sdf>
