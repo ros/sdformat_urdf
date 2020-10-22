@@ -24,9 +24,11 @@ find_package(TinyXML2 REQUIRED)
 add_library(sdformat_urdf SHARED
   src/sdformat_urdf.cpp
 )
-target_link_libraries(sdformat_urdf
-  PUBLIC
+target_link_libraries(sdformat_urdf PUBLIC
     sdformat9::sdformat9
+)
+target_link_libraries(sdformat_urdf PRIVATE
+  rcutils::rcutils
 )
 target_include_directories(sdformat_urdf
   PUBLIC
@@ -34,22 +36,17 @@ target_include_directories(sdformat_urdf
     "$<INSTALL_INTERFACE:include>"
     ${urdfdom_headers_INCLUDE_DIRS}
 )
-ament_target_dependencies(sdformat_urdf PUBLIC
-  "rcutils"
-)
 
 # Add sdformat_urdf_plugin module library
 add_library(sdformat_urdf_plugin MODULE
   src/sdformat_urdf_plugin.cpp
 )
-target_link_libraries(sdformat_urdf_plugin PUBLIC
+target_link_libraries(sdformat_urdf_plugin PRIVATE
+  pluginlib::pluginlib
+  rcutils::rcutils
   sdformat_urdf
-)
-ament_target_dependencies(sdformat_urdf_plugin PUBLIC
-  "pluginlib"
-  "rcutils"
-  "TinyXML2"
-  "urdf_parser_plugin"
+  tinyxml2::tinyxml2
+  urdf_parser_plugin::urdf_parser_plugin
 )
 
 ament_export_dependencies(urdfdom_headers)
