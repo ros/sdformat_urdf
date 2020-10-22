@@ -57,7 +57,6 @@ public:
       // Since it's an XML document it must have `<sdf>` as the first tag
       const tinyxml2::XMLElement * root = doc.RootElement();
       if (std::string("sdf") != root->Name()) {
-        std::cout << "'" << root->Name() << "'\n";
         return std::numeric_limits<size_t>::max();
       }
     }
