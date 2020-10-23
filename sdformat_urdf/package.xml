@@ -3,7 +3,7 @@
   <name>sdformat_urdf</name>
   <version>0.1.0</version>
   <description>
-    URDF plugin to parse SDFormat XML into URDF C++ structures.
+    URDF plugin to parse SDFormat XML into URDF C++ DOM objects.
   </description>
 
   <author email="sloretz@openrobotics.org">Shane Loretz</author>
