@@ -60,25 +60,25 @@ TEST(Pose, pose_chain)
   const ignition::math::Pose3d link_4_to_joint_3_in_link_4{0.7, 0.6, 0.5, 0.4, 0.3, 0.2};
 
   const ignition::math::Pose3d model_to_joint_1_in_model =
-    link_2_to_joint_1_in_link_2 + model_to_link_2_in_model;
+    model_to_link_2_in_model * link_2_to_joint_1_in_link_2;
   const ignition::math::Pose3d model_to_joint_2_in_model =
-    link_3_to_joint_2_in_link_3 + model_to_link_3_in_model;
+    model_to_link_3_in_model * link_3_to_joint_2_in_link_3;
   const ignition::math::Pose3d model_to_joint_3_in_model =
-    link_4_to_joint_3_in_link_4 + model_to_link_4_in_model;
+    model_to_link_4_in_model * link_4_to_joint_3_in_link_4;
 
   const ignition::math::Pose3d link_1_to_joint_1_in_link_1 =
-    model_to_joint_1_in_model - model_to_link_1_in_model;
+    model_to_link_1_in_model.Inverse() * model_to_joint_1_in_model;
   const ignition::math::Pose3d joint_1_to_link_2_in_joint_1 =
-    model_to_link_2_in_model - model_to_joint_1_in_model;
+    model_to_joint_1_in_model.Inverse() * model_to_link_2_in_model;
   const ignition::math::Pose3d joint_2_to_link_3_in_joint_2 =
-    model_to_link_3_in_model - model_to_joint_2_in_model;
+    model_to_joint_2_in_model.Inverse() * model_to_link_3_in_model;
   const ignition::math::Pose3d joint_3_to_link_4_in_joint_3 =
-    model_to_link_4_in_model - model_to_joint_3_in_model;
+    model_to_joint_3_in_model.Inverse() * model_to_link_4_in_model;
 
   const ignition::math::Pose3d joint_1_to_joint_2_in_joint_1 =
-    model_to_joint_2_in_model - model_to_joint_1_in_model;
+    model_to_joint_1_in_model.Inverse() * model_to_joint_2_in_model;
   const ignition::math::Pose3d joint_2_to_joint_3_in_joint_2 =
-    model_to_joint_3_in_model - model_to_joint_2_in_model;
+    model_to_joint_2_in_model.Inverse() * model_to_joint_3_in_model;
 
   EXPECT_POSE(ignition::math::Pose3d::Zero, link_1->inertial->origin);
   EXPECT_POSE(ignition::math::Pose3d::Zero, link_1->visual->origin);
@@ -138,10 +138,10 @@ TEST(Pose, pose_collision_in_frame)
   const ignition::math::Pose3d model_to_frame_in_model{0.05, 0.1, 0.2, 0.1, 0.2, 0.3};
   const ignition::math::Pose3d model_to_link_in_model{0, 0, 0, 0, 0, 0};
   const ignition::math::Pose3d frame_to_link_in_frame =
-    model_to_link_in_model - model_to_frame_in_model;
+    model_to_frame_in_model.Inverse() * model_to_link_in_model;
   const ignition::math::Pose3d frame_to_collision_in_frame{0.2, 0.4, 0.8, 0.2, 0.3, 0.4};
   const ignition::math::Pose3d link_to_collision_in_link =
-    frame_to_collision_in_frame - frame_to_link_in_frame;
+    frame_to_link_in_frame.Inverse() * frame_to_collision_in_frame;
 
   EXPECT_POSE(ignition::math::Pose3d::Zero, link->inertial->origin);
   EXPECT_POSE(ignition::math::Pose3d::Zero, link->visual->origin);
@@ -184,10 +184,10 @@ TEST(Pose, pose_inertial_in_frame)
   const ignition::math::Pose3d model_to_frame_in_model{0.05, 0.1, 0.2, 0.1, 0.2, 0.3};
   const ignition::math::Pose3d model_to_link_in_model{0, 0, 0, 0, 0, 0};
   const ignition::math::Pose3d frame_to_link_in_frame =
-    model_to_link_in_model - model_to_frame_in_model;
+    model_to_frame_in_model.Inverse() * model_to_link_in_model;
   const ignition::math::Pose3d frame_to_inertial_in_frame{0.2, 0.4, 0.8, 0.2, 0.3, 0.4};
   const ignition::math::Pose3d link_to_inertial_in_link =
-    frame_to_inertial_in_frame - frame_to_link_in_frame;
+    frame_to_link_in_frame.Inverse() * frame_to_inertial_in_frame;
 
   EXPECT_POSE(link_to_inertial_in_link, link->inertial->origin);
   EXPECT_POSE(ignition::math::Pose3d::Zero, link->visual->origin);
@@ -215,10 +215,10 @@ TEST(Pose, pose_joint)
   const ignition::math::Pose3d child_to_joint_in_child{0.05, 0.1, 0.2, 0.1, 0.2, 0.3};
 
   const ignition::math::Pose3d parent_to_child_in_parent =
-    model_to_child_in_model - model_to_parent_in_model;
+    model_to_parent_in_model.Inverse() * model_to_child_in_model;
   const ignition::math::Pose3d parent_to_joint_in_parent =
-    child_to_joint_in_child + parent_to_child_in_parent;
-  const ignition::math::Pose3d joint_to_child_in_joint = -child_to_joint_in_child;
+    parent_to_child_in_parent * child_to_joint_in_child;
+  const ignition::math::Pose3d joint_to_child_in_joint = child_to_joint_in_child.Inverse();
 
   EXPECT_POSE(parent_to_joint_in_parent, joint->parent_to_joint_origin_transform);
 
@@ -251,11 +251,11 @@ TEST(Pose, pose_joint_in_frame)
   const ignition::math::Pose3d frame_to_joint_in_frame{0.05, 0.1, 0.2, 0.1, 0.2, 0.3};
 
   const ignition::math::Pose3d model_to_joint_in_model =
-    frame_to_joint_in_frame + model_to_frame_in_model;
+    model_to_frame_in_model * frame_to_joint_in_frame;
   const ignition::math::Pose3d parent_to_joint_in_parent =
-    model_to_joint_in_model - model_to_parent_in_model;
+    model_to_parent_in_model.Inverse() * model_to_joint_in_model;
   const ignition::math::Pose3d joint_to_child_in_joint =
-    model_to_child_in_model - model_to_joint_in_model;
+    model_to_joint_in_model.Inverse() * model_to_child_in_model;
 
   EXPECT_POSE(parent_to_joint_in_parent, joint->parent_to_joint_origin_transform);
 
@@ -371,10 +371,10 @@ TEST(Pose, pose_visual_in_frame)
   const ignition::math::Pose3d model_to_frame_in_model{0.05, 0.1, 0.2, 0.1, 0.2, 0.3};
   const ignition::math::Pose3d model_to_link_in_model{0, 0, 0, 0, 0, 0};
   const ignition::math::Pose3d frame_to_link_in_frame =
-    model_to_link_in_model - model_to_frame_in_model;
+    model_to_frame_in_model.Inverse() * model_to_link_in_model;
   const ignition::math::Pose3d frame_to_visual_in_frame{0.2, 0.4, 0.8, 0.2, 0.3, 0.4};
   const ignition::math::Pose3d link_to_visual_in_link =
-    frame_to_visual_in_frame - frame_to_link_in_frame;
+    frame_to_link_in_frame.Inverse() * frame_to_visual_in_frame;
 
   EXPECT_POSE(ignition::math::Pose3d::Zero, link->inertial->origin);
   EXPECT_POSE(link_to_visual_in_link, link->visual->origin);

@@ -184,10 +184,10 @@ TEST(Joint, joint_revolute_axis_in_frame)
   const ignition::math::Pose3d model_to_frame_in_model{0.05, 0.1, 0.2, 0.1, 0.2, 0.3};
   const ignition::math::Pose3d model_to_child_in_model{0.1, 0, 0.1, 0, 0, 0};
   const ignition::math::Pose3d frame_to_child_in_frame =
-    model_to_child_in_model - model_to_frame_in_model;
+    model_to_frame_in_model.Inverse() * model_to_child_in_model;
   const ignition::math::Pose3d child_to_joint_in_child{0, 0, 0, 0, 0, 0};
   const ignition::math::Pose3d frame_to_joint_in_frame =
-    child_to_joint_in_child + frame_to_child_in_frame;
+    frame_to_child_in_frame * child_to_joint_in_child;
 
   const ignition::math::Vector3d axis_in_frame{0.1, 1.23, 4.567};
   const ignition::math::Vector3d axis_in_joint =
