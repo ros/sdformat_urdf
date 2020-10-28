@@ -47,6 +47,11 @@ get_file(const char * path)
     EXPECT_EQ(expected_ign, actual_ign); \
   } while (false)
 
+// Given a container of pointers to urdf types and C strings as arguments,
+// this macro will make sure the names of those elements match the arguments
+// to this macro (in any order).
+// EXPECT_NAMES(links, "link1", "link2") will expect the links vector to have
+// two links, one with name "link1" and the other with name "link2".
 #define EXPECT_NAMES(child_ptr_list, ...) \
   do { \
     std::vector<std::string> expected_names{__VA_ARGS__}; \
