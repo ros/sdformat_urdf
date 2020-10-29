@@ -32,6 +32,7 @@ TEST(Link, link_inertia)
   ASSERT_EQ("link_inertia", model->getName());
 
   urdf::LinkConstSharedPtr link = model->getLink("link");
+  ASSERT_NE(nullptr, link);
 
   EXPECT_EQ("link", link->name);
   ASSERT_NE(nullptr, link->inertial);
@@ -66,6 +67,7 @@ TEST(Link, link_multiple_collisions)
   ASSERT_EQ("link_multiple_collisions", model->getName());
 
   urdf::LinkConstSharedPtr link = model->getLink("link");
+  ASSERT_NE(nullptr, link);
 
   EXPECT_EQ("link", link->name);
   ASSERT_NE(nullptr, link->collision);
@@ -85,6 +87,7 @@ TEST(Link, link_multiple_visuals)
   ASSERT_EQ("link_multiple_visuals", model->getName());
 
   urdf::LinkConstSharedPtr link = model->getLink("link");
+  ASSERT_NE(nullptr, link);
 
   EXPECT_EQ("link", link->name);
   ASSERT_NE(nullptr, link->visual);
