@@ -163,11 +163,12 @@ TEST(Joint, joint_revolute_axis)
 
   urdf::JointConstSharedPtr joint = model->getJoint("joint_revolute");
 
+  const ignition::math::Vector3d expected_axis{0.1, 1.23, 4.567};
+  const ignition::math::Vector3d actual_axis{joint->axis.x, joint->axis.y, joint->axis.z};
+
   EXPECT_EQ("joint_revolute", joint->name);
   EXPECT_EQ(urdf::Joint::REVOLUTE, joint->type);
-  EXPECT_DOUBLE_EQ(0.1, joint->axis.x);
-  EXPECT_DOUBLE_EQ(1.23, joint->axis.y);
-  EXPECT_DOUBLE_EQ(4.567, joint->axis.z);
+  EXPECT_EQ(expected_axis.Normalized(), actual_axis.Normalized());
 }
 
 TEST(Joint, joint_revolute_axis_in_frame)
@@ -193,11 +194,11 @@ TEST(Joint, joint_revolute_axis_in_frame)
   const ignition::math::Vector3d axis_in_joint =
     frame_to_joint_in_frame.Inverse().Rot().RotateVector(axis_in_frame);
 
+  const ignition::math::Vector3d actual_axis{joint->axis.x, joint->axis.y, joint->axis.z};
+
   EXPECT_EQ("joint_revolute", joint->name);
   EXPECT_EQ(urdf::Joint::REVOLUTE, joint->type);
-  EXPECT_DOUBLE_EQ(axis_in_joint.X(), joint->axis.x);
-  EXPECT_DOUBLE_EQ(axis_in_joint.Y(), joint->axis.y);
-  EXPECT_DOUBLE_EQ(axis_in_joint.Z(), joint->axis.z);
+  EXPECT_EQ(axis_in_joint.Normalized(), actual_axis.Normalized());
 }
 
 TEST(Joint, joint_revolute_default_limits)
