@@ -35,6 +35,8 @@ TEST(Geometry, geometry_box)
   ASSERT_NE(nullptr, link);
   ASSERT_NE(nullptr, link->visual);
   ASSERT_NE(nullptr, link->collision);
+  ASSERT_NE(nullptr, link->visual->geometry);
+  ASSERT_NE(nullptr, link->collision->geometry);
 
   ASSERT_EQ(urdf::Geometry::BOX, link->visual->geometry->type);
   {
@@ -68,6 +70,8 @@ TEST(Geometry, geometry_cylinder)
   ASSERT_NE(nullptr, link);
   ASSERT_NE(nullptr, link->visual);
   ASSERT_NE(nullptr, link->collision);
+  ASSERT_NE(nullptr, link->visual->geometry);
+  ASSERT_NE(nullptr, link->collision->geometry);
 
   ASSERT_EQ(urdf::Geometry::CYLINDER, link->visual->geometry->type);
   {
@@ -111,6 +115,8 @@ TEST(Geometry, geometry_mesh_collada)
   ASSERT_NE(nullptr, link);
   ASSERT_NE(nullptr, link->visual);
   ASSERT_NE(nullptr, link->collision);
+  ASSERT_NE(nullptr, link->visual->geometry);
+  ASSERT_NE(nullptr, link->collision->geometry);
 
   ASSERT_EQ(urdf::Geometry::MESH, link->visual->geometry->type);
   {
@@ -142,6 +148,8 @@ TEST(Geometry, geometry_mesh_obj)
   ASSERT_NE(nullptr, link);
   ASSERT_NE(nullptr, link->visual);
   ASSERT_NE(nullptr, link->collision);
+  ASSERT_NE(nullptr, link->visual->geometry);
+  ASSERT_NE(nullptr, link->collision->geometry);
 
   ASSERT_EQ(urdf::Geometry::MESH, link->visual->geometry->type);
   {
@@ -173,6 +181,8 @@ TEST(Geometry, geometry_mesh_scaled)
   ASSERT_NE(nullptr, link);
   ASSERT_NE(nullptr, link->visual);
   ASSERT_NE(nullptr, link->collision);
+  ASSERT_NE(nullptr, link->visual->geometry);
+  ASSERT_NE(nullptr, link->collision->geometry);
 
   ASSERT_EQ(urdf::Geometry::MESH, link->visual->geometry->type);
   {
@@ -210,6 +220,8 @@ TEST(Geometry, geometry_mesh_stl)
   ASSERT_NE(nullptr, link);
   ASSERT_NE(nullptr, link->visual);
   ASSERT_NE(nullptr, link->collision);
+  ASSERT_NE(nullptr, link->visual->geometry);
+  ASSERT_NE(nullptr, link->collision->geometry);
 
   ASSERT_EQ(urdf::Geometry::MESH, link->visual->geometry->type);
   {
@@ -251,6 +263,8 @@ TEST(Geometry, geometry_sphere)
   ASSERT_NE(nullptr, link);
   ASSERT_NE(nullptr, link->visual);
   ASSERT_NE(nullptr, link->collision);
+  ASSERT_NE(nullptr, link->visual->geometry);
+  ASSERT_NE(nullptr, link->collision->geometry);
 
   ASSERT_EQ(urdf::Geometry::SPHERE, link->visual->geometry->type);
   {
