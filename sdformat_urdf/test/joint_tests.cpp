@@ -42,6 +42,7 @@ TEST(Joint, joint_continuous)
   ASSERT_EQ("joint_continuous", model->getName());
 
   urdf::JointConstSharedPtr joint = model->getJoint("joint_continuous");
+  ASSERT_NE(nullptr, joint);
 
   EXPECT_EQ("joint_continuous", joint->name);
   EXPECT_EQ(urdf::Joint::CONTINUOUS, joint->type);
@@ -67,6 +68,7 @@ TEST(Joint, joint_fixed)
   ASSERT_EQ("joint_fixed", model->getName());
 
   urdf::JointConstSharedPtr joint = model->getJoint("joint_fixed");
+  ASSERT_NE(nullptr, joint);
 
   EXPECT_EQ("joint_fixed", joint->name);
   EXPECT_EQ(urdf::Joint::FIXED, joint->type);
@@ -97,6 +99,7 @@ TEST(Joint, joint_prismatic)
   ASSERT_EQ("joint_prismatic", model->getName());
 
   urdf::JointConstSharedPtr joint = model->getJoint("joint_prismatic");
+  ASSERT_NE(nullptr, joint);
 
   EXPECT_EQ("joint_prismatic", joint->name);
   EXPECT_EQ(urdf::Joint::PRISMATIC, joint->type);
@@ -126,6 +129,7 @@ TEST(Joint, joint_revolute)
   ASSERT_EQ("joint_revolute", model->getName());
 
   urdf::JointConstSharedPtr joint = model->getJoint("joint_revolute");
+  ASSERT_NE(nullptr, joint);
 
   EXPECT_EQ("joint_revolute", joint->name);
   EXPECT_EQ(urdf::Joint::REVOLUTE, joint->type);
@@ -162,6 +166,7 @@ TEST(Joint, joint_revolute_axis)
   ASSERT_EQ("joint_revolute_axis", model->getName());
 
   urdf::JointConstSharedPtr joint = model->getJoint("joint_revolute");
+  ASSERT_NE(nullptr, joint);
 
   const ignition::math::Vector3d expected_axis{0.1, 1.23, 4.567};
   const ignition::math::Vector3d actual_axis{joint->axis.x, joint->axis.y, joint->axis.z};
@@ -181,6 +186,7 @@ TEST(Joint, joint_revolute_axis_in_frame)
   ASSERT_EQ("joint_revolute_axis_in_frame", model->getName());
 
   urdf::JointConstSharedPtr joint = model->getJoint("joint_revolute");
+  ASSERT_NE(nullptr, joint);
 
   const ignition::math::Pose3d model_to_frame_in_model{0.05, 0.1, 0.2, 0.1, 0.2, 0.3};
   const ignition::math::Pose3d model_to_child_in_model{0.1, 0, 0.1, 0, 0, 0};
@@ -211,6 +217,7 @@ TEST(Joint, joint_revolute_default_limits)
   ASSERT_EQ("joint_revolute_default_limits", model->getName());
 
   urdf::JointConstSharedPtr joint = model->getJoint("joint_revolute");
+  ASSERT_NE(nullptr, joint);
 
   EXPECT_EQ("joint_revolute", joint->name);
   EXPECT_EQ(urdf::Joint::REVOLUTE, joint->type);
