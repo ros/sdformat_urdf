@@ -36,12 +36,17 @@ TEST(Material, material_blinn_phong)
   urdf::VisualConstSharedPtr visual = link->visual;
   ASSERT_NE(nullptr, visual);
 
+  const ignition::math::Vector4d ambient{0.3, 0, 0, 1};
+  const ignition::math::Vector4d diffuse{0, 0.3, 0, 1};
+  const ignition::math::Vector4d expected_color =
+    0.4 * ambient + 0.8 * diffuse;
+
   EXPECT_EQ(link->name + visual->name, visual->material->name);
   EXPECT_EQ("", visual->material->texture_filename);
-  EXPECT_FLOAT_EQ(0.3, visual->material->color.r);
-  EXPECT_FLOAT_EQ(0, visual->material->color.g);
-  EXPECT_FLOAT_EQ(0, visual->material->color.b);
-  EXPECT_FLOAT_EQ(1, visual->material->color.a);
+  EXPECT_FLOAT_EQ(expected_color[0], visual->material->color.r);
+  EXPECT_FLOAT_EQ(expected_color[1], visual->material->color.g);
+  EXPECT_FLOAT_EQ(expected_color[2], visual->material->color.b);
+  EXPECT_FLOAT_EQ(expected_color[3], visual->material->color.a);
 }
 
 TEST(Material, material_dynamic_lights)

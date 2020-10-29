@@ -49,7 +49,9 @@ The warning is issued using an `rcutils` logger with the name `sdformat_urdf`.
 * `<link>` should not have any `<light>` or `<sensor>`
 
 #### Material limitations
-* Only solid color materials are supported - the color of the urdf comes from the `<ambient>` tag of the material
+* Only solid color materials are supported
+  * The color only uses `<ambient>` and `<diffuse>` tags of the material
+  * Color is calculated as `0.4 * ambient + 0.8 * diffuse`
 * The model should not disable dynamic lighting using the `<lighting>`
 * The model should not use materials with `<script>`, `<shader>`, or `<pbr>`
 * The URDF material name assigned the name of the SDFormat `<visual>` containing the material, so `<visual>` names should be unique within the model

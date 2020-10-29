@@ -387,11 +387,17 @@ sdformat_urdf::convert_link(
       auto urdf_material = std::make_shared<urdf::Material>();
       // sdf materials don't have names, so assign link's + visual's name and hope it's unique
       urdf_material->name = sdf_link.Name() + sdf_visual->Name();
+      // Render to color same as Gazebo's default world ignoring specular
+      // color = 0.4 * ambient + 0.8 * specular
       // Color support is pretty limited in urdf, just take the ambient (color with no light)
-      urdf_material->color.r = sdf_material->Ambient().R();
-      urdf_material->color.g = sdf_material->Ambient().G();
-      urdf_material->color.b = sdf_material->Ambient().B();
-      urdf_material->color.a = sdf_material->Ambient().A();
+      urdf_material->color.r =
+        0.4 * sdf_material->Ambient().R() + 0.8 * sdf_material->Diffuse().R();
+      urdf_material->color.g =
+        0.4 * sdf_material->Ambient().G() + 0.8 * sdf_material->Diffuse().G();
+      urdf_material->color.b =
+        0.4 * sdf_material->Ambient().B() + 0.8 * sdf_material->Diffuse().B();
+      urdf_material->color.a =
+        0.4 * sdf_material->Ambient().A() + 0.8 * sdf_material->Diffuse().A();
 
       urdf_visual->material = urdf_material;
 
