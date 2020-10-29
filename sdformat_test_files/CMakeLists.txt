@@ -57,6 +57,7 @@ set(model_names
   "pose_inertial"
   "pose_inertial_in_frame"
   "pose_joint"
+  "pose_joint_all"
   "pose_joint_in_frame"
   "pose_link"
   "pose_link_all"

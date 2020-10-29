@@ -103,6 +103,8 @@ This package contains a list of SDFormat files for testing tools that work with 
   * A single-link model where only the inertial has a non-zero pose, and that pose is given in a frame on the model.
 * `pose_joint`
   * A model having two links and a revolute joint, where only the joint has a non-zero pose.
+* `pose_joint_all`
+  * A model having two links and a revolute joint, with non-zero poses on all including the inertials, visuals, and collisions.
 * `pose_joint_in_frame`
   * A model having two links and a revolute joint, where only the joint has a non-zero pose, and that pose is given in a frame on the model.
 * `pose_link`

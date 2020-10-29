@@ -58,6 +58,7 @@
 #define PATH_TO_SDF_POSE_INERTIAL "@path_to_sdf_pose_inertial@"
 #define PATH_TO_SDF_POSE_INERTIAL_IN_FRAME "@path_to_sdf_pose_inertial_in_frame@"
 #define PATH_TO_SDF_POSE_JOINT "@path_to_sdf_pose_joint@"
+#define PATH_TO_SDF_POSE_JOINT_ALL "@path_to_sdf_pose_joint_all@"
 #define PATH_TO_SDF_POSE_JOINT_IN_FRAME "@path_to_sdf_pose_joint_in_frame@"
 #define PATH_TO_SDF_POSE_LINK "@path_to_sdf_pose_link@"
 #define PATH_TO_SDF_POSE_LINK_ALL "@path_to_sdf_pose_link_all@"
