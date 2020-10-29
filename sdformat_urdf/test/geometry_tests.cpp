@@ -39,6 +39,7 @@ TEST(Geometry, geometry_box)
   ASSERT_EQ(urdf::Geometry::BOX, link->visual->geometry->type);
   {
     urdf::BoxConstSharedPtr box = std::dynamic_pointer_cast<urdf::Box>(link->visual->geometry);
+    ASSERT_NE(nullptr, box);
     EXPECT_DOUBLE_EQ(0.1, box->dim.x);
     EXPECT_DOUBLE_EQ(0.2, box->dim.y);
     EXPECT_DOUBLE_EQ(0.4, box->dim.z);
@@ -47,6 +48,7 @@ TEST(Geometry, geometry_box)
   ASSERT_EQ(urdf::Geometry::BOX, link->collision->geometry->type);
   {
     urdf::BoxConstSharedPtr box = std::dynamic_pointer_cast<urdf::Box>(link->collision->geometry);
+    ASSERT_NE(nullptr, box);
     EXPECT_DOUBLE_EQ(0.1, box->dim.x);
     EXPECT_DOUBLE_EQ(0.2, box->dim.y);
     EXPECT_DOUBLE_EQ(0.4, box->dim.z);
@@ -71,6 +73,7 @@ TEST(Geometry, geometry_cylinder)
   {
     urdf::CylinderConstSharedPtr cylinder =
       std::dynamic_pointer_cast<urdf::Cylinder>(link->visual->geometry);
+    ASSERT_NE(nullptr, cylinder);
     EXPECT_DOUBLE_EQ(0.2, cylinder->length);
     EXPECT_DOUBLE_EQ(0.125, cylinder->radius);
   }
@@ -79,6 +82,7 @@ TEST(Geometry, geometry_cylinder)
   {
     urdf::CylinderConstSharedPtr cylinder =
       std::dynamic_pointer_cast<urdf::Cylinder>(link->collision->geometry);
+    ASSERT_NE(nullptr, cylinder);
     EXPECT_DOUBLE_EQ(0.2, cylinder->length);
     EXPECT_DOUBLE_EQ(0.125, cylinder->radius);
   }
@@ -112,6 +116,7 @@ TEST(Geometry, geometry_mesh_collada)
   {
     urdf::MeshConstSharedPtr mesh =
       std::dynamic_pointer_cast<urdf::Mesh>(link->visual->geometry);
+    ASSERT_NE(nullptr, mesh);
     EXPECT_EQ("model://geometry_mesh_collada/torus.dae", mesh->filename);
   }
 
@@ -119,6 +124,7 @@ TEST(Geometry, geometry_mesh_collada)
   {
     urdf::MeshConstSharedPtr mesh =
       std::dynamic_pointer_cast<urdf::Mesh>(link->collision->geometry);
+    ASSERT_NE(nullptr, mesh);
     EXPECT_EQ("model://geometry_mesh_collada/torus.dae", mesh->filename);
   }
 }
@@ -141,6 +147,7 @@ TEST(Geometry, geometry_mesh_obj)
   {
     urdf::MeshConstSharedPtr mesh =
       std::dynamic_pointer_cast<urdf::Mesh>(link->visual->geometry);
+    ASSERT_NE(nullptr, mesh);
     EXPECT_EQ("model://geometry_mesh_obj/torus.obj", mesh->filename);
   }
 
@@ -148,6 +155,7 @@ TEST(Geometry, geometry_mesh_obj)
   {
     urdf::MeshConstSharedPtr mesh =
       std::dynamic_pointer_cast<urdf::Mesh>(link->collision->geometry);
+    ASSERT_NE(nullptr, mesh);
     EXPECT_EQ("model://geometry_mesh_obj/torus.obj", mesh->filename);
   }
 }
@@ -170,6 +178,7 @@ TEST(Geometry, geometry_mesh_scaled)
   {
     urdf::MeshConstSharedPtr mesh =
       std::dynamic_pointer_cast<urdf::Mesh>(link->visual->geometry);
+    ASSERT_NE(nullptr, mesh);
     EXPECT_EQ("model://geometry_mesh_scaled/torus.stl", mesh->filename);
     EXPECT_DOUBLE_EQ(0.1, mesh->scale.x);
     EXPECT_DOUBLE_EQ(0.2, mesh->scale.y);
@@ -180,6 +189,7 @@ TEST(Geometry, geometry_mesh_scaled)
   {
     urdf::MeshConstSharedPtr mesh =
       std::dynamic_pointer_cast<urdf::Mesh>(link->collision->geometry);
+    ASSERT_NE(nullptr, mesh);
     EXPECT_EQ("model://geometry_mesh_scaled/torus.stl", mesh->filename);
     EXPECT_DOUBLE_EQ(0.1, mesh->scale.x);
     EXPECT_DOUBLE_EQ(0.2, mesh->scale.y);
@@ -205,6 +215,7 @@ TEST(Geometry, geometry_mesh_stl)
   {
     urdf::MeshConstSharedPtr mesh =
       std::dynamic_pointer_cast<urdf::Mesh>(link->visual->geometry);
+    ASSERT_NE(nullptr, mesh);
     EXPECT_EQ("model://geometry_mesh_stl/torus.stl", mesh->filename);
   }
 
@@ -212,6 +223,7 @@ TEST(Geometry, geometry_mesh_stl)
   {
     urdf::MeshConstSharedPtr mesh =
       std::dynamic_pointer_cast<urdf::Mesh>(link->collision->geometry);
+    ASSERT_NE(nullptr, mesh);
     EXPECT_EQ("model://geometry_mesh_stl/torus.stl", mesh->filename);
   }
 }
@@ -244,6 +256,7 @@ TEST(Geometry, geometry_sphere)
   {
     urdf::SphereConstSharedPtr sphere =
       std::dynamic_pointer_cast<urdf::Sphere>(link->visual->geometry);
+    ASSERT_NE(nullptr, sphere);
     EXPECT_DOUBLE_EQ(0.125, sphere->radius);
   }
 
@@ -251,6 +264,7 @@ TEST(Geometry, geometry_sphere)
   {
     urdf::SphereConstSharedPtr sphere =
       std::dynamic_pointer_cast<urdf::Sphere>(link->collision->geometry);
+    ASSERT_NE(nullptr, sphere);
     EXPECT_DOUBLE_EQ(0.125, sphere->radius);
   }
 }
