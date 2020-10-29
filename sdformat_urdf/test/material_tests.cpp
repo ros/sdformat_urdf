@@ -32,6 +32,7 @@ TEST(Material, material_blinn_phong)
   ASSERT_EQ("material_blinn_phong", model->getName());
 
   urdf::LinkConstSharedPtr link = model->getRoot();
+  ASSERT_NE(nullptr, link);
   urdf::VisualConstSharedPtr visual = link->visual;
   ASSERT_NE(nullptr, visual);
 
