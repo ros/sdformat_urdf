@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='utf-8'?>
+<sdf version="1.7">
+  <model name="link_inertia">
+    <link name="link">
+      <visual name="link_visual">
+        <geometry>
+          <box>
+            <size>0.1 0.2 0.4</size>
+          </box>
+        </geometry>
+      </visual>
+      <collision name="link_collision">
+        <geometry>
+          <box>
+            <size>0.1 0.2 0.4</size>
+          </box>
+        </geometry>
+      </collision>
+      <inertial>
+        <mass>116.0</mass>
+        <inertia>
+          <ixx>5.652232699207</ixx>
+          <ixy>-0.009719934438</ixy>
+          <ixz>1.293988226423</ixz>
+          <iyy>5.669473158652</iyy>
+          <iyz>-0.007379583694</iyz>
+          <izz>3.683196351726</izz>
+        </inertia>
+      </inertial>
+    </link>
+  </model>
+</sdf>

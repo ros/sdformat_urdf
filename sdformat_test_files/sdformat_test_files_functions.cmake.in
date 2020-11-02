@@ -1,0 +1,32 @@
+# This file assumes sdformat_test_files_MODELS_DIR exists
+
+function(sdformat_test_files_has_model arg model_name)
+  set(known_model_names @model_names@)
+  foreach(known_model_name ${model_names})
+    if("${model_name}" STREQUAL "${known_model_name")
+      set("${arg}" TRUE PARENT_SCOPE)
+      return()
+    endif()
+  endforeach()
+  set("${arg}" "${model_name}-NOTFOUND}" PARENT_SCOPE)
+endfunction()
+
+# Get path to directory containing model.config for a model with the given name
+function(sdformat_test_files_get_model_path arg model_name)
+  sdformat_test_files_has_model("has_model" "${model_name}")
+  if(NOT has_model)
+    message(FATAL_ERROR "Unknown model ${model_name}")
+  endif()
+
+  set("${arg}" "${sdformat_test_files_MODELS_DIR}/${model_name}" PARENT_SCOPE)
+endfunction()
+
+# Get path to <model>.sdf for a model with the given name
+function(sdformat_test_files_get_model_sdf arg model_name)
+  sdformat_test_files_has_model("has_model" "${model_name}")
+  if(NOT has_model)
+    message(FATAL_ERROR "Unknown model ${model_name}")
+  endif()
+
+  set("${arg}" "${sdformat_test_files_MODELS_DIR}/${model_name}/${model_name}.sdf" PARENT_SCOPE)
+endfunction()

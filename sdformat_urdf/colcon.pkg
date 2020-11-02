@@ -1,0 +1,5 @@
+{
+  # Add dependency on sdformat's CMake project name so colcon can build this
+  # and sdformat in the same workspace
+  "dependencies": ["sdformat9"]
+}

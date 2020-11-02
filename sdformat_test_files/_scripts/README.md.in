@@ -1,0 +1,33 @@
+# SDFormat Test files
+
+This package contains a list of SDFormat files for testing tools that work with SDFormat XML.
+
+## Models
+
+### Geometry
+
+$geometry
+
+### Materials
+
+$materials
+
+### Joints
+
+$joints
+
+### Links
+
+$links
+
+### Kinematic structures
+
+$graphs
+
+### Poses and Frames
+
+$poses
+
+### Models
+
+$models

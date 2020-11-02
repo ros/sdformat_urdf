@@ -1,0 +1,70 @@
+// Copyright 2020 Open Source Robotics Foundation, Inc.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+#ifndef SDFORMAT_URDF__TEST__SDF_PATHS_HPP_
+#define SDFORMAT_URDF__TEST__SDF_PATHS_HPP_
+
+#define PATH_TO_SDF_GEOMETRY_BOX "@path_to_sdf_geometry_box@"
+#define PATH_TO_SDF_GEOMETRY_CYLINDER "@path_to_sdf_geometry_cylinder@"
+#define PATH_TO_SDF_GEOMETRY_HEIGHTMAP "@path_to_sdf_geometry_heightmap@"
+#define PATH_TO_SDF_GEOMETRY_MESH_COLLADA "@path_to_sdf_geometry_mesh_collada@"
+#define PATH_TO_SDF_GEOMETRY_MESH_OBJ "@path_to_sdf_geometry_mesh_obj@"
+#define PATH_TO_SDF_GEOMETRY_MESH_SCALED "@path_to_sdf_geometry_mesh_scaled@"
+#define PATH_TO_SDF_GEOMETRY_MESH_STL "@path_to_sdf_geometry_mesh_stl@"
+#define PATH_TO_SDF_GEOMETRY_PLANE "@path_to_sdf_geometry_plane@"
+#define PATH_TO_SDF_GEOMETRY_SPHERE "@path_to_sdf_geometry_sphere@"
+#define PATH_TO_SDF_GRAPH_CHAIN "@path_to_sdf_graph_chain@"
+#define PATH_TO_SDF_GRAPH_CHAIN_NON_CANONICAL_ROOT "@path_to_sdf_graph_chain_non_canonical_root@"
+#define PATH_TO_SDF_GRAPH_FOUR_BAR "@path_to_sdf_graph_four_bar@"
+#define PATH_TO_SDF_GRAPH_LOOP "@path_to_sdf_graph_loop@"
+#define PATH_TO_SDF_GRAPH_TREE "@path_to_sdf_graph_tree@"
+#define PATH_TO_SDF_GRAPH_TREE_NON_CANONICAL_ROOT "@path_to_sdf_graph_tree_non_canonical_root@"
+#define PATH_TO_SDF_JOINT_BALL "@path_to_sdf_joint_ball@"
+#define PATH_TO_SDF_JOINT_CONTINUOUS "@path_to_sdf_joint_continuous@"
+#define PATH_TO_SDF_JOINT_FIXED "@path_to_sdf_joint_fixed@"
+#define PATH_TO_SDF_JOINT_GEARBOX "@path_to_sdf_joint_gearbox@"
+#define PATH_TO_SDF_JOINT_PRISMATIC "@path_to_sdf_joint_prismatic@"
+#define PATH_TO_SDF_JOINT_REVOLUTE "@path_to_sdf_joint_revolute@"
+#define PATH_TO_SDF_JOINT_REVOLUTE2 "@path_to_sdf_joint_revolute2@"
+#define PATH_TO_SDF_JOINT_REVOLUTE_AXIS "@path_to_sdf_joint_revolute_axis@"
+#define PATH_TO_SDF_JOINT_REVOLUTE_AXIS_IN_FRAME "@path_to_sdf_joint_revolute_axis_in_frame@"
+#define PATH_TO_SDF_JOINT_REVOLUTE_DEFAULT_LIMITS "@path_to_sdf_joint_revolute_default_limits@"
+#define PATH_TO_SDF_JOINT_REVOLUTE_TWO_JOINTS_TWO_LINKS "@path_to_sdf_joint_revolute_two_joints_two_links@"
+#define PATH_TO_SDF_JOINT_SCREW "@path_to_sdf_joint_screw@"
+#define PATH_TO_SDF_JOINT_UNIVERSAL "@path_to_sdf_joint_universal@"
+#define PATH_TO_SDF_LINK_INERTIA "@path_to_sdf_link_inertia@"
+#define PATH_TO_SDF_LINK_LIGHT_POINT "@path_to_sdf_link_light_point@"
+#define PATH_TO_SDF_LINK_MULTIPLE_COLLISIONS "@path_to_sdf_link_multiple_collisions@"
+#define PATH_TO_SDF_LINK_MULTIPLE_VISUALS "@path_to_sdf_link_multiple_visuals@"
+#define PATH_TO_SDF_LINK_SENSOR_IMU "@path_to_sdf_link_sensor_imu@"
+#define PATH_TO_SDF_MATERIAL_BLINN_PHONG "@path_to_sdf_material_blinn_phong@"
+#define PATH_TO_SDF_MATERIAL_DYNAMIC_LIGHTS "@path_to_sdf_material_dynamic_lights@"
+#define PATH_TO_SDF_MODEL_TWO_MODELS "@path_to_sdf_model_two_models@"
+#define PATH_TO_SDF_MODEL_ZERO_MODELS "@path_to_sdf_model_zero_models@"
+#define PATH_TO_SDF_POSE_CHAIN "@path_to_sdf_pose_chain@"
+#define PATH_TO_SDF_POSE_COLLISION "@path_to_sdf_pose_collision@"
+#define PATH_TO_SDF_POSE_COLLISION_IN_FRAME "@path_to_sdf_pose_collision_in_frame@"
+#define PATH_TO_SDF_POSE_INERTIAL "@path_to_sdf_pose_inertial@"
+#define PATH_TO_SDF_POSE_INERTIAL_IN_FRAME "@path_to_sdf_pose_inertial_in_frame@"
+#define PATH_TO_SDF_POSE_JOINT "@path_to_sdf_pose_joint@"
+#define PATH_TO_SDF_POSE_JOINT_ALL "@path_to_sdf_pose_joint_all@"
+#define PATH_TO_SDF_POSE_JOINT_IN_FRAME "@path_to_sdf_pose_joint_in_frame@"
+#define PATH_TO_SDF_POSE_LINK "@path_to_sdf_pose_link@"
+#define PATH_TO_SDF_POSE_LINK_ALL "@path_to_sdf_pose_link_all@"
+#define PATH_TO_SDF_POSE_LINK_IN_FRAME "@path_to_sdf_pose_link_in_frame@"
+#define PATH_TO_SDF_POSE_MODEL "@path_to_sdf_pose_model@"
+#define PATH_TO_SDF_POSE_VISUAL "@path_to_sdf_pose_visual@"
+#define PATH_TO_SDF_POSE_VISUAL_IN_FRAME "@path_to_sdf_pose_visual_in_frame@"
+
+#endif  // SDFORMAT_URDF__TEST__SDF_PATHS_HPP_

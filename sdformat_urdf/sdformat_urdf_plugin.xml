@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<library path="sdformat_urdf_plugin">
+  <class name="sdformat_urdf_plugin/SDFormatURDFParser" type="sdformat_urdf::SDFormatURDFParser" base_class_type="urdf::URDFParser">
+    <description>
+      Parse models as URDF from SDFormat XML.
+    </description>
+  </class>
+</library>

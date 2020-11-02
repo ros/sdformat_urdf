@@ -1,0 +1,117 @@
+<?xml version='1.0' encoding='utf-8'?>
+<sdf version="1.7">
+  <model name="joint_gearbox">
+    <link name="link_1">
+      <pose>0 0 0.2 0 0 0</pose>
+      <visual name="link_1_visual">
+        <geometry>
+          <box>
+            <size>0.2 0.2 0.4</size>
+          </box>
+        </geometry>
+      </visual>
+      <collision name="link_1_collision">
+        <geometry>
+          <box>
+            <size>0.2 0.2 0.4</size>
+          </box>
+        </geometry>
+      </collision>
+      <inertial>
+        <mass>12.3</mass>
+        <inertia>
+          <ixx>0.205</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>0.205</iyy>
+          <iyz>0</iyz>
+          <izz>0.082</izz>
+        </inertia>
+      </inertial>
+    </link>
+    <link name="link_2">
+      <pose>0 -0.2 0.4 0 0 0</pose>
+      <visual name="link_2_visual">
+        <geometry>
+          <box>
+            <size>0.1 0.1 0.1</size>
+          </box>
+        </geometry>
+      </visual>
+      <collision name="link_2_collision">
+        <geometry>
+          <box>
+            <size>0.1 0.1 0.1</size>
+          </box>
+        </geometry>
+      </collision>
+      <inertial>
+        <mass>1.23</mass>
+        <inertia>
+          <ixx>0.00205</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>0.00205</iyy>
+          <iyz>0</iyz>
+          <izz>0.00205</izz>
+        </inertia>
+      </inertial>
+    </link>
+    <link name="link_3">
+      <pose>0 0.3 0.4 0 0 0</pose>
+      <visual name="link_3_visual">
+        <geometry>
+          <box>
+            <size>0.3 0.3 0.3</size>
+          </box>
+        </geometry>
+      </visual>
+      <collision name="link_3_collision">
+        <geometry>
+          <box>
+            <size>0.3 0.3 0.3</size>
+          </box>
+        </geometry>
+      </collision>
+      <inertial>
+        <mass>1.23</mass>
+        <inertia>
+          <ixx>0.01845</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>0.01845</iyy>
+          <iyz>0</iyz>
+          <izz>0.01845</izz>
+        </inertia>
+      </inertial>
+    </link>
+
+    <joint name="joint_revolute_1" type="revolute">
+      <parent>link_1</parent>
+      <child>link_2</child>
+      <axis>
+        <xyz expressed_in="__model__">0 1 0</xyz>
+      </axis>
+    </joint>
+    <joint name="joint_revolute_2" type="revolute">
+      <parent>link_1</parent>
+      <child>link_3</child>
+      <axis>
+        <xyz expressed_in="__model__">0 1 0</xyz>
+      </axis>
+    </joint>
+
+    <joint name="joint_gearbox" type="gearbox">
+      <parent>link_3</parent>
+      <child>link_2</child>
+      <gearbox_ratio>-27</gearbox_ratio>
+      <gearbox_reference_body>link_1</gearbox_reference_body>
+      <axis>
+        <xyz expressed_in="__model__">0 1 0</xyz>
+      </axis>
+      <axis2>
+        <xyz expressed_in="__model__">0 1 0</xyz>
+      </axis2>
+    </joint>
+  </model>
+</sdf>

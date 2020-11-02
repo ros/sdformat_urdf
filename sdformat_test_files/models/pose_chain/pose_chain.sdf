@@ -1,0 +1,153 @@
+<?xml version='1.0' encoding='utf-8'?>
+<sdf version="1.7">
+  <model name="pose_chain">
+    <link name="link_1">
+      <pose>0.1 0.2 0.3 0.4 0.5 0.6</pose>
+      <visual name="link_1_visual">
+        <geometry>
+          <box>
+            <size>0.1 0.2 0.4</size>
+          </box>
+        </geometry>
+      </visual>
+      <collision name="link_1_collision">
+        <geometry>
+          <box>
+            <size>0.1 0.2 0.4</size>
+          </box>
+        </geometry>
+      </collision>
+      <inertial>
+        <mass>1.23</mass>
+        <inertia>
+          <ixx>0.0205</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>0.017425</iyy>
+          <iyz>0</iyz>
+          <izz>0.005125</izz>
+        </inertia>
+      </inertial>
+    </link>
+    <link name="link_2">
+      <pose>0.2 0.3 0.4 0.5 0.6 0.7</pose>
+      <visual name="link_2_visual">
+        <geometry>
+          <box>
+            <size>0.1 0.2 0.4</size>
+          </box>
+        </geometry>
+      </visual>
+      <collision name="link_2_collision">
+        <geometry>
+          <box>
+            <size>0.1 0.2 0.4</size>
+          </box>
+        </geometry>
+      </collision>
+      <inertial>
+        <mass>1.23</mass>
+        <inertia>
+          <ixx>0.0205</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>0.017425</iyy>
+          <iyz>0</iyz>
+          <izz>0.005125</izz>
+        </inertia>
+      </inertial>
+    </link>
+    <link name="link_3">
+      <pose>0.3 0.4 0.5 0.6 0.7 0.8</pose>
+      <visual name="link_3_visual">
+        <geometry>
+          <box>
+            <size>0.1 0.2 0.4</size>
+          </box>
+        </geometry>
+      </visual>
+      <collision name="link_3_collision">
+        <geometry>
+          <box>
+            <size>0.1 0.2 0.4</size>
+          </box>
+        </geometry>
+      </collision>
+      <inertial>
+        <mass>1.23</mass>
+        <inertia>
+          <ixx>0.0205</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>0.017425</iyy>
+          <iyz>0</iyz>
+          <izz>0.005125</izz>
+        </inertia>
+      </inertial>
+    </link>
+    <link name="link_4">
+      <pose>0.4 0.5 0.6 0.7 0.8 0.9</pose>
+      <visual name="link_4_visual">
+        <geometry>
+          <box>
+            <size>0.1 0.2 0.4</size>
+          </box>
+        </geometry>
+      </visual>
+      <collision name="link_4_collision">
+        <geometry>
+          <box>
+            <size>0.1 0.2 0.4</size>
+          </box>
+        </geometry>
+      </collision>
+      <inertial>
+        <mass>1.23</mass>
+        <inertia>
+          <ixx>0.0205</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>0.017425</iyy>
+          <iyz>0</iyz>
+          <izz>0.005125</izz>
+        </inertia>
+      </inertial>
+    </link>
+    <joint name="joint_1" type="revolute">
+      <pose>0.9 0.8 0.7 0.6 0.5 0.4</pose>
+      <parent>link_1</parent>
+      <child>link_2</child>
+      <axis>
+        <xyz>1 0 0</xyz>
+        <limit>
+          <lower>-1.5</lower>
+          <upper>1.5</upper>
+        </limit>
+      </axis>
+    </joint>
+    <joint name="joint_2" type="revolute">
+      <pose>0.8 0.7 0.6 0.5 0.4 0.3</pose>
+      <parent>link_2</parent>
+      <child>link_3</child>
+      <axis>
+        <xyz>1 0 0</xyz>
+        <limit>
+          <lower>-1.5</lower>
+          <upper>1.5</upper>
+        </limit>
+      </axis>
+    </joint>
+    <joint name="joint_3" type="revolute">
+      <pose>0.7 0.6 0.5 0.4 0.3 0.2</pose>
+      <parent>link_3</parent>
+      <child>link_4</child>
+      <axis>
+        <xyz>1 0 0</xyz>
+        <limit>
+          <lower>-1.5</lower>
+          <upper>1.5</upper>
+        </limit>
+      </axis>
+    </joint>
+  </model>
+</sdf>

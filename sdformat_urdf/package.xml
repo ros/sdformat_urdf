@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>sdformat_urdf</name>
+  <version>0.1.0</version>
+  <description>
+    URDF plugin to parse SDFormat XML into URDF C++ DOM objects.
+  </description>
+
+  <author email="sloretz@openrobotics.org">Shane Loretz</author>
+  <maintainer email="sloretz@osrfoundation.org">Shane Loretz</maintainer>
+
+  <license>Apache 2.0</license>
+
+  <url type="repository">https://github.com/ros/sdformat_urdf</url>
+  <url type="bugtracker">https://github.com/ros/sdformat_urdf/issues</url>
+
+  <buildtool_depend>ament_cmake_ros</buildtool_depend>
+  <buildtool_export_depend>ament_cmake_ros</buildtool_export_depend>
+
+  <depend>sdformat</depend>
+  <depend>urdf</depend>
+
+  <build_depend>liburdfdom-headers-dev</build_depend>
+  <build_depend>pluginlib</build_depend>
+  <build_depend>tinyxml2_vendor</build_depend>
+  <build_depend>urdf_parser_plugin</build_depend>
+
+  <exec_depend>tinyxml2_vendor</exec_depend>
+  <exec_depend>urdf_parser_plugin</exec_depend>
+
+  <test_depend>ament_cmake_gtest</test_depend>
+  <test_depend>ament_lint_auto</test_depend>
+  <test_depend>ament_lint_common</test_depend>
+  <test_depend>sdformat_test_files</test_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>

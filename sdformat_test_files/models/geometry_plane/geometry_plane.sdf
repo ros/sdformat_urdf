@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='utf-8'?>
+<sdf version="1.7">
+  <model name="geometry_plane">
+    <link name="link">
+      <visual name="link_visual">
+        <geometry>
+          <plane>
+            <normal>0 0 1</normal>
+            <size>0.1 0.2</size>
+          </plane>
+        </geometry>
+      </visual>
+      <collision name="link_collision">
+        <geometry>
+          <plane>
+            <normal>0 0 1</normal>
+            <size>0.1 0.2</size>
+          </plane>
+        </geometry>
+      </collision>
+      <!-- TODO(sloretz) what's the moment of inertia of a plane? Is it affected by the <normal>? -->
+      <inertial>
+        <mass>1.23</mass>
+        <inertia>
+          <ixx>0.0205</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>0.017425</iyy>
+          <iyz>0</iyz>
+          <izz>0.005125</izz>
+        </inertia>
+      </inertial>
+    </link>
+  </model>
+</sdf>

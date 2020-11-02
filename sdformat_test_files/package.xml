@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>sdformat_test_files</name>
+  <version>0.1.0</version>
+  <description>
+    Example SDFormat XML files for testing tools using hthis format.
+  </description>
+
+  <author email="sloretz@openrobotics.org">Shane Loretz</author>
+  <maintainer email="sloretz@osrfoundation.org">Shane Loretz</maintainer>
+
+  <license>Apache 2.0</license>
+
+  <url type="repository">https://github.com/ros/sdformat_test_files</url>
+  <url type="bugtracker">https://github.com/ros/sdformat_test_files/issues</url>
+
+  <buildtool_depend>cmake</buildtool_depend>
+  <buildtool_export_depend>cmake</buildtool_export_depend>
+
+  <export>
+    <build_type>cmake</build_type>
+  </export>
+</package>

@@ -1,0 +1,7 @@
+@PACKAGE_INIT@
+
+set_and_check(sdformat_test_files_MODELS_DIR "@PACKAGE_INSTALL_SHARE_DIR@/models")
+
+include("@PACKAGE_INSTALL_CMAKE_DIR@/sdformat_test_files_functions.cmake")
+
+check_required_components("sdformat_test_files")
