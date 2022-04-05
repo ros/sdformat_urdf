@@ -14,18 +14,35 @@ find_package(ament_cmake_ros REQUIRED)
 
 find_package(pluginlib REQUIRED)
 find_package(rcutils REQUIRED)
-find_package(sdformat9 REQUIRED)
 find_package(urdfdom_headers 1.0.6 REQUIRED)
 find_package(urdf_parser_plugin REQUIRED)
 find_package(tinyxml2_vendor REQUIRED)
 find_package(TinyXML2 REQUIRED)
+
+# Figure out which version of SDFormat we're using
+set(sdformat_max 12)
+set(sdformat_min 9)
+foreach(major RANGE ${sdformat_max} ${sdformat_min})
+  find_package(sdformat${major} QUIET)
+  if(sdformat${major}_FOUND)
+    set(sdformat_FOUND 1)
+    set(sdformat_major ${major})
+    break()
+  endif()
+endforeach()
+
+if(NOT sdformat_FOUND)
+  message(WARNING "Could not find any version of sdformat between ${sdformat_max} and ${sdformat_min}")
+  # This will fail, but at least it's an informative error message
+  find_package(sdformat${sdformat_max} REQUIRED)
+endif()
 
 # Add sdformat_urdf shared library
 add_library(sdformat_urdf SHARED
   src/sdformat_urdf.cpp
 )
 target_link_libraries(sdformat_urdf PUBLIC
-    sdformat9::sdformat9
+  sdformat${sdformat_major}::sdformat${sdformat_major}
   urdfdom_headers::urdfdom_headers
 )
 target_link_libraries(sdformat_urdf PRIVATE
@@ -51,7 +68,7 @@ target_link_libraries(sdformat_urdf_plugin PRIVATE
 
 ament_export_dependencies(pluginlib)
 ament_export_dependencies(rcutils)
-ament_export_dependencies(sdformat9)
+ament_export_dependencies(sdformat${sdformat_major})
 ament_export_dependencies(tinyxml2)
 ament_export_dependencies(urdf_parser_plugin)
 ament_export_dependencies(urdfdom_headers)
