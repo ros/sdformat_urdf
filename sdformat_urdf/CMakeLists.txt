@@ -26,6 +26,7 @@ add_library(sdformat_urdf SHARED
 )
 target_link_libraries(sdformat_urdf PUBLIC
     sdformat9::sdformat9
+  urdfdom_headers::urdfdom_headers
 )
 target_link_libraries(sdformat_urdf PRIVATE
   rcutils::rcutils
@@ -46,7 +47,6 @@ target_link_libraries(sdformat_urdf_plugin PRIVATE
   sdformat_urdf
   tinyxml2::tinyxml2
   urdf_parser_plugin::urdf_parser_plugin
-  urdfdom_headers::urdfdom_headers
 )
 
 ament_export_dependencies(pluginlib)
