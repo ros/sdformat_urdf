@@ -15,7 +15,7 @@ find_package(ament_cmake_ros REQUIRED)
 find_package(pluginlib REQUIRED)
 find_package(rcutils REQUIRED)
 find_package(sdformat9 REQUIRED)
-find_package(urdfdom_headers REQUIRED)
+find_package(urdfdom_headers 1.0.6 REQUIRED)
 find_package(urdf_parser_plugin REQUIRED)
 find_package(tinyxml2_vendor REQUIRED)
 find_package(TinyXML2 REQUIRED)
@@ -34,7 +34,6 @@ target_include_directories(sdformat_urdf
   PUBLIC
     "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>"
     "$<INSTALL_INTERFACE:include>"
-    ${urdfdom_headers_INCLUDE_DIRS}
 )
 
 # Add sdformat_urdf_plugin module library
@@ -47,10 +46,15 @@ target_link_libraries(sdformat_urdf_plugin PRIVATE
   sdformat_urdf
   tinyxml2::tinyxml2
   urdf_parser_plugin::urdf_parser_plugin
+  urdfdom_headers::urdfdom_headers
 )
 
-ament_export_dependencies(urdfdom_headers)
+ament_export_dependencies(pluginlib)
+ament_export_dependencies(rcutils)
 ament_export_dependencies(sdformat9)
+ament_export_dependencies(tinyxml2)
+ament_export_dependencies(urdf_parser_plugin)
+ament_export_dependencies(urdfdom_headers)
 
 install(TARGETS sdformat_urdf EXPORT sdformat_urdf-export
   ARCHIVE DESTINATION lib
