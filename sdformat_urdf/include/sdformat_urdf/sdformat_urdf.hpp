@@ -15,11 +15,14 @@
 #ifndef SDFORMAT_URDF__SDFORMAT_URDF_HPP_
 #define SDFORMAT_URDF__SDFORMAT_URDF_HPP_
 
-#include <sdf/sdf.hh>
 #include <urdf_world/types.h>
 #include <urdf_model/types.h>
 
 #include <string>
+
+#include <sdf/Model.hh>
+#include <sdf/Root.hh>
+#include <sdf/Types.hh>
 
 #include "sdformat_urdf/visibility_control.hpp"
 

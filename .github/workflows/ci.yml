@@ -1,0 +1,28 @@
+name: Build and test
+
+on: [push, pull_request]
+
+jobs:
+  ci:
+    name: CI
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - docker-image: "ubuntu:22.04"
+            gazebo-version: "citadel"
+            ros-distro: "humble"
+          - docker-image: "ubuntu:22.04"
+            gazebo-version: "citadel"
+            ros-distro: "rolling"
+    container:
+      image: ${{ matrix.docker-image }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Build and Test
+        run: .github/workflows/build-and-test.sh
+        env:
+          DOCKER_IMAGE: ${{ matrix.docker-image }}
+          GAZEBO_VERSION: ${{ matrix.gazebo-version  }}
+          ROS_DISTRO: ${{ matrix.ros-distro }}
