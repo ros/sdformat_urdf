@@ -14,18 +14,37 @@ find_package(ament_cmake_ros REQUIRED)
 
 find_package(pluginlib REQUIRED)
 find_package(rcutils REQUIRED)
-find_package(sdformat9 REQUIRED)
 find_package(urdfdom_headers REQUIRED)
 find_package(urdf_parser_plugin REQUIRED)
 find_package(tinyxml2_vendor REQUIRED)
 find_package(TinyXML2 REQUIRED)
+
+# Edifice
+if("$ENV{GAZEBO_VERSION}" STREQUAL "edifice")
+  find_package(sdformat11 REQUIRED)
+  set(SDF_VER ${sdformat11_VERSION_MAJOR})
+
+  message(STATUS "Compiling against Gazebo Edifice")
+# Fortress
+elseif("$ENV{GAZEBO_VERSION}" STREQUAL "fortress")
+  find_package(sdformat12 REQUIRED)
+  set(SDF_VER ${sdformat12_VERSION_MAJOR})
+
+  message(STATUS "Compiling against Gazebo Fortress")
+# Default to libSDFormat 9 for backwards compatibility
+else()
+  find_package(sdformat9 REQUIRED)
+  set(SDF_VER ${sdformat9_VERSION_MAJOR})
+
+  message(STATUS "Compiling against Gazebo Citadel")
+endif()
 
 # Add sdformat_urdf shared library
 add_library(sdformat_urdf SHARED
   src/sdformat_urdf.cpp
 )
 target_link_libraries(sdformat_urdf PUBLIC
-    sdformat9::sdformat9
+    sdformat${SDF_VER}::sdformat${SDF_VER}
 )
 target_link_libraries(sdformat_urdf PRIVATE
   rcutils::rcutils
@@ -50,7 +69,7 @@ target_link_libraries(sdformat_urdf_plugin PRIVATE
 )
 
 ament_export_dependencies(urdfdom_headers)
-ament_export_dependencies(sdformat9)
+ament_export_dependencies(sdformat${SDF_VER})
 
 install(TARGETS sdformat_urdf EXPORT sdformat_urdf-export
   ARCHIVE DESTINATION lib

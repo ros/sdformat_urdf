@@ -14,10 +14,12 @@
 
 
 #include <gtest/gtest.h>
-#include <sdf/sdf.hh>
+#include <sdf/Types.hh>
 #include <sdformat_urdf/sdformat_urdf.hpp>
 #include <urdf_model/model.h>
 #include <urdf_model/types.h>
+
+#include <limits>
 
 #include "sdf_paths.hpp"
 #include "test_tools.hpp"
@@ -112,8 +114,13 @@ TEST(Joint, joint_prismatic)
   ASSERT_NE(nullptr, joint->limits);
   EXPECT_DOUBLE_EQ(-0.2, joint->limits->lower);
   EXPECT_DOUBLE_EQ(0.2, joint->limits->upper);
+#if SDF_MAJOR_VERSION < 11
   EXPECT_DOUBLE_EQ(-1, joint->limits->effort);  // SDFormat default
   EXPECT_DOUBLE_EQ(-1, joint->limits->velocity);  // SDFormat default
+#else
+  EXPECT_DOUBLE_EQ(std::numeric_limits<double>::infinity(), joint->limits->effort);
+  EXPECT_DOUBLE_EQ(std::numeric_limits<double>::infinity(), joint->limits->velocity);
+#endif
   ASSERT_EQ(nullptr, joint->safety);
   ASSERT_EQ(nullptr, joint->calibration);
   ASSERT_EQ(nullptr, joint->mimic);
@@ -139,8 +146,13 @@ TEST(Joint, joint_revolute)
   ASSERT_NE(nullptr, joint->limits);
   EXPECT_DOUBLE_EQ(-1.5, joint->limits->lower);
   EXPECT_DOUBLE_EQ(1.5, joint->limits->upper);
+#if SDF_MAJOR_VERSION < 11
   EXPECT_DOUBLE_EQ(-1, joint->limits->effort);  // SDFormat default
   EXPECT_DOUBLE_EQ(-1, joint->limits->velocity);  // SDFormat default
+#else
+  EXPECT_DOUBLE_EQ(std::numeric_limits<double>::infinity(), joint->limits->effort);
+  EXPECT_DOUBLE_EQ(std::numeric_limits<double>::infinity(), joint->limits->velocity);
+#endif
   ASSERT_EQ(nullptr, joint->safety);
   ASSERT_EQ(nullptr, joint->calibration);
   ASSERT_EQ(nullptr, joint->mimic);
@@ -224,8 +236,13 @@ TEST(Joint, joint_revolute_default_limits)
   ASSERT_NE(nullptr, joint->limits);
   EXPECT_DOUBLE_EQ(-1e16, joint->limits->lower);  // SDFormat default
   EXPECT_DOUBLE_EQ(1e16, joint->limits->upper);  // SDFormat default
+#if SDF_MAJOR_VERSION < 11
   EXPECT_DOUBLE_EQ(-1, joint->limits->effort);  // SDFormat default
   EXPECT_DOUBLE_EQ(-1, joint->limits->velocity);  // SDFormat default
+#else
+  EXPECT_DOUBLE_EQ(std::numeric_limits<double>::infinity(), joint->limits->effort);
+  EXPECT_DOUBLE_EQ(std::numeric_limits<double>::infinity(), joint->limits->velocity);
+#endif
 }
 
 TEST(Joint, joint_revolute_two_joints_two_links)

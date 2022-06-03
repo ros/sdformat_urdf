@@ -14,7 +14,7 @@
 
 
 #include <gtest/gtest.h>
-#include <sdf/sdf.hh>
+#include <sdf/Types.hh>
 #include <sdformat_urdf/sdformat_urdf.hpp>
 #include <urdf_model/model.h>
 #include <urdf_model/types.h>

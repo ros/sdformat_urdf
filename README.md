@@ -11,3 +11,20 @@ See the [README in the `sdformat_urdf` package](./sdformat_urdf/README.md) for m
   * provides a library and a `urdf_parser_plugin` using that library to convert SDFormat XML to URDF C++ DOM structures
 * [`sdformat_test_files`](./sdformat_test_files/README.md)
   * provides SDFormat models using different parts of the SDFormat XML specification for testing
+
+## Version combinations
+
+This package can be compiled against different Gazebo versions.
+
+Set the `GAZEBO_VERSION` environment variable to the Gazebo version you'd
+like to compile against. For example:
+
+    export GAZEBO_VERSION=fortress
+
+> You only need to set this variable when compiling, not when running.
+
+ROS version | Gazebo version | Branch | Binaries hosted at
+-- | -- | -- | --
+Galactic | Citadel | [galactic](https://github.com/ros/ros_ign/tree/galactic) | https://packages.ros.org
+Galactic | Edifice | [galactic](https://github.com/ros/ros_ign/tree/galactic) | only from source
+Galactic | Fortress | [galactic](https://github.com/ros/ros_ign/tree/galactic) | only from source

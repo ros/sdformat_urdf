@@ -66,6 +66,7 @@ sdformat_urdf::sdf_to_urdf(const sdf::Root & sdf_dom, sdf::Errors & errors)
       "SDFormat xml has a world; but only a single model is supported");
     return nullptr;
   }
+#if SDF_MAJOR_VERSION < 11
   if (0u == sdf_dom.ModelCount()) {
     errors.emplace_back(
       sdf::ErrorCode::STRING_READ,
@@ -78,8 +79,16 @@ sdformat_urdf::sdf_to_urdf(const sdf::Root & sdf_dom, sdf::Errors & errors)
       "SDFormat xml has multiple models; but only a single model is supported");
     return nullptr;
   }
-
   return convert_model(*sdf_dom.ModelByIndex(0), errors);
+#else
+  if (nullptr == sdf_dom.Model()) {
+    errors.emplace_back(
+      sdf::ErrorCode::ELEMENT_MISSING,
+      "SDFormat xml has no models; need at least one");
+    return nullptr;
+  }
+  return convert_model(*sdf_dom.Model(), errors);
+#endif
 }
 
 urdf::ModelInterfaceSharedPtr
