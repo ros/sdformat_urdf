@@ -19,24 +19,47 @@ find_package(urdf_parser_plugin REQUIRED)
 find_package(tinyxml2_vendor REQUIRED)
 find_package(TinyXML2 REQUIRED)
 
+# Choose SDF version
+
+# Default to Citadel
+set(SDF_VER 9)
+
+# First try GZ_VERSION
+
 # Edifice
-if("$ENV{GAZEBO_VERSION}" STREQUAL "edifice")
+if("$ENV{GZ_VERSION}" STREQUAL "edifice")
   find_package(sdformat11 REQUIRED)
   set(SDF_VER ${sdformat11_VERSION_MAJOR})
 
-  message(STATUS "Compiling against Gazebo Edifice")
+  message(STATUS "Compiling against Gazebo Edifice (SDF 11), requested with GZ_VERSION")
 # Fortress
-elseif("$ENV{GAZEBO_VERSION}" STREQUAL "fortress")
+elseif("$ENV{GZ_VERSION}" STREQUAL "fortress")
   find_package(sdformat12 REQUIRED)
   set(SDF_VER ${sdformat12_VERSION_MAJOR})
 
-  message(STATUS "Compiling against Gazebo Fortress")
-# Default to libSDFormat 9 for backwards compatibility
-else()
+  message(STATUS "Compiling against Gazebo Fortress (SDF 12), requested with GZ_VERSION")
+elseif("$ENV{GZ_VERSION}" STREQUAL "citadel")
   find_package(sdformat9 REQUIRED)
   set(SDF_VER ${sdformat9_VERSION_MAJOR})
 
-  message(STATUS "Compiling against Gazebo Citadel")
+  message(STATUS "Compiling against Gazebo Citadel (SDF 9), requested with GZ_VERSION")
+endif()
+# Then try ROS_DISTRO
+elseif("$ENV{ROS_DISTRO}" STREQUAL "galactic")
+  find_package(sdformat11 REQUIRED)
+  set(SDF_VER ${sdformat11_VERSION_MAJOR})
+
+  message(STATUS "Compiling against Gazebo Edifice (SDF 11), requested with ROS_DISTRO")
+# Then try any version available, looking from higher to lower
+else()
+  foreach(major RANGE 13 9)
+    find_package(sdformat${major} QUIET)
+    if(sdformat${major}_FOUND)
+      # Next `find_package` call will be a noop
+      set(SDF_VER ${major})
+      break()
+    endif()
+  endforeach()
 endif()
 
 # Add sdformat_urdf shared library
