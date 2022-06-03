@@ -3,11 +3,13 @@ on:
   pull_request
 jobs:
   test_sdformat_urdf:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-20.04
     strategy:
       matrix:
-        ros-distro: ["humble", "rolling"]
+        ros-distro: ["galactic"]
         gazebo-version:
+          - "citadel"  # libsdformat9
+          - "edifice"  # libsdformat11
           - "fortress"  # libsdformat12
     env:
        GAZEBO_VERSION: ${{ matrix.gazebo-version }}
