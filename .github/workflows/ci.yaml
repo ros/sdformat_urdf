@@ -1,5 +1,6 @@
 name: gh-ci
-on: [push, pull_request]
+on:
+  pull_request
 jobs:
   test_sdformat_urdf:
     runs-on: ubuntu-22.04
