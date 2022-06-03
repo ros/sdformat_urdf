@@ -12,9 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include <ignition/math/Pose3.hh>
 #include <rcutils/logging_macros.h>
-#include <sdf/sdf.hh>
 #include <urdf_world/types.h>
 #include <urdf_model/model.h>
 
@@ -22,6 +20,16 @@
 #include <memory>
 #include <string>
 #include <vector>
+
+#include <ignition/math/Pose3.hh>
+#include <sdf/Error.hh>
+#include <sdf/Collision.hh>
+#include <sdf/Geometry.hh>
+#include <sdf/Joint.hh>
+#include <sdf/JointAxis.hh>
+#include <sdf/Link.hh>
+#include <sdf/Mesh.hh>
+#include <sdf/Visual.hh>
 
 #include "sdformat_urdf/sdformat_urdf.hpp"
 
@@ -66,20 +74,13 @@ sdformat_urdf::sdf_to_urdf(const sdf::Root & sdf_dom, sdf::Errors & errors)
       "SDFormat xml has a world; but only a single model is supported");
     return nullptr;
   }
-  if (0u == sdf_dom.ModelCount()) {
+  if (nullptr == sdf_dom.Model()) {
     errors.emplace_back(
-      sdf::ErrorCode::STRING_READ,
+      sdf::ErrorCode::ELEMENT_MISSING,
       "SDFormat xml has no models; need at least one");
     return nullptr;
   }
-  if (1u != sdf_dom.ModelCount()) {
-    errors.emplace_back(
-      sdf::ErrorCode::STRING_READ,
-      "SDFormat xml has multiple models; but only a single model is supported");
-    return nullptr;
-  }
-
-  return convert_model(*sdf_dom.ModelByIndex(0), errors);
+  return convert_model(*sdf_dom.Model(), errors);
 }
 
 urdf::ModelInterfaceSharedPtr

@@ -17,7 +17,7 @@
   <buildtool_depend>ament_cmake_ros</buildtool_depend>
   <buildtool_export_depend>ament_cmake_ros</buildtool_export_depend>
 
-  <depend>sdformat</depend>
+  <depend>sdformat12</depend>
   <depend>urdf</depend>
 
   <build_depend>liburdfdom-headers-dev</build_depend>

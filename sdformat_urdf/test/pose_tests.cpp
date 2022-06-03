@@ -14,11 +14,12 @@
 
 
 #include <gtest/gtest.h>
-#include <ignition/math/Pose3.hh>
-#include <sdf/sdf.hh>
-#include <sdformat_urdf/sdformat_urdf.hpp>
 #include <urdf_model/model.h>
 #include <urdf_model/types.h>
+#include <sdformat_urdf/sdformat_urdf.hpp>
+
+#include <ignition/math/Pose3.hh>
+#include <sdf/Types.hh>
 
 #include "sdf_paths.hpp"
 #include "test_tools.hpp"

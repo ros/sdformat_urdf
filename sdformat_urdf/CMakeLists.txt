@@ -14,7 +14,7 @@ find_package(ament_cmake_ros REQUIRED)
 
 find_package(pluginlib REQUIRED)
 find_package(rcutils REQUIRED)
-find_package(sdformat9 REQUIRED)
+find_package(sdformat12 REQUIRED)
 find_package(urdfdom_headers 1.0.6 REQUIRED)
 find_package(urdf_parser_plugin REQUIRED)
 find_package(tinyxml2_vendor REQUIRED)
@@ -25,7 +25,7 @@ add_library(sdformat_urdf SHARED
   src/sdformat_urdf.cpp
 )
 target_link_libraries(sdformat_urdf PUBLIC
-    sdformat9::sdformat9
+    sdformat12::sdformat12
   urdfdom_headers::urdfdom_headers
 )
 target_link_libraries(sdformat_urdf PRIVATE
@@ -51,7 +51,7 @@ target_link_libraries(sdformat_urdf_plugin PRIVATE
 
 ament_export_dependencies(pluginlib)
 ament_export_dependencies(rcutils)
-ament_export_dependencies(sdformat9)
+ament_export_dependencies(sdformat12)
 ament_export_dependencies(tinyxml2)
 ament_export_dependencies(urdf_parser_plugin)
 ament_export_dependencies(urdfdom_headers)
