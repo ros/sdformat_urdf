@@ -43,7 +43,6 @@ elseif("$ENV{GZ_VERSION}" STREQUAL "citadel")
   set(SDF_VER ${sdformat9_VERSION_MAJOR})
 
   message(STATUS "Compiling against Gazebo Citadel (SDF 9), requested with GZ_VERSION")
-endif()
 # Then try ROS_DISTRO
 elseif("$ENV{ROS_DISTRO}" STREQUAL "galactic")
   find_package(sdformat11 REQUIRED)
