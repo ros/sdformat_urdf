@@ -7,12 +7,12 @@ jobs:
     strategy:
       matrix:
         ros-distro: ["galactic"]
-        gazebo-version:
+        gz-version:
           - "citadel"  # libsdformat9
           - "edifice"  # libsdformat11
           - "fortress"  # libsdformat12
     env:
-       GAZEBO_VERSION: ${{ matrix.gazebo-version }}
+       GZ_VERSION: ${{ matrix.gazebo-version }}
     steps:
       - uses: ros-tooling/setup-ros@v0.3
         with:
