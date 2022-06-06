@@ -73,9 +73,9 @@ sdformat_urdf::sdf_to_urdf(const sdf::Root & sdf_dom, sdf::Errors & errors)
   // To keep test expectations consistent across all versions, we use
   // the deprecated APIs for 11.
 #if SDF_MAJOR_VERSION <= 11
-  #if SDF_MAJOR_VERSION >= 11
-    IGN_UTILS_WARN_IGNORE__DEPRECATED_DECLARATION
-  #endif
+#if SDF_MAJOR_VERSION >= 11
+  IGN_UTILS_WARN_IGNORE__DEPRECATED_DECLARATION
+#endif
   if (0u == sdf_dom.ModelCount()) {
     errors.emplace_back(
       sdf::ErrorCode::STRING_READ,
@@ -89,9 +89,9 @@ sdformat_urdf::sdf_to_urdf(const sdf::Root & sdf_dom, sdf::Errors & errors)
     return nullptr;
   }
   return convert_model(*sdf_dom.ModelByIndex(0), errors);
-  #if SDF_MAJOR_VERSION >= 11
-    IGN_UTILS_WARN_RESUME__DEPRECATED_DECLARATION
-  #endif
+#if SDF_MAJOR_VERSION >= 11
+  IGN_UTILS_WARN_RESUME__DEPRECATED_DECLARATION
+#endif
 #else
   if (nullptr == sdf_dom.Model()) {
     errors.emplace_back(
