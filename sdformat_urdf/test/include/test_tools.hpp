@@ -15,8 +15,6 @@
 #ifndef TEST_TOOLS_HPP_
 #define TEST_TOOLS_HPP_
 
-#include <sdf/sdf.hh>
-
 #include <algorithm>
 #include <string>
 #include <fstream>
@@ -60,7 +58,7 @@ get_file(const char * path)
       bool name_is_expected = false; \
       auto expected_name_iter = expected_names.begin(); \
       while (expected_name_iter != expected_names.end()) { \
-        if (* expected_name_iter == child->name) { \
+        if (*expected_name_iter == child->name) { \
           name_is_expected = true; \
           expected_names.erase(expected_name_iter); \
           break; \
@@ -80,13 +78,5 @@ get_file(const char * path)
       } \
     } \
   } while (false)
-
-std::ostream & operator<<(std::ostream & os, const sdf::Errors & errors)
-{
-  for (const auto & error : errors) {
-    os << error;
-  }
-  return os;
-}
 
 #endif  // TEST_TOOLS_HPP_
