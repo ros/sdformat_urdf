@@ -24,38 +24,38 @@ find_package(TinyXML2 REQUIRED)
 # Default to Citadel
 set(SDF_VER 9)
 
-# First try GZ_VERSION
+# If the user didn't specify a GZ distribution, pick the one matching the ROS distribution according to REP 2000
+if(NOT DEFINED ENV{GZ_VERSION} AND DEFINED ENV{ROS_DISTRO})
+  if("$ENV{ROS_DISTRO}" STREQUAL "foxy")
+    set(ENV{GZ_VERSION} "citadel")
+  elseif("$ENV{ROS_DISTRO}" STREQUAL "galactic")
+    set(ENV{GZ_VERSION} "edifice")
+  elseif("$ENV{ROS_DISTRO}" STREQUAL "humble")
+    set(ENV{GZ_VERSION} "fortress")
+  endif()
+endif()
 
-# Edifice
-if("$ENV{GZ_VERSION}" STREQUAL "edifice")
+# Find libsdformat matching the picked GZ distribution
+if("$ENV{GZ_VERSION}" STREQUAL "citadel")
+  find_package(sdformat9 REQUIRED)
+  set(SDF_VER ${sdformat9_VERSION_MAJOR})
+  message(STATUS "Compiling against Gazebo Citadel (libSDFormat 9)")
+elseif("$ENV{GZ_VERSION}" STREQUAL "edifice")
   find_package(sdformat11 REQUIRED)
   set(SDF_VER ${sdformat11_VERSION_MAJOR})
-
-  message(STATUS "Compiling against Gazebo Edifice (SDF 11), requested with GZ_VERSION")
-# Fortress
+  message(STATUS "Compiling against Gazebo Edifice (libSDFormat 11)")
 elseif("$ENV{GZ_VERSION}" STREQUAL "fortress")
   find_package(sdformat12 REQUIRED)
   set(SDF_VER ${sdformat12_VERSION_MAJOR})
-
-  message(STATUS "Compiling against Gazebo Fortress (SDF 12), requested with GZ_VERSION")
-elseif("$ENV{GZ_VERSION}" STREQUAL "citadel")
-  find_package(sdformat9 REQUIRED)
-  set(SDF_VER ${sdformat9_VERSION_MAJOR})
-
-  message(STATUS "Compiling against Gazebo Citadel (SDF 9), requested with GZ_VERSION")
-# Then try ROS_DISTRO
-elseif("$ENV{ROS_DISTRO}" STREQUAL "galactic")
-  find_package(sdformat11 REQUIRED)
-  set(SDF_VER ${sdformat11_VERSION_MAJOR})
-
-  message(STATUS "Compiling against Gazebo Edifice (SDF 11), requested with ROS_DISTRO")
-# Then try any version available, looking from higher to lower
+  message(STATUS "Compiling against Gazebo Fortress (libSDFormat 12)")
+# No GZ distribution specified, find any version of libsdformat we can
 else()
   foreach(major RANGE 13 9)
     find_package(sdformat${major} QUIET)
     if(sdformat${major}_FOUND)
       # Next `find_package` call will be a noop
       set(SDF_VER ${major})
+      message(STATUS "Compiling against libSDFormat ${major}")
       break()
     endif()
   endforeach()

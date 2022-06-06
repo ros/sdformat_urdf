@@ -12,7 +12,7 @@ jobs:
           - "edifice"  # libsdformat11
           - "fortress"  # libsdformat12
     env:
-       GZ_VERSION: ${{ matrix.gazebo-version }}
+       GZ_VERSION: ${{ matrix.gz-version }}
     steps:
       - uses: ros-tooling/setup-ros@v0.3
         with:

@@ -21,12 +21,15 @@
   <depend condition="$GZ_VERSION == edifice">sdformat11</depend>
 
   <!-- Fortress -->
+  <depend condition="$ROS_DISTRO == 'humble'">sdformat12</depend>
+  <depend condition="$ROS_DISTRO == 'rolling'">sdformat12</depend>
   <depend condition="$GZ_VERSION == fortress">sdformat12</depend>
 
   <!--
       For backwards compatibility, default to version 9, which comes with
       the unversioned `sdformat` key on Focal. That's Gazebo Citadel.
   -->
+  <depend condition="$ROS_DISTRO == 'galactic'">sdformat</depend>
   <depend condition="$GZ_VERSION == 'citadel'">sdformat</depend>
   <depend condition="$GZ_VERSION == ''">sdformat</depend>
 
