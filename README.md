@@ -14,19 +14,19 @@ See the [README in the `sdformat_urdf` package](./sdformat_urdf/README.md) for m
 
 ## Version combinations
 
-This package can be compiled against different Gazebo versions.
+This package can be compiled against versions of libSDFormat.
 
-Set the `GZ_VERSION` environment variable to the Gazebo version you'd
-like to compile against. For example:
+Set the `GZ_VERSION` environment variable to match the libSDFormat version you'd like to compile against.
+For example:
 
     export GZ_VERSION=fortress
 
 > You only need to set this variable when compiling, not when running.
 
-ROS version | Gazebo version | Branch | Binaries hosted at
--- | -- | -- | --
-Galactic | Citadel | [galactic](https://github.com/ros/ros_ign/tree/galactic) | https://packages.ros.org
-Galactic | Edifice | [galactic](https://github.com/ros/ros_ign/tree/galactic) | only from source
-Galactic | Fortress | [galactic](https://github.com/ros/ros_ign/tree/galactic) | only from source
-Humble | Fortress | [ros2](https://github.com/ros/ros_ign/tree/ros2) | https://packages.ros.org
-Rolling | Fortress | [ros2](https://github.com/ros/ros_ign/tree/ros2) | https://packages.ros.org
+ROS version | Gazebo version | libSDFormat version | Branch | Binaries hosted at
+-- | -- | -- | -- | --
+Galactic | Citadel | 9.x | [galactic](https://github.com/ros/ros_ign/tree/galactic) | https://packages.ros.org
+Galactic | Edifice | 11.x | [galactic](https://github.com/ros/ros_ign/tree/galactic) | only from source
+Galactic | Fortress | 12.x | [galactic](https://github.com/ros/ros_ign/tree/galactic) | only from source
+Humble | Fortress | 12.x | [ros2](https://github.com/ros/ros_ign/tree/ros2) | https://packages.ros.org
+Rolling | Fortress | 12.x | [ros2](https://github.com/ros/ros_ign/tree/ros2) | https://packages.ros.org
