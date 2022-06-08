@@ -81,6 +81,8 @@ get_file(const char * path)
     } \
   } while (false)
 
+
+#if SDF_MAJOR_VERSION < 11
 std::ostream & operator<<(std::ostream & os, const sdf::Errors & errors)
 {
   for (const auto & error : errors) {
@@ -88,5 +90,6 @@ std::ostream & operator<<(std::ostream & os, const sdf::Errors & errors)
   }
   return os;
 }
+#endif
 
 #endif  // TEST_TOOLS_HPP_

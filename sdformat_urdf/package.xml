@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<package format="2">
+<package format="3">
   <name>sdformat_urdf</name>
   <version>0.1.0</version>
   <description>
@@ -17,7 +17,22 @@
   <buildtool_depend>ament_cmake_ros</buildtool_depend>
   <buildtool_export_depend>ament_cmake_ros</buildtool_export_depend>
 
-  <depend>sdformat</depend>
+  <!-- Edifice - should have been the default with Galactic per REP-2000 -->
+  <depend condition="$GZ_VERSION == edifice">sdformat11</depend>
+
+  <!-- Fortress -->
+  <depend condition="$ROS_DISTRO == 'humble'">sdformat12</depend>
+  <depend condition="$ROS_DISTRO == 'rolling'">sdformat12</depend>
+  <depend condition="$GZ_VERSION == fortress">sdformat12</depend>
+
+  <!--
+      For backwards compatibility, default to version 9, which comes with
+      the unversioned `sdformat` key on Focal. That's Gazebo Citadel.
+  -->
+  <depend condition="$ROS_DISTRO == 'galactic'">sdformat</depend>
+  <depend condition="$GZ_VERSION == 'citadel'">sdformat</depend>
+  <depend condition="$GZ_VERSION == ''">sdformat</depend>
+
   <depend>urdf</depend>
 
   <build_depend>liburdfdom-headers-dev</build_depend>
