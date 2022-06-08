@@ -1,0 +1,24 @@
+name: gh-ci
+on:
+  pull_request
+jobs:
+  test_sdformat_urdf:
+    runs-on: ubuntu-20.04
+    strategy:
+      matrix:
+        ros-distro: ["galactic"]
+        gz-version:
+          - "citadel"  # libsdformat9
+          - "edifice"  # libsdformat11
+          - "fortress"  # libsdformat12
+    env:
+       GZ_VERSION: ${{ matrix.gz-version }}
+    steps:
+      - uses: ros-tooling/setup-ros@v0.3
+        with:
+          required-ros-distributions: ${{ matrix.ros-distro }}
+      - name: Build and test all packages
+        uses: ros-tooling/action-ros-ci@v0.2
+        with:
+          target-ros2-distro: ${{ matrix.ros-distro }}
+
