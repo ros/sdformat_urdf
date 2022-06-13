@@ -494,16 +494,14 @@ sdformat_urdf::convert_joint(const sdf::Joint & sdf_joint, sdf::Errors & errors)
     case sdf::JointType::PRISMATIC:
       urdf_joint->type = urdf::Joint::PRISMATIC;
       break;
-    case sdf::JointType::UNIVERSAL:
-      urdf_joint->type = urdf::Joint::FLOATING;
-      break;
-    case sdf::JointType::BALL:
-      urdf_joint->type = urdf::Joint::FLOATING;
-      break;
-    case sdf::JointType::INVALID:     // Unsupported: fall through to default
+    case sdf::JointType::UNIVERSAL:   // Unsupported: fall through to floating
+    case sdf::JointType::BALL:        //  Will require custom TF publisher
     case sdf::JointType::GEARBOX:     //  |
     case sdf::JointType::REVOLUTE2:   //  |
     case sdf::JointType::SCREW:       //  V
+      urdf_joint->type = urdf::Joint::FLOATING;
+      break;
+    case sdf::JointType::INVALID:
     default:
       errors.emplace_back(
         sdf::ErrorCode::STRING_READ,
