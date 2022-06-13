@@ -17,13 +17,20 @@
   <buildtool_depend>ament_cmake_ros</buildtool_depend>
   <buildtool_export_depend>ament_cmake_ros</buildtool_export_depend>
 
-  <depend>sdformat</depend>
+  <depend>sdformat12</depend>
   <depend>urdf</depend>
 
   <build_depend>liburdfdom-headers-dev</build_depend>
   <build_depend>pluginlib</build_depend>
+  <build_depend>rcutils</build_depend>
   <build_depend>tinyxml2_vendor</build_depend>
   <build_depend>urdf_parser_plugin</build_depend>
+
+  <build_export_depend>liburdfdom-headers-dev</build_export_depend>
+  <build_export_depend>pluginlib</build_export_depend>
+  <build_export_depend>rcutils</build_export_depend>
+  <build_export_depend>tinyxml2_vendor</build_export_depend>
+  <build_export_depend>urdf_parser_plugin</build_export_depend>
 
   <exec_depend>tinyxml2_vendor</exec_depend>
   <exec_depend>urdf_parser_plugin</exec_depend>
