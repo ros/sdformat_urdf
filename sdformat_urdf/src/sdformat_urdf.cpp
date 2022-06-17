@@ -509,8 +509,8 @@ sdformat_urdf::convert_joint(const sdf::Joint & sdf_joint, sdf::Errors & errors)
       return nullptr;
   }
 
-  if (urdf::Joint::FIXED != urdf_joint->type) {
-    // Add axis info for non-fixed joints
+  if ((urdf::Joint::FIXED != urdf_joint->type) && (urdf::Joint::FLOATING != urdf_joint->type)) {
+    // Add axis info for non-fixed and non-floating joints
     const sdf::JointAxis * sdf_axis = sdf_joint.Axis(0);
 
     // URDF expects axis to be expressed in the joint frame
