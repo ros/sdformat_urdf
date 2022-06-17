@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
+#include <iostream>
 #include <gtest/gtest.h>
 #include <sdf/Types.hh>
 #include <sdformat_urdf/sdformat_urdf.hpp>
@@ -98,21 +98,9 @@ TEST(Joint, joint_gearbox)
   sdf::Errors errors;
   urdf::ModelInterfaceSharedPtr model = sdformat_urdf::parse(
     get_file(PATH_TO_SDF_JOINT_GEARBOX), errors);
-  EXPECT_TRUE(errors.empty()) << errors;
+  EXPECT_FALSE(errors.empty());
   EXPECT_NO_ALGORITHM_ERRORS(errors);
-  ASSERT_TRUE(model);
-  ASSERT_EQ("joint_gearbox", model->getName());
-
-  urdf::JointConstSharedPtr joint = model->getJoint("joint_gearbox");
-  ASSERT_NE(nullptr, joint);
-
-  EXPECT_EQ("joint_gearbox", joint->name);
-  EXPECT_EQ(urdf::Joint::FLOATING, joint->type);
-  ASSERT_EQ(nullptr, joint->dynamics);
-  ASSERT_EQ(nullptr, joint->limits);
-  ASSERT_EQ(nullptr, joint->safety);
-  ASSERT_EQ(nullptr, joint->calibration);
-  ASSERT_EQ(nullptr, joint->mimic);
+  ASSERT_FALSE(model);
 }
 
 TEST(Joint, joint_prismatic)
