@@ -532,7 +532,7 @@ sdformat_urdf::convert_joint(const sdf::Joint & sdf_joint, sdf::Errors & errors)
   if ((urdf::Joint::FIXED != urdf_joint->type) && (urdf::Joint::FLOATING != urdf_joint->type)) {
     // Add axis info for non-fixed and non-floating joints
     const sdf::JointAxis * sdf_axis = sdf_joint.Axis(0);
-    if(nullptr == sdf_axis) {
+    if (nullptr == sdf_axis) {
       errors.emplace_back(
         sdf::ErrorCode::STRING_READ,
         "Axes missing for joint [" + sdf_joint.Name() + "]");
