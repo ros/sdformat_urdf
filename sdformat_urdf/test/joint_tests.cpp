@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include <iostream>
 #include <gtest/gtest.h>
 #include <urdf_model/model.h>
 #include <urdf_model/types.h>
