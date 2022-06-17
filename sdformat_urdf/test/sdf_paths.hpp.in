@@ -35,6 +35,7 @@
 #define PATH_TO_SDF_JOINT_FIXED "@path_to_sdf_joint_fixed@"
 #define PATH_TO_SDF_JOINT_GEARBOX "@path_to_sdf_joint_gearbox@"
 #define PATH_TO_SDF_JOINT_PRISMATIC "@path_to_sdf_joint_prismatic@"
+#define PATH_TO_SDF_JOINT_PRISMATIC_NO_AXIS "@path_to_sdf_joint_prismatic_no_axis@"
 #define PATH_TO_SDF_JOINT_REVOLUTE "@path_to_sdf_joint_revolute@"
 #define PATH_TO_SDF_JOINT_REVOLUTE2 "@path_to_sdf_joint_revolute2@"
 #define PATH_TO_SDF_JOINT_REVOLUTE_AXIS "@path_to_sdf_joint_revolute_axis@"

@@ -137,6 +137,15 @@ TEST(Joint, joint_prismatic)
   ASSERT_EQ(nullptr, joint->mimic);
 }
 
+TEST(Joint, joint_prismatic_no_axis)
+{
+  sdf::Errors errors;
+  urdf::ModelInterfaceSharedPtr model = sdformat_urdf::parse(
+    get_file(PATH_TO_SDF_JOINT_PRISMATIC_NO_AXIS), errors);
+  EXPECT_FALSE(errors.empty());
+  ASSERT_FALSE(model);
+}
+
 TEST(Joint, joint_revolute)
 {
   sdf::Errors errors;
