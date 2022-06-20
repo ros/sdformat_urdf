@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 #include <gtest/gtest.h>
 #include <urdf_model/model.h>
 #include <urdf_model/types.h>
@@ -28,9 +27,21 @@ TEST(Joint, joint_ball)
   sdf::Errors errors;
   urdf::ModelInterfaceSharedPtr model = sdformat_urdf::parse(
     get_file(PATH_TO_SDF_JOINT_BALL), errors);
-  EXPECT_FALSE(errors.empty());
+  EXPECT_TRUE(errors.empty()) << errors;
   EXPECT_NO_ALGORITHM_ERRORS(errors);
-  ASSERT_FALSE(model);
+  ASSERT_TRUE(model);
+  ASSERT_EQ("joint_ball", model->getName());
+
+  urdf::JointConstSharedPtr joint = model->getJoint("joint_ball");
+  ASSERT_NE(nullptr, joint);
+
+  EXPECT_EQ("joint_ball", joint->name);
+  EXPECT_EQ(urdf::Joint::FLOATING, joint->type);
+  ASSERT_EQ(nullptr, joint->dynamics);
+  ASSERT_EQ(nullptr, joint->limits);
+  ASSERT_EQ(nullptr, joint->safety);
+  ASSERT_EQ(nullptr, joint->calibration);
+  ASSERT_EQ(nullptr, joint->mimic);
 }
 
 TEST(Joint, joint_continuous)
@@ -120,6 +131,15 @@ TEST(Joint, joint_prismatic)
   ASSERT_EQ(nullptr, joint->mimic);
 }
 
+TEST(Joint, joint_prismatic_no_axis)
+{
+  sdf::Errors errors;
+  urdf::ModelInterfaceSharedPtr model = sdformat_urdf::parse(
+    get_file(PATH_TO_SDF_JOINT_PRISMATIC_NO_AXIS), errors);
+  EXPECT_FALSE(errors.empty());
+  ASSERT_FALSE(model);
+}
+
 TEST(Joint, joint_revolute)
 {
   sdf::Errors errors;
@@ -152,9 +172,21 @@ TEST(Joint, joint_revolute2)
   sdf::Errors errors;
   urdf::ModelInterfaceSharedPtr model = sdformat_urdf::parse(
     get_file(PATH_TO_SDF_JOINT_REVOLUTE2), errors);
-  EXPECT_FALSE(errors.empty());
+  EXPECT_TRUE(errors.empty()) << errors;
   EXPECT_NO_ALGORITHM_ERRORS(errors);
-  ASSERT_FALSE(model);
+  ASSERT_TRUE(model);
+  ASSERT_EQ("joint_revolute2", model->getName());
+
+  urdf::JointConstSharedPtr joint = model->getJoint("joint_revolute2");
+  ASSERT_NE(nullptr, joint);
+
+  EXPECT_EQ("joint_revolute2", joint->name);
+  EXPECT_EQ(urdf::Joint::FLOATING, joint->type);
+  ASSERT_EQ(nullptr, joint->dynamics);
+  ASSERT_EQ(nullptr, joint->limits);
+  ASSERT_EQ(nullptr, joint->safety);
+  ASSERT_EQ(nullptr, joint->calibration);
+  ASSERT_EQ(nullptr, joint->mimic);
 }
 
 TEST(Joint, joint_revolute_axis)
@@ -244,9 +276,21 @@ TEST(Joint, joint_screw)
   sdf::Errors errors;
   urdf::ModelInterfaceSharedPtr model = sdformat_urdf::parse(
     get_file(PATH_TO_SDF_JOINT_SCREW), errors);
-  EXPECT_FALSE(errors.empty());
+  EXPECT_TRUE(errors.empty()) << errors;
   EXPECT_NO_ALGORITHM_ERRORS(errors);
-  ASSERT_FALSE(model);
+  ASSERT_TRUE(model);
+  ASSERT_EQ("joint_screw", model->getName());
+
+  urdf::JointConstSharedPtr joint = model->getJoint("joint_screw");
+  ASSERT_NE(nullptr, joint);
+
+  EXPECT_EQ("joint_screw", joint->name);
+  EXPECT_EQ(urdf::Joint::FLOATING, joint->type);
+  ASSERT_EQ(nullptr, joint->dynamics);
+  ASSERT_EQ(nullptr, joint->limits);
+  ASSERT_EQ(nullptr, joint->safety);
+  ASSERT_EQ(nullptr, joint->calibration);
+  ASSERT_EQ(nullptr, joint->mimic);
 }
 
 TEST(Joint, joint_universal)
@@ -254,7 +298,19 @@ TEST(Joint, joint_universal)
   sdf::Errors errors;
   urdf::ModelInterfaceSharedPtr model = sdformat_urdf::parse(
     get_file(PATH_TO_SDF_JOINT_UNIVERSAL), errors);
-  EXPECT_FALSE(errors.empty());
+  EXPECT_TRUE(errors.empty()) << errors;
   EXPECT_NO_ALGORITHM_ERRORS(errors);
-  ASSERT_FALSE(model);
+  ASSERT_TRUE(model);
+  ASSERT_EQ("joint_universal", model->getName());
+
+  urdf::JointConstSharedPtr joint = model->getJoint("joint_universal");
+  ASSERT_NE(nullptr, joint);
+
+  EXPECT_EQ("joint_universal", joint->name);
+  EXPECT_EQ(urdf::Joint::FLOATING, joint->type);
+  ASSERT_EQ(nullptr, joint->dynamics);
+  ASSERT_EQ(nullptr, joint->limits);
+  ASSERT_EQ(nullptr, joint->safety);
+  ASSERT_EQ(nullptr, joint->calibration);
+  ASSERT_EQ(nullptr, joint->mimic);
 }
