@@ -34,6 +34,7 @@ set(model_names
   "joint_fixed"
   "joint_gearbox"
   "joint_prismatic"
+  "joint_prismatic_no_axis"
   "joint_revolute"
   "joint_revolute2"
   "joint_revolute_axis"

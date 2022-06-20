@@ -514,12 +514,14 @@ sdformat_urdf::convert_joint(const sdf::Joint & sdf_joint, sdf::Errors & errors)
     case sdf::JointType::PRISMATIC:
       urdf_joint->type = urdf::Joint::PRISMATIC;
       break;
-    case sdf::JointType::INVALID:     // Unsupported: fall through to default
-    case sdf::JointType::BALL:        //  |
+    case sdf::JointType::UNIVERSAL:   // Unsupported: fall through to floating
+    case sdf::JointType::BALL:        //  Will require custom TF publisher
     case sdf::JointType::GEARBOX:     //  |
     case sdf::JointType::REVOLUTE2:   //  |
-    case sdf::JointType::SCREW:       //  |
-    case sdf::JointType::UNIVERSAL:   //  V
+    case sdf::JointType::SCREW:       //  V
+      urdf_joint->type = urdf::Joint::FLOATING;
+      break;
+    case sdf::JointType::INVALID:
     default:
       errors.emplace_back(
         sdf::ErrorCode::STRING_READ,
@@ -527,9 +529,15 @@ sdformat_urdf::convert_joint(const sdf::Joint & sdf_joint, sdf::Errors & errors)
       return nullptr;
   }
 
-  if (urdf::Joint::FIXED != urdf_joint->type) {
-    // Add axis info for non-fixed joints
+  if ((urdf::Joint::FIXED != urdf_joint->type) && (urdf::Joint::FLOATING != urdf_joint->type)) {
+    // Add axis info for non-fixed and non-floating joints
     const sdf::JointAxis * sdf_axis = sdf_joint.Axis(0);
+    if (nullptr == sdf_axis) {
+      errors.emplace_back(
+        sdf::ErrorCode::STRING_READ,
+        "Axes missing for joint [" + sdf_joint.Name() + "]");
+      return nullptr;
+    }
 
     // URDF expects axis to be expressed in the joint frame
     ignition::math::Vector3d axis_xyz;
