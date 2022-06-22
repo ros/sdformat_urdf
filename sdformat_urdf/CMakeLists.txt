@@ -78,7 +78,7 @@ pluginlib_export_plugin_description_file(urdf_parser_plugin "sdformat_urdf_plugi
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
-  find_package(sdformat_test_files 0.1 REQUIRED)
+  find_package(sdformat_test_files REQUIRED)
   ament_lint_auto_find_test_dependencies()
 
   sdformat_test_files_get_model_sdf("path_to_sdf_geometry_box" "geometry_box")
