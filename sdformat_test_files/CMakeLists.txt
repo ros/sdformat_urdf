@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.5)
 project(sdformat_test_files)
 
-set(sdformat_test_files_VERSION 1.0.0)
+set(sdformat_test_files_VERSION 1.0.1)
 
 # Decide where to install stuff
 include(GNUInstallDirs)

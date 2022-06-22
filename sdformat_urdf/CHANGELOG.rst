@@ -2,6 +2,11 @@
 Changelog for package sdformat_urdf
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+1.0.1 (2022-06-21)
+------------------
+* Remove version requirement on sdformat_test_files (`#15 <https://github.com/ros/sdformat_urdf/issues/15>`_)
+* Contributors: Shane Loretz
+
 1.0.0 (2022-06-21)
 ------------------
 * Support for universal and ball joint as floating joints `#13 <https://github.com/ros/sdformat_urdf/issues/13>`_
