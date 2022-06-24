@@ -37,11 +37,11 @@ TEST(Joint, joint_ball)
 
   EXPECT_EQ("joint_ball", joint->name);
   EXPECT_EQ(urdf::Joint::FLOATING, joint->type);
-  ASSERT_EQ(nullptr, joint->dynamics);
-  ASSERT_EQ(nullptr, joint->limits);
-  ASSERT_EQ(nullptr, joint->safety);
-  ASSERT_EQ(nullptr, joint->calibration);
-  ASSERT_EQ(nullptr, joint->mimic);
+  EXPECT_EQ(nullptr, joint->dynamics);
+  EXPECT_EQ(nullptr, joint->limits);
+  EXPECT_EQ(nullptr, joint->safety);
+  EXPECT_EQ(nullptr, joint->calibration);
+  EXPECT_EQ(nullptr, joint->mimic);
 }
 
 TEST(Joint, joint_continuous)
@@ -64,10 +64,10 @@ TEST(Joint, joint_continuous)
   ASSERT_NE(nullptr, joint->dynamics);
   EXPECT_DOUBLE_EQ(0, joint->dynamics->damping);
   EXPECT_DOUBLE_EQ(0, joint->dynamics->friction);
-  ASSERT_EQ(nullptr, joint->limits);
-  ASSERT_EQ(nullptr, joint->safety);
-  ASSERT_EQ(nullptr, joint->calibration);
-  ASSERT_EQ(nullptr, joint->mimic);
+  EXPECT_EQ(nullptr, joint->limits);
+  EXPECT_EQ(nullptr, joint->safety);
+  EXPECT_EQ(nullptr, joint->calibration);
+  EXPECT_EQ(nullptr, joint->mimic);
 }
 
 TEST(Joint, joint_fixed)
@@ -84,11 +84,11 @@ TEST(Joint, joint_fixed)
 
   EXPECT_EQ("joint_fixed", joint->name);
   EXPECT_EQ(urdf::Joint::FIXED, joint->type);
-  ASSERT_EQ(nullptr, joint->dynamics);
-  ASSERT_EQ(nullptr, joint->limits);
-  ASSERT_EQ(nullptr, joint->safety);
-  ASSERT_EQ(nullptr, joint->calibration);
-  ASSERT_EQ(nullptr, joint->mimic);
+  EXPECT_EQ(nullptr, joint->dynamics);
+  EXPECT_EQ(nullptr, joint->limits);
+  EXPECT_EQ(nullptr, joint->safety);
+  EXPECT_EQ(nullptr, joint->calibration);
+  EXPECT_EQ(nullptr, joint->mimic);
 }
 
 TEST(Joint, joint_gearbox)
@@ -288,9 +288,9 @@ TEST(Joint, joint_screw)
   EXPECT_EQ(urdf::Joint::FLOATING, joint->type);
   ASSERT_EQ(nullptr, joint->dynamics);
   ASSERT_EQ(nullptr, joint->limits);
-  ASSERT_EQ(nullptr, joint->safety);
-  ASSERT_EQ(nullptr, joint->calibration);
-  ASSERT_EQ(nullptr, joint->mimic);
+  EXPECT_EQ(nullptr, joint->safety);
+  EXPECT_EQ(nullptr, joint->calibration);
+  EXPECT_EQ(nullptr, joint->mimic);
 }
 
 TEST(Joint, joint_universal)
@@ -308,9 +308,9 @@ TEST(Joint, joint_universal)
 
   EXPECT_EQ("joint_universal", joint->name);
   EXPECT_EQ(urdf::Joint::FLOATING, joint->type);
-  ASSERT_EQ(nullptr, joint->dynamics);
-  ASSERT_EQ(nullptr, joint->limits);
-  ASSERT_EQ(nullptr, joint->safety);
-  ASSERT_EQ(nullptr, joint->calibration);
-  ASSERT_EQ(nullptr, joint->mimic);
+  EXPECT_EQ(nullptr, joint->dynamics);
+  EXPECT_EQ(nullptr, joint->limits);
+  EXPECT_EQ(nullptr, joint->safety);
+  EXPECT_EQ(nullptr, joint->calibration);
+  EXPECT_EQ(nullptr, joint->mimic);
 }
