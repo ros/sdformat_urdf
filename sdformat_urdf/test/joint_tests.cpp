@@ -17,6 +17,8 @@
 #include <urdf_model/types.h>
 #include <sdformat_urdf/sdformat_urdf.hpp>
 
+#include <ignition/math/Pose3.hh>
+#include <ignition/math/Vector3.hh>
 #include <sdf/Types.hh>
 
 #include "sdf_paths.hpp"
