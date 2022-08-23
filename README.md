@@ -21,7 +21,7 @@ For example:
 
     export GZ_VERSION=fortress
 
-> You only need to set this variable when compiling, not when running.
+You only need to set this variable when compiling, not when running.
 ROS version | Gazebo version | libSDFormat version | Branch | Binaries hosted at
 -- | -- | -- | -- | --
 Galactic | Citadel | 9.x | [galactic](https://github.com/ros/ros_ign/tree/galactic) | https://packages.ros.org
