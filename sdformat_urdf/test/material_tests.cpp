@@ -18,7 +18,7 @@
 #include <urdf_model/types.h>
 #include <sdformat_urdf/sdformat_urdf.hpp>
 
-#include <ignition/math/Vector4.hh>
+#include <gz/math/Vector4.hh>
 #include <sdf/Types.hh>
 
 #include "sdf_paths.hpp"
@@ -38,9 +38,9 @@ TEST(Material, material_blinn_phong)
   urdf::VisualConstSharedPtr visual = link->visual;
   ASSERT_NE(nullptr, visual);
 
-  const ignition::math::Vector4d ambient{0.3, 0, 0, 1};
-  const ignition::math::Vector4d diffuse{0, 0.3, 0, 1};
-  const ignition::math::Vector4d expected_color =
+  const gz::math::Vector4d ambient{0.3, 0, 0, 1};
+  const gz::math::Vector4d diffuse{0, 0.3, 0, 1};
+  const gz::math::Vector4d expected_color =
     0.4 * ambient + 0.8 * diffuse;
 
   EXPECT_EQ(link->name + visual->name, visual->material->name);

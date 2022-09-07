@@ -21,7 +21,7 @@
 #include <string>
 #include <vector>
 
-#include <ignition/math/Pose3.hh>
+#include <gz/math/Pose3.hh>
 #include <sdf/Error.hh>
 #include <sdf/Collision.hh>
 #include <sdf/Geometry.hh>
@@ -48,7 +48,7 @@ urdf::JointSharedPtr
 convert_joint(const sdf::Joint & sdf_joint, sdf::Errors & errors);
 
 urdf::Pose
-convert_pose(const ignition::math::Pose3d & sdf_pose);
+convert_pose(const gz::math::Pose3d & sdf_pose);
 
 urdf::GeometrySharedPtr
 convert_geometry(const sdf::Geometry & sdf_geometry, sdf::Errors & errors);
@@ -93,7 +93,7 @@ sdformat_urdf::convert_model(const sdf::Model & sdf_model, sdf::Errors & errors)
 
   // A model's pose is the location of the model in a larger context, like a world or parent model
   // It doesn't make sense in the context of a robot description.
-  if ("" != sdf_model.PoseRelativeTo() || ignition::math::Pose3d{} != sdf_model.RawPose()) {
+  if ("" != sdf_model.PoseRelativeTo() || gz::math::Pose3d{} != sdf_model.RawPose()) {
     errors.emplace_back(
       sdf::ErrorCode::STRING_READ,
       "<model> tags with <pose> are not currently supported by sdformat_urdf");
@@ -115,7 +115,7 @@ sdformat_urdf::convert_model(const sdf::Model & sdf_model, sdf::Errors & errors)
     std::string relative_joint_name{""};
     for (uint64_t j = 0; j < sdf_model.JointCount(); ++j) {
       const sdf::Joint * sdf_joint = sdf_model.JointByIndex(j);
-      if (sdf_joint && sdf_joint->ChildLinkName() == sdf_link->Name()) {
+      if (sdf_joint && sdf_joint->ChildName() == sdf_link->Name()) {
         relative_joint_name = sdf_joint->Name();
         break;
       }
@@ -212,7 +212,7 @@ sdformat_urdf::convert_model(const sdf::Model & sdf_model, sdf::Errors & errors)
     // Fix poses and check for tree structure issues
     while (joint_iter != joints_to_visit.end()) {
       const sdf::Joint * sdf_joint = *joint_iter;
-      if (sdf_joint->ParentLinkName() == sdf_parent_link->Name()) {
+      if (sdf_joint->ParentName() == sdf_parent_link->Name()) {
         // Visited parent link of this joint - don't look at it again
         joint_iter = joints_to_visit.erase(joint_iter);
 
@@ -227,7 +227,7 @@ sdformat_urdf::convert_model(const sdf::Model & sdf_model, sdf::Errors & errors)
           parent_frame_name = urdf_parent_link->parent_joint->name;
         }
 
-        ignition::math::Pose3d joint_pose;
+        gz::math::Pose3d joint_pose;
         sdf::Errors pose_errors = sdf_joint->SemanticPose().Resolve(joint_pose, parent_frame_name);
         if (!pose_errors.empty()) {
           errors.insert(errors.end(), pose_errors.begin(), pose_errors.end());
@@ -269,7 +269,7 @@ sdformat_urdf::convert_model(const sdf::Model & sdf_model, sdf::Errors & errors)
 
         // Explore this child link later
         link_stack.push_back(sdf_child_link);
-      } else if (sdf_joint->ChildLinkName() == sdf_parent_link->Name()) {
+      } else if (sdf_joint->ChildName() == sdf_parent_link->Name()) {
         // Something is wrong here
         if (sdf_parent_link == sdf_canonical_link) {
           // The canonical link can't be a child of a joint
@@ -321,7 +321,7 @@ sdformat_urdf::convert_link(
 
   // joint to link in joint if this is not the root link, else identity
   // The pose of the root link does not matter because there is no equivalent in URDF
-  ignition::math::Pose3d link_pose;
+  gz::math::Pose3d link_pose;
   if (!relative_joint_name.empty()) {
     // urdf link pose is the location of the joint having it as a child
     sdf::Errors pose_errors = sdf_link.SemanticPose().Resolve(link_pose, relative_joint_name);
@@ -334,7 +334,7 @@ sdformat_urdf::convert_link(
     }
   }
 
-  const ignition::math::Inertiald sdf_inertia = sdf_link.Inertial();
+  const gz::math::Inertiald sdf_inertia = sdf_link.Inertial();
   urdf_link->inertial = std::make_shared<urdf::Inertial>();
   urdf_link->inertial->mass = sdf_inertia.MassMatrix().Mass();
   // URDF doesn't have link pose concept, so add SDF link pose to inertial
@@ -360,7 +360,7 @@ sdformat_urdf::convert_link(
     urdf_visual->name = sdf_visual->Name();
 
     // URDF visual is relative to link origin
-    ignition::math::Pose3d visual_pose;
+    gz::math::Pose3d visual_pose;
     sdf::Errors pose_errors = sdf_visual->SemanticPose().Resolve(visual_pose, sdf_link.Name());
     if (!pose_errors.empty()) {
       errors.insert(errors.end(), pose_errors.begin(), pose_errors.end());
@@ -431,7 +431,7 @@ sdformat_urdf::convert_link(
     urdf_collision->name = sdf_collision->Name();
 
     // URDF collision is relative to link origin
-    ignition::math::Pose3d collision_pose;
+    gz::math::Pose3d collision_pose;
     sdf::Errors pose_errors =
       sdf_collision->SemanticPose().Resolve(collision_pose, sdf_link.Name());
     if (!pose_errors.empty()) {
@@ -520,7 +520,7 @@ sdformat_urdf::convert_joint(const sdf::Joint & sdf_joint, sdf::Errors & errors)
     }
 
     // URDF expects axis to be expressed in the joint frame
-    ignition::math::Vector3d axis_xyz;
+    gz::math::Vector3d axis_xyz;
     sdf::Errors axis_errors = sdf_axis->ResolveXyz(axis_xyz, sdf_joint.Name());
     if (!axis_errors.empty()) {
       errors.insert(errors.end(), axis_errors.begin(), axis_errors.end());
@@ -573,14 +573,14 @@ sdformat_urdf::convert_joint(const sdf::Joint & sdf_joint, sdf::Errors & errors)
     }
   }
 
-  urdf_joint->child_link_name = sdf_joint.ChildLinkName();
-  urdf_joint->parent_link_name = sdf_joint.ParentLinkName();
+  urdf_joint->child_link_name = sdf_joint.ChildName();
+  urdf_joint->parent_link_name = sdf_joint.ParentName();
 
   return urdf_joint;
 }
 
 urdf::Pose
-sdformat_urdf::convert_pose(const ignition::math::Pose3d & sdf_pose)
+sdformat_urdf::convert_pose(const gz::math::Pose3d & sdf_pose)
 {
   urdf::Pose pose;
   pose.position.x = sdf_pose.Pos().X();

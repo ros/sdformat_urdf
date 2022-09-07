@@ -34,7 +34,7 @@ get_file(const char * path)
 
 #define EXPECT_POSE(expected_ign, actual_urdf) \
   do { \
-    const auto actual_ign = ignition::math::Pose3d{ \
+    const auto actual_ign = gz::math::Pose3d{ \
       actual_urdf.position.x, \
       actual_urdf.position.y, \
       actual_urdf.position.z, \

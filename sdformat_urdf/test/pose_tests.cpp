@@ -18,7 +18,7 @@
 #include <urdf_model/types.h>
 #include <sdformat_urdf/sdformat_urdf.hpp>
 
-#include <ignition/math/Pose3.hh>
+#include <gz/math/Pose3.hh>
 #include <sdf/Types.hh>
 
 #include "sdf_paths.hpp"
@@ -52,38 +52,38 @@ TEST(Pose, pose_chain)
   urdf::JointConstSharedPtr joint_3 = model->getJoint("joint_3");
   ASSERT_NE(nullptr, joint_3);
 
-  const ignition::math::Pose3d model_to_link_1_in_model{0.1, 0.2, 0.3, 0.4, 0.5, 0.6};
-  const ignition::math::Pose3d model_to_link_2_in_model{0.2, 0.3, 0.4, 0.5, 0.6, 0.7};
-  const ignition::math::Pose3d model_to_link_3_in_model{0.3, 0.4, 0.5, 0.6, 0.7, 0.8};
-  const ignition::math::Pose3d model_to_link_4_in_model{0.4, 0.5, 0.6, 0.7, 0.8, 0.9};
-  const ignition::math::Pose3d link_2_to_joint_1_in_link_2 {0.9, 0.8, 0.7, 0.6, 0.5, 0.4};
-  const ignition::math::Pose3d link_3_to_joint_2_in_link_3{0.8, 0.7, 0.6, 0.5, 0.4, 0.3};
-  const ignition::math::Pose3d link_4_to_joint_3_in_link_4{0.7, 0.6, 0.5, 0.4, 0.3, 0.2};
+  const gz::math::Pose3d model_to_link_1_in_model{0.1, 0.2, 0.3, 0.4, 0.5, 0.6};
+  const gz::math::Pose3d model_to_link_2_in_model{0.2, 0.3, 0.4, 0.5, 0.6, 0.7};
+  const gz::math::Pose3d model_to_link_3_in_model{0.3, 0.4, 0.5, 0.6, 0.7, 0.8};
+  const gz::math::Pose3d model_to_link_4_in_model{0.4, 0.5, 0.6, 0.7, 0.8, 0.9};
+  const gz::math::Pose3d link_2_to_joint_1_in_link_2 {0.9, 0.8, 0.7, 0.6, 0.5, 0.4};
+  const gz::math::Pose3d link_3_to_joint_2_in_link_3{0.8, 0.7, 0.6, 0.5, 0.4, 0.3};
+  const gz::math::Pose3d link_4_to_joint_3_in_link_4{0.7, 0.6, 0.5, 0.4, 0.3, 0.2};
 
-  const ignition::math::Pose3d model_to_joint_1_in_model =
+  const gz::math::Pose3d model_to_joint_1_in_model =
     model_to_link_2_in_model * link_2_to_joint_1_in_link_2;
-  const ignition::math::Pose3d model_to_joint_2_in_model =
+  const gz::math::Pose3d model_to_joint_2_in_model =
     model_to_link_3_in_model * link_3_to_joint_2_in_link_3;
-  const ignition::math::Pose3d model_to_joint_3_in_model =
+  const gz::math::Pose3d model_to_joint_3_in_model =
     model_to_link_4_in_model * link_4_to_joint_3_in_link_4;
 
-  const ignition::math::Pose3d link_1_to_joint_1_in_link_1 =
+  const gz::math::Pose3d link_1_to_joint_1_in_link_1 =
     model_to_link_1_in_model.Inverse() * model_to_joint_1_in_model;
-  const ignition::math::Pose3d joint_1_to_link_2_in_joint_1 =
+  const gz::math::Pose3d joint_1_to_link_2_in_joint_1 =
     model_to_joint_1_in_model.Inverse() * model_to_link_2_in_model;
-  const ignition::math::Pose3d joint_2_to_link_3_in_joint_2 =
+  const gz::math::Pose3d joint_2_to_link_3_in_joint_2 =
     model_to_joint_2_in_model.Inverse() * model_to_link_3_in_model;
-  const ignition::math::Pose3d joint_3_to_link_4_in_joint_3 =
+  const gz::math::Pose3d joint_3_to_link_4_in_joint_3 =
     model_to_joint_3_in_model.Inverse() * model_to_link_4_in_model;
 
-  const ignition::math::Pose3d joint_1_to_joint_2_in_joint_1 =
+  const gz::math::Pose3d joint_1_to_joint_2_in_joint_1 =
     model_to_joint_1_in_model.Inverse() * model_to_joint_2_in_model;
-  const ignition::math::Pose3d joint_2_to_joint_3_in_joint_2 =
+  const gz::math::Pose3d joint_2_to_joint_3_in_joint_2 =
     model_to_joint_2_in_model.Inverse() * model_to_joint_3_in_model;
 
-  EXPECT_POSE(ignition::math::Pose3d::Zero, link_1->inertial->origin);
-  EXPECT_POSE(ignition::math::Pose3d::Zero, link_1->visual->origin);
-  EXPECT_POSE(ignition::math::Pose3d::Zero, link_1->collision->origin);
+  EXPECT_POSE(gz::math::Pose3d::Zero, link_1->inertial->origin);
+  EXPECT_POSE(gz::math::Pose3d::Zero, link_1->visual->origin);
+  EXPECT_POSE(gz::math::Pose3d::Zero, link_1->collision->origin);
 
   EXPECT_POSE(link_1_to_joint_1_in_link_1, joint_1->parent_to_joint_origin_transform);
 
@@ -117,10 +117,10 @@ TEST(Pose, pose_collision)
   urdf::LinkConstSharedPtr link = model->getRoot();
   ASSERT_NE(nullptr, link);
 
-  const ignition::math::Pose3d expected_collision_pose{0.05, 0.1, 0.2, 0.1, 0.2, 0.3};
+  const gz::math::Pose3d expected_collision_pose{0.05, 0.1, 0.2, 0.1, 0.2, 0.3};
 
-  EXPECT_POSE(ignition::math::Pose3d::Zero, link->inertial->origin);
-  EXPECT_POSE(ignition::math::Pose3d::Zero, link->visual->origin);
+  EXPECT_POSE(gz::math::Pose3d::Zero, link->inertial->origin);
+  EXPECT_POSE(gz::math::Pose3d::Zero, link->visual->origin);
   EXPECT_POSE(expected_collision_pose, link->collision->origin);
 }
 
@@ -136,16 +136,16 @@ TEST(Pose, pose_collision_in_frame)
   urdf::LinkConstSharedPtr link = model->getRoot();
   ASSERT_NE(nullptr, link);
 
-  const ignition::math::Pose3d model_to_frame_in_model{0.05, 0.1, 0.2, 0.1, 0.2, 0.3};
-  const ignition::math::Pose3d model_to_link_in_model{0, 0, 0, 0, 0, 0};
-  const ignition::math::Pose3d frame_to_link_in_frame =
+  const gz::math::Pose3d model_to_frame_in_model{0.05, 0.1, 0.2, 0.1, 0.2, 0.3};
+  const gz::math::Pose3d model_to_link_in_model{0, 0, 0, 0, 0, 0};
+  const gz::math::Pose3d frame_to_link_in_frame =
     model_to_frame_in_model.Inverse() * model_to_link_in_model;
-  const ignition::math::Pose3d frame_to_collision_in_frame{0.2, 0.4, 0.8, 0.2, 0.3, 0.4};
-  const ignition::math::Pose3d link_to_collision_in_link =
+  const gz::math::Pose3d frame_to_collision_in_frame{0.2, 0.4, 0.8, 0.2, 0.3, 0.4};
+  const gz::math::Pose3d link_to_collision_in_link =
     frame_to_link_in_frame.Inverse() * frame_to_collision_in_frame;
 
-  EXPECT_POSE(ignition::math::Pose3d::Zero, link->inertial->origin);
-  EXPECT_POSE(ignition::math::Pose3d::Zero, link->visual->origin);
+  EXPECT_POSE(gz::math::Pose3d::Zero, link->inertial->origin);
+  EXPECT_POSE(gz::math::Pose3d::Zero, link->visual->origin);
   EXPECT_POSE(link_to_collision_in_link, link->collision->origin);
 }
 
@@ -161,11 +161,11 @@ TEST(Pose, pose_inertial)
   urdf::LinkConstSharedPtr link = model->getRoot();
   ASSERT_NE(nullptr, link);
 
-  const ignition::math::Pose3d expected_inertial_pose{0.05, 0.1, 0.2, 0.1, 0.2, 0.3};
+  const gz::math::Pose3d expected_inertial_pose{0.05, 0.1, 0.2, 0.1, 0.2, 0.3};
 
   EXPECT_POSE(expected_inertial_pose, link->inertial->origin);
-  EXPECT_POSE(ignition::math::Pose3d::Zero, link->visual->origin);
-  EXPECT_POSE(ignition::math::Pose3d::Zero, link->collision->origin);
+  EXPECT_POSE(gz::math::Pose3d::Zero, link->visual->origin);
+  EXPECT_POSE(gz::math::Pose3d::Zero, link->collision->origin);
 }
 
 TEST(Pose, pose_inertial_in_frame)
@@ -182,17 +182,17 @@ TEST(Pose, pose_inertial_in_frame)
   urdf::LinkConstSharedPtr link = model->getRoot();
   ASSERT_NE(nullptr, link);
 
-  const ignition::math::Pose3d model_to_frame_in_model{0.05, 0.1, 0.2, 0.1, 0.2, 0.3};
-  const ignition::math::Pose3d model_to_link_in_model{0, 0, 0, 0, 0, 0};
-  const ignition::math::Pose3d frame_to_link_in_frame =
+  const gz::math::Pose3d model_to_frame_in_model{0.05, 0.1, 0.2, 0.1, 0.2, 0.3};
+  const gz::math::Pose3d model_to_link_in_model{0, 0, 0, 0, 0, 0};
+  const gz::math::Pose3d frame_to_link_in_frame =
     model_to_frame_in_model.Inverse() * model_to_link_in_model;
-  const ignition::math::Pose3d frame_to_inertial_in_frame{0.2, 0.4, 0.8, 0.2, 0.3, 0.4};
-  const ignition::math::Pose3d link_to_inertial_in_link =
+  const gz::math::Pose3d frame_to_inertial_in_frame{0.2, 0.4, 0.8, 0.2, 0.3, 0.4};
+  const gz::math::Pose3d link_to_inertial_in_link =
     frame_to_link_in_frame.Inverse() * frame_to_inertial_in_frame;
 
   EXPECT_POSE(link_to_inertial_in_link, link->inertial->origin);
-  EXPECT_POSE(ignition::math::Pose3d::Zero, link->visual->origin);
-  EXPECT_POSE(ignition::math::Pose3d::Zero, link->collision->origin);
+  EXPECT_POSE(gz::math::Pose3d::Zero, link->visual->origin);
+  EXPECT_POSE(gz::math::Pose3d::Zero, link->collision->origin);
 }
 
 TEST(Pose, pose_joint)
@@ -211,15 +211,15 @@ TEST(Pose, pose_joint)
 
   // In URDF joint is in parent link frame
   // The child link in URDF lives in the joint frame
-  const ignition::math::Pose3d model_to_parent_in_model{0, 0, 0, 0, 0, 0};
-  const ignition::math::Pose3d model_to_child_in_model{0, 0, 0, 0, 0, 0};
-  const ignition::math::Pose3d child_to_joint_in_child{0.05, 0.1, 0.2, 0.1, 0.2, 0.3};
+  const gz::math::Pose3d model_to_parent_in_model{0, 0, 0, 0, 0, 0};
+  const gz::math::Pose3d model_to_child_in_model{0, 0, 0, 0, 0, 0};
+  const gz::math::Pose3d child_to_joint_in_child{0.05, 0.1, 0.2, 0.1, 0.2, 0.3};
 
-  const ignition::math::Pose3d parent_to_child_in_parent =
+  const gz::math::Pose3d parent_to_child_in_parent =
     model_to_parent_in_model.Inverse() * model_to_child_in_model;
-  const ignition::math::Pose3d parent_to_joint_in_parent =
+  const gz::math::Pose3d parent_to_joint_in_parent =
     parent_to_child_in_parent * child_to_joint_in_child;
-  const ignition::math::Pose3d joint_to_child_in_joint = child_to_joint_in_child.Inverse();
+  const gz::math::Pose3d joint_to_child_in_joint = child_to_joint_in_child.Inverse();
 
   EXPECT_POSE(parent_to_joint_in_parent, joint->parent_to_joint_origin_transform);
 
@@ -250,31 +250,31 @@ TEST(Pose, pose_joint_all)
   urdf::JointConstSharedPtr joint = model->getJoint("joint");
   ASSERT_NE(nullptr, joint);
 
-  const ignition::math::Pose3d model_to_link_1_in_model{0.1, 0.2, 0.3, 0.4, 0.5, 0.6};
-  const ignition::math::Pose3d model_to_link_2_in_model{0.5, 0.6, 0.7, 0.8, 0.9, 1.0};
-  const ignition::math::Pose3d link_2_to_joint_in_link_2{0.9, 1.0, 1.1, 1.2, 1.3, 1.4};
+  const gz::math::Pose3d model_to_link_1_in_model{0.1, 0.2, 0.3, 0.4, 0.5, 0.6};
+  const gz::math::Pose3d model_to_link_2_in_model{0.5, 0.6, 0.7, 0.8, 0.9, 1.0};
+  const gz::math::Pose3d link_2_to_joint_in_link_2{0.9, 1.0, 1.1, 1.2, 1.3, 1.4};
 
-  const ignition::math::Pose3d model_to_joint_in_model =
+  const gz::math::Pose3d model_to_joint_in_model =
     model_to_link_2_in_model * link_2_to_joint_in_link_2;
 
-  const ignition::math::Pose3d link_1_to_joint_in_link_1 =
+  const gz::math::Pose3d link_1_to_joint_in_link_1 =
     model_to_link_1_in_model.Inverse() * model_to_joint_in_model;
-  const ignition::math::Pose3d joint_to_link_2_in_joint =
+  const gz::math::Pose3d joint_to_link_2_in_joint =
     model_to_joint_in_model.Inverse() * model_to_link_2_in_model;
 
-  const ignition::math::Pose3d link_1_to_visual_in_link_1{0.2, 0.3, 0.4, 0.5, 0.6, 0.7};
-  const ignition::math::Pose3d link_1_to_collision_in_link_1{0.3, 0.4, 0.5, 0.6, 0.7, 0.8};
-  const ignition::math::Pose3d link_1_to_inertial_in_link_1{0.4, 0.5, 0.6, 0.7, 0.8, 0.9};
+  const gz::math::Pose3d link_1_to_visual_in_link_1{0.2, 0.3, 0.4, 0.5, 0.6, 0.7};
+  const gz::math::Pose3d link_1_to_collision_in_link_1{0.3, 0.4, 0.5, 0.6, 0.7, 0.8};
+  const gz::math::Pose3d link_1_to_inertial_in_link_1{0.4, 0.5, 0.6, 0.7, 0.8, 0.9};
 
-  const ignition::math::Pose3d link_2_to_visual_in_link_2{0.6, 0.7, 0.8, 0.9, 1.0, 1.1};
-  const ignition::math::Pose3d link_2_to_collision_in_link_2{0.7, 0.8, 0.9, 1.0, 1.1, 1.2};
-  const ignition::math::Pose3d link_2_to_inertial_in_link_2{0.8, 0.9, 1.0, 1.1, 1.2, 1.3};
+  const gz::math::Pose3d link_2_to_visual_in_link_2{0.6, 0.7, 0.8, 0.9, 1.0, 1.1};
+  const gz::math::Pose3d link_2_to_collision_in_link_2{0.7, 0.8, 0.9, 1.0, 1.1, 1.2};
+  const gz::math::Pose3d link_2_to_inertial_in_link_2{0.8, 0.9, 1.0, 1.1, 1.2, 1.3};
 
-  const ignition::math::Pose3d joint_to_visual_in_joint =
+  const gz::math::Pose3d joint_to_visual_in_joint =
     joint_to_link_2_in_joint * link_2_to_visual_in_link_2;
-  const ignition::math::Pose3d joint_to_collision_in_joint =
+  const gz::math::Pose3d joint_to_collision_in_joint =
     joint_to_link_2_in_joint * link_2_to_collision_in_link_2;
-  const ignition::math::Pose3d joint_to_inertial_in_joint =
+  const gz::math::Pose3d joint_to_inertial_in_joint =
     joint_to_link_2_in_joint * link_2_to_inertial_in_link_2;
 
   EXPECT_POSE(link_1_to_visual_in_link_1, link_1->visual->origin);
@@ -304,16 +304,16 @@ TEST(Pose, pose_joint_in_frame)
 
   // In URDF joint is in parent link frame
   // The child link in URDF lives in the joint frame
-  const ignition::math::Pose3d model_to_parent_in_model{0, 0, 0, 0, 0, 0};
-  const ignition::math::Pose3d model_to_child_in_model{0, 0, 0, 0, 0, 0};
-  const ignition::math::Pose3d model_to_frame_in_model{0.05, 0.1, 0.2, 0.1, 0.2, 0.3};
-  const ignition::math::Pose3d frame_to_joint_in_frame{0.05, 0.1, 0.2, 0.1, 0.2, 0.3};
+  const gz::math::Pose3d model_to_parent_in_model{0, 0, 0, 0, 0, 0};
+  const gz::math::Pose3d model_to_child_in_model{0, 0, 0, 0, 0, 0};
+  const gz::math::Pose3d model_to_frame_in_model{0.05, 0.1, 0.2, 0.1, 0.2, 0.3};
+  const gz::math::Pose3d frame_to_joint_in_frame{0.05, 0.1, 0.2, 0.1, 0.2, 0.3};
 
-  const ignition::math::Pose3d model_to_joint_in_model =
+  const gz::math::Pose3d model_to_joint_in_model =
     model_to_frame_in_model * frame_to_joint_in_frame;
-  const ignition::math::Pose3d parent_to_joint_in_parent =
+  const gz::math::Pose3d parent_to_joint_in_parent =
     model_to_parent_in_model.Inverse() * model_to_joint_in_model;
-  const ignition::math::Pose3d joint_to_child_in_joint =
+  const gz::math::Pose3d joint_to_child_in_joint =
     model_to_joint_in_model.Inverse() * model_to_child_in_model;
 
   EXPECT_POSE(parent_to_joint_in_parent, joint->parent_to_joint_origin_transform);
@@ -339,9 +339,9 @@ TEST(Pose, pose_link)
 
   // URDF link C++ structure does not have an origin - root link members should be unaffected
   // by root link pose
-  EXPECT_POSE(ignition::math::Pose3d::Zero, link->inertial->origin);
-  EXPECT_POSE(ignition::math::Pose3d::Zero, link->visual->origin);
-  EXPECT_POSE(ignition::math::Pose3d::Zero, link->collision->origin);
+  EXPECT_POSE(gz::math::Pose3d::Zero, link->inertial->origin);
+  EXPECT_POSE(gz::math::Pose3d::Zero, link->visual->origin);
+  EXPECT_POSE(gz::math::Pose3d::Zero, link->collision->origin);
 }
 
 TEST(Pose, pose_link_all)
@@ -358,9 +358,9 @@ TEST(Pose, pose_link_all)
 
   // URDF link C++ structure does not have an origin - root link members should be unaffected
   // by root link pose
-  const ignition::math::Pose3d link_to_inertial_in_link{0.05, 0.1, 0.2, 0.4, 0.5, 0.6};
-  const ignition::math::Pose3d link_to_collision_in_link{0.04, 0.8, 0.16, 0.3, 0.4, 0.5};
-  const ignition::math::Pose3d link_to_visual_in_link{0.03, 0.6, 0.12, 0.2, 0.3, 0.4};
+  const gz::math::Pose3d link_to_inertial_in_link{0.05, 0.1, 0.2, 0.4, 0.5, 0.6};
+  const gz::math::Pose3d link_to_collision_in_link{0.04, 0.8, 0.16, 0.3, 0.4, 0.5};
+  const gz::math::Pose3d link_to_visual_in_link{0.03, 0.6, 0.12, 0.2, 0.3, 0.4};
 
   EXPECT_POSE(link_to_inertial_in_link, link->inertial->origin);
   EXPECT_POSE(link_to_visual_in_link, link->visual->origin);
@@ -381,9 +381,9 @@ TEST(Pose, pose_link_in_frame)
 
   // URDF link C++ structure does not have an origin - root link members should be unaffected
   // by root link pose
-  EXPECT_POSE(ignition::math::Pose3d::Zero, link->inertial->origin);
-  EXPECT_POSE(ignition::math::Pose3d::Zero, link->visual->origin);
-  EXPECT_POSE(ignition::math::Pose3d::Zero, link->collision->origin);
+  EXPECT_POSE(gz::math::Pose3d::Zero, link->inertial->origin);
+  EXPECT_POSE(gz::math::Pose3d::Zero, link->visual->origin);
+  EXPECT_POSE(gz::math::Pose3d::Zero, link->collision->origin);
 }
 
 TEST(Pose, pose_model)
@@ -408,11 +408,11 @@ TEST(Pose, pose_visual)
   urdf::LinkConstSharedPtr link = model->getRoot();
   ASSERT_NE(nullptr, link);
 
-  const ignition::math::Pose3d expected_visual_pose{0.05, 0.1, 0.2, 0.1, 0.2, 0.3};
+  const gz::math::Pose3d expected_visual_pose{0.05, 0.1, 0.2, 0.1, 0.2, 0.3};
 
-  EXPECT_POSE(ignition::math::Pose3d::Zero, link->inertial->origin);
+  EXPECT_POSE(gz::math::Pose3d::Zero, link->inertial->origin);
   EXPECT_POSE(expected_visual_pose, link->visual->origin);
-  EXPECT_POSE(ignition::math::Pose3d::Zero, link->collision->origin);
+  EXPECT_POSE(gz::math::Pose3d::Zero, link->collision->origin);
 }
 
 TEST(Pose, pose_visual_in_frame)
@@ -427,15 +427,15 @@ TEST(Pose, pose_visual_in_frame)
   urdf::LinkConstSharedPtr link = model->getRoot();
   ASSERT_NE(nullptr, link);
 
-  const ignition::math::Pose3d model_to_frame_in_model{0.05, 0.1, 0.2, 0.1, 0.2, 0.3};
-  const ignition::math::Pose3d model_to_link_in_model{0, 0, 0, 0, 0, 0};
-  const ignition::math::Pose3d frame_to_link_in_frame =
+  const gz::math::Pose3d model_to_frame_in_model{0.05, 0.1, 0.2, 0.1, 0.2, 0.3};
+  const gz::math::Pose3d model_to_link_in_model{0, 0, 0, 0, 0, 0};
+  const gz::math::Pose3d frame_to_link_in_frame =
     model_to_frame_in_model.Inverse() * model_to_link_in_model;
-  const ignition::math::Pose3d frame_to_visual_in_frame{0.2, 0.4, 0.8, 0.2, 0.3, 0.4};
-  const ignition::math::Pose3d link_to_visual_in_link =
+  const gz::math::Pose3d frame_to_visual_in_frame{0.2, 0.4, 0.8, 0.2, 0.3, 0.4};
+  const gz::math::Pose3d link_to_visual_in_link =
     frame_to_link_in_frame.Inverse() * frame_to_visual_in_frame;
 
-  EXPECT_POSE(ignition::math::Pose3d::Zero, link->inertial->origin);
+  EXPECT_POSE(gz::math::Pose3d::Zero, link->inertial->origin);
   EXPECT_POSE(link_to_visual_in_link, link->visual->origin);
-  EXPECT_POSE(ignition::math::Pose3d::Zero, link->collision->origin);
+  EXPECT_POSE(gz::math::Pose3d::Zero, link->collision->origin);
 }
