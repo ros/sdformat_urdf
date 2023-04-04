@@ -17,6 +17,7 @@ namespace
 {
 
 /// \brief Get the list of available models
+SDFORMAT_URDF_LOCAL
 std::unordered_map<std::string, std::string> gz_models()
 {
   namespace fs = std::filesystem;
@@ -56,8 +57,9 @@ std::unordered_map<std::string, std::string> gz_models()
 
 
 /// \brief Get a SDF-formatted mesh URI and returns the absolute path to it
-//SDFORMAT_URDF_PUBLIC
-std::string resolveURI(const std::string &uri)
+SDFORMAT_URDF_PUBLIC
+std::string
+resolveURI(const std::string &uri)
 {
   // URDF is fine with package:// or file://
   const auto sep{uri.find("://")};
