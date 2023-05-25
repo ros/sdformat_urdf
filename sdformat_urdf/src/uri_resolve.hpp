@@ -1,21 +1,20 @@
-#ifndef SDFORMAT_URDF_URI_RESOLVE_HPP
-#define SDFORMAT_URDF_URI_RESOLVE_HPP
+// Copyright 2023 Open Source Robotics Foundation, Inc.
+#ifndef URI_RESOLVE_HPP_
+#define URI_RESOLVE_HPP_
 
-#include "sdformat_urdf/visibility_control.hpp"
-#include <string>
 #include <string.h>
+#include <string>
 #include <vector>
 #include <filesystem>
 #include <unordered_map>
-
 #include <iostream>
+#include "sdformat_urdf/visibility_control.hpp"
 
 namespace sdformat_urdf
 {
 
 namespace
 {
-
 /// \brief Get the list of available models
 SDFORMAT_URDF_LOCAL
 std::unordered_map<std::string, std::string> gz_models()
@@ -26,7 +25,7 @@ std::unordered_map<std::string, std::string> gz_models()
   // there seem to be many possible environment variables to get models?
   // https://github.com/gazebosim/gz-sim/pull/172
   // no idea how they should be ordered
-  for(auto env: {
+  for(auto env : {
       "IGN_GAZEBO_RESOURCE_PATH",
       "GZ_SIM_RESOURCE_PATH",
       "GAZEBO_MODEL_PATH",
@@ -36,24 +35,25 @@ std::unordered_map<std::string, std::string> gz_models()
     if(!paths)
       continue;
 
-    char* path = strtok(paths, ":");
+    char** save_ptr{};
+    char* path = strtok_r(paths, ":", save_ptr);
     while(path)
     {
       fs::path root(path);
       if(fs::exists(root))
       {
-        for(const auto &model: fs::directory_iterator(root))
+        for(const auto &model : fs::directory_iterator(root))
         {
           if(model.is_directory() && fs::exists(model.path() / "model.sdf"))
             models[model.path().filename()] = model.path();
         }
       }
-      path = strtok(nullptr, ":");
+      path = strtok_r(nullptr, ":", save_ptr);
     }
   }
   return models;
 }
-}
+}  // namespace
 
 
 /// \brief Get a SDF-formatted mesh URI and returns the absolute path to it
@@ -66,7 +66,7 @@ resolveURI(const std::string &uri)
   if(uri.substr(0, sep) != "model")
     return uri;
 
-  static const auto models{gz_models()};
+  const auto models{gz_models()};
   const auto model_path{uri.substr(sep+3, uri.npos)};
   const auto slash{model_path.find('/')};
   if(slash == model_path.npos)
@@ -80,7 +80,7 @@ resolveURI(const std::string &uri)
 
   return "file://" + path->second + rel_path;
 }
-}
+}  // namespace sdformat_urdf
 
 
-#endif // SDFORMAT_URDF_URI_RESOLVE_HPP
+#endif  // URI_RESOLVE_HPP_
