@@ -32,7 +32,7 @@
 #include <sdf/Visual.hh>
 
 #include "sdformat_urdf/sdformat_urdf.hpp"
-#include "uri_resolve.hpp"
+#include "resolve_model_uri.hpp"
 
 namespace sdformat_urdf
 {

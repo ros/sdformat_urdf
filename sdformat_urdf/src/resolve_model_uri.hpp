@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef URI_RESOLVE_HPP_
-#define URI_RESOLVE_HPP_
+#ifndef RESOLVE_MODEL_URI_HPP_
+#define RESOLVE_MODEL_URI_HPP_
 
 #include <string.h>
 #include <string>
@@ -44,21 +44,22 @@ std::unordered_map<std::string, std::string> gz_models()
         "GAZEBO_MODEL_PATH",
         "SDF_PATH"})
   {
-    const auto paths{std::getenv(env)};
-    if(!paths)
+    const std::string paths{std::getenv(env)};
+    if(paths.empty())
       continue;
 
-    char ** save_ptr{};
-    char * path = strtok_r(paths, ":", save_ptr);
-    while (path) {
-      fs::path root(path);
-     if (fs::exists(root)) {
-        for (const auto & model : fs::directory_iterator(root)) {
+    std::istringstream iss{paths};
+    std::string path;
+
+    while (std::getline(iss, path, ':')) {
+      const fs::path modelDirectory(path);
+      if (fs::exists(modelDirectory)) {
+        for (const auto & model : fs::directory_iterator(modelDirectory)) {
           if (model.is_directory() && fs::exists(model.path() / "model.sdf")) {
             models[model.path().filename()] = model.path();
+          }
         }
       }
-      path = strtok_r(nullptr, ":", save_ptr);
     }
   }
   return models;
@@ -86,11 +87,11 @@ resolveURI(const std::string &uri)
   if(path == models.end())
     return uri;
 
-  const auto rel_path{model_path.substr(slash, model_path.npos)};
+  const auto relativePath{model_path.substr(slash, model_path.npos)};
 
-  return "file://" + path->second + rel_path;
+  return "file://" + path->second + relativePath;
 }
 }  // namespace sdformat_urdf
 
 
-#endif  // URI_RESOLVE_HPP_
+#endif  // RESOLVE_MODEL_URI_HPP_
