@@ -48,10 +48,9 @@ std::unordered_map<std::string, std::string> gz_models()
     if(!paths)
       continue;
 
-    char** save_ptr{};
-    char* path = strtok_r(paths, ":", save_ptr);
-    while(path)
-    {
+    char ** save_ptr{};
+    char * path = strtok_r(paths, ":", save_ptr);
+    while (path) {
       fs::path root(path);
       if(fs::exists(root))
       {
