@@ -52,11 +52,9 @@ std::unordered_map<std::string, std::string> gz_models()
     char * path = strtok_r(paths, ":", save_ptr);
     while (path) {
       fs::path root(path);
-      if(fs::exists(root))
-      {
-        for(const auto &model : fs::directory_iterator(root))
-        {
-          if(model.is_directory() && fs::exists(model.path() / "model.sdf"))
+     if (fs::exists(root)) {
+        for (const auto & model : fs::directory_iterator(root)) {
+          if (model.is_directory() && fs::exists(model.path() / "model.sdf")) {
             models[model.path().filename()] = model.path();
         }
       }
