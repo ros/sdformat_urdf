@@ -38,11 +38,11 @@ std::unordered_map<std::string, std::string> gz_models()
   // there seem to be many possible environment variables to get models?
   // https://github.com/gazebosim/gz-sim/pull/172
   // no idea how they should be ordered
-  for(auto env : {
-      "IGN_GAZEBO_RESOURCE_PATH",
-      "GZ_SIM_RESOURCE_PATH",
-      "GAZEBO_MODEL_PATH",
-      "SDF_PATH"})
+  for (auto env : {
+        "IGN_GAZEBO_RESOURCE_PATH",
+        "GZ_SIM_RESOURCE_PATH",
+        "GAZEBO_MODEL_PATH",
+        "SDF_PATH"})
   {
     const auto paths{std::getenv(env)};
     if(!paths)
