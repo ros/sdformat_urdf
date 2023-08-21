@@ -79,9 +79,9 @@ resolveURI(const std::string &uri)
   const auto models{gz_models()};
   const auto model_path{uri.substr(sep+3, uri.npos)};
   const auto slash{model_path.find('/')};
-  if(slash == model_path.npos)
+  if (slash == model_path.npos) {
     return uri;
-
+  }
   const auto path{models.find(model_path.substr(0, slash))};
   if(path == models.end())
     return uri;
