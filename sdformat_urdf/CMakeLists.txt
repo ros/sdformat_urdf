@@ -69,7 +69,9 @@ target_include_directories(sdformat_urdf
 )
 
 # Add sdformat_urdf_plugin module library
-add_library(sdformat_urdf_plugin MODULE
+# not actually a MODULE as workaround for 
+# https://github.com/ros/pluginlib/issues/200
+add_library(sdformat_urdf_plugin SHARED
   src/sdformat_urdf_plugin.cpp
 )
 target_link_libraries(sdformat_urdf_plugin PRIVATE
