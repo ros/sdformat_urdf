@@ -115,7 +115,7 @@ sdformat_urdf::convert_model(const sdf::Model & sdf_model, sdf::Errors & errors)
     std::string relative_joint_name{""};
     for (uint64_t j = 0; j < sdf_model.JointCount(); ++j) {
       const sdf::Joint * sdf_joint = sdf_model.JointByIndex(j);
-      if (sdf_joint && sdf_joint->ChildName() == sdf_link->Name()) {
+      if (sdf_joint && sdf_joint->ChildLinkName() == sdf_link->Name()) {
         relative_joint_name = sdf_joint->Name();
         break;
       }
@@ -212,7 +212,7 @@ sdformat_urdf::convert_model(const sdf::Model & sdf_model, sdf::Errors & errors)
     // Fix poses and check for tree structure issues
     while (joint_iter != joints_to_visit.end()) {
       const sdf::Joint * sdf_joint = *joint_iter;
-      if (sdf_joint->ParentName() == sdf_parent_link->Name()) {
+      if (sdf_joint->ParentLinkName() == sdf_parent_link->Name()) {
         // Visited parent link of this joint - don't look at it again
         joint_iter = joints_to_visit.erase(joint_iter);
 
@@ -269,7 +269,7 @@ sdformat_urdf::convert_model(const sdf::Model & sdf_model, sdf::Errors & errors)
 
         // Explore this child link later
         link_stack.push_back(sdf_child_link);
-      } else if (sdf_joint->ChildName() == sdf_parent_link->Name()) {
+      } else if (sdf_joint->ChildLinkName() == sdf_parent_link->Name()) {
         // Something is wrong here
         if (sdf_parent_link == sdf_canonical_link) {
           // The canonical link can't be a child of a joint
@@ -573,8 +573,8 @@ sdformat_urdf::convert_joint(const sdf::Joint & sdf_joint, sdf::Errors & errors)
     }
   }
 
-  urdf_joint->child_link_name = sdf_joint.ChildName();
-  urdf_joint->parent_link_name = sdf_joint.ParentName();
+  urdf_joint->child_link_name = sdf_joint.ChildLinkName();
+  urdf_joint->parent_link_name = sdf_joint.ParentLinkName();
 
   return urdf_joint;
 }
