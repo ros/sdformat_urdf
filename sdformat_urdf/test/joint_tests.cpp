@@ -17,8 +17,8 @@
 #include <urdf_model/types.h>
 #include <sdformat_urdf/sdformat_urdf.hpp>
 
-#include <ignition/math/Pose3.hh>
-#include <ignition/math/Vector3.hh>
+#include <gz/math/Pose3.hh>
+#include <gz/math/Vector3.hh>
 #include <sdf/Types.hh>
 
 #include "sdf_paths.hpp"
@@ -203,8 +203,8 @@ TEST(Joint, joint_revolute_axis)
   urdf::JointConstSharedPtr joint = model->getJoint("joint_revolute");
   ASSERT_NE(nullptr, joint);
 
-  const ignition::math::Vector3d expected_axis{0.1, 1.23, 4.567};
-  const ignition::math::Vector3d actual_axis{joint->axis.x, joint->axis.y, joint->axis.z};
+  const gz::math::Vector3d expected_axis{0.1, 1.23, 4.567};
+  const gz::math::Vector3d actual_axis{joint->axis.x, joint->axis.y, joint->axis.z};
 
   EXPECT_EQ("joint_revolute", joint->name);
   EXPECT_EQ(urdf::Joint::REVOLUTE, joint->type);
@@ -223,19 +223,19 @@ TEST(Joint, joint_revolute_axis_in_frame)
   urdf::JointConstSharedPtr joint = model->getJoint("joint_revolute");
   ASSERT_NE(nullptr, joint);
 
-  const ignition::math::Pose3d model_to_frame_in_model{0.05, 0.1, 0.2, 0.1, 0.2, 0.3};
-  const ignition::math::Pose3d model_to_child_in_model{0.1, 0, 0.1, 0, 0, 0};
-  const ignition::math::Pose3d frame_to_child_in_frame =
+  const gz::math::Pose3d model_to_frame_in_model{0.05, 0.1, 0.2, 0.1, 0.2, 0.3};
+  const gz::math::Pose3d model_to_child_in_model{0.1, 0, 0.1, 0, 0, 0};
+  const gz::math::Pose3d frame_to_child_in_frame =
     model_to_frame_in_model.Inverse() * model_to_child_in_model;
-  const ignition::math::Pose3d child_to_joint_in_child{0, 0, 0, 0, 0, 0};
-  const ignition::math::Pose3d frame_to_joint_in_frame =
+  const gz::math::Pose3d child_to_joint_in_child{0, 0, 0, 0, 0, 0};
+  const gz::math::Pose3d frame_to_joint_in_frame =
     frame_to_child_in_frame * child_to_joint_in_child;
 
-  const ignition::math::Vector3d axis_in_frame{0.1, 1.23, 4.567};
-  const ignition::math::Vector3d axis_in_joint =
+  const gz::math::Vector3d axis_in_frame{0.1, 1.23, 4.567};
+  const gz::math::Vector3d axis_in_joint =
     frame_to_joint_in_frame.Inverse().Rot().RotateVector(axis_in_frame);
 
-  const ignition::math::Vector3d actual_axis{joint->axis.x, joint->axis.y, joint->axis.z};
+  const gz::math::Vector3d actual_axis{joint->axis.x, joint->axis.y, joint->axis.z};
 
   EXPECT_EQ("joint_revolute", joint->name);
   EXPECT_EQ(urdf::Joint::REVOLUTE, joint->type);
