@@ -25,6 +25,8 @@
 
   <!-- Garden -->
   <depend condition="$GZ_VERSION == garden">sdformat13</depend>
+  <!-- Harmonic -->
+  <depend condition="$GZ_VERSION == harmonic">sdformat14</depend>
 
   <depend>urdf</depend>
 
