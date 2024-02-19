@@ -32,6 +32,7 @@
 #include <sdf/Visual.hh>
 
 #include "sdformat_urdf/sdformat_urdf.hpp"
+#include "resolve_model_uri.hpp"
 
 namespace sdformat_urdf
 {
@@ -624,7 +625,7 @@ sdformat_urdf::convert_geometry(const sdf::Geometry & sdf_geometry, sdf::Errors 
     // resolve the filename - which may be a URI - to the mesh resource.
     // Pass it here unmodified, ignoring that SDFormat relative paths may not
     // be resolvable this way.
-    urdf_mesh->filename = uri;
+    urdf_mesh->filename = resolveURI(uri);
 
     urdf_mesh->scale.x = sdf_geometry.MeshShape()->Scale().X();
     urdf_mesh->scale.y = sdf_geometry.MeshShape()->Scale().Y();
