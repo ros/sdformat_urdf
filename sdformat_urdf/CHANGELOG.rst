@@ -2,6 +2,12 @@
 Changelog for package sdformat_urdf
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+2.0.2 (2025-07-04)
+------------------
+* Relax the version of urdfdom_headers (`#39 <https://github.com/ros/sdformat_urdf/issues/39>`_)
+* Explain how Gazebo and RViz can resolve mesh URIs (`#26 <https://github.com/ros/sdformat_urdf/issues/26>`_) (`#29 <https://github.com/ros/sdformat_urdf/issues/29>`_)
+* Contributors: Alejandro Hernández Cordero, Andrew Symington
+
 2.0.1 (2024-04-23)
 ------------------
 
