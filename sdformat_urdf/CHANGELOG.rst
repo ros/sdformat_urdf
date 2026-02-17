@@ -2,6 +2,11 @@
 Changelog for package sdformat_urdf
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+2.1.0 (2026-02-17)
+------------------
+* chore: remove tinyxml2 vendor (`#40 <https://github.com/ros/sdformat_urdf/issues/40>`_)
+* Contributors: Daisuke Nishimatsu
+
 2.0.2 (2025-07-04)
 ------------------
 * Relax the version of urdfdom_headers (`#39 <https://github.com/ros/sdformat_urdf/issues/39>`_)
