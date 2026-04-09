@@ -16,6 +16,9 @@
 #include <gtest/gtest.h>
 #include <urdf_model/model.h>
 #include <urdf_model/types.h>
+
+#include <algorithm>
+
 #include <sdformat_urdf/sdformat_urdf.hpp>
 
 #include <gz/math/Vector4.hh>
@@ -38,10 +41,14 @@ TEST(Material, material_blinn_phong)
   urdf::VisualConstSharedPtr visual = link->visual;
   ASSERT_NE(nullptr, visual);
 
+  const gz::math::Vector4d zero{0.0, 0.0, 0.0, 0.0};
+  const gz::math::Vector4d one{1.0, 1.0, 1.0, 1.0};
   const gz::math::Vector4d ambient{0.3, 0, 0, 1};
   const gz::math::Vector4d diffuse{0, 0.3, 0, 1};
-  const gz::math::Vector4d expected_color =
+  gz::math::Vector4d expected_color =
     0.4 * ambient + 0.8 * diffuse;
+  expected_color.Max(gz::math::Vector4d::Zero);
+  expected_color.Min(gz::math::Vector4d::One);
 
   EXPECT_EQ(link->name + visual->name, visual->material->name);
   EXPECT_EQ("", visual->material->texture_filename);
