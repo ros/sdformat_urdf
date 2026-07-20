@@ -14,6 +14,7 @@
 
 #include <rcutils/logging_macros.h>
 #include <tinyxml2.h>
+#include <urdf_world/types.h>
 #include <urdf_parser_plugin/parser.h>
 
 #include <limits>
