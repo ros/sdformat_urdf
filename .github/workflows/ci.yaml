@@ -7,7 +7,7 @@ jobs:
     strategy:
       matrix:
         include:
-          - ros-distro: "rolling"
+          - ros-distro: "lyrical"
             docker-image: "ubuntu:26.04"
     container:
       image: ${{ matrix.docker-image }}
