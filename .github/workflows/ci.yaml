@@ -8,7 +8,7 @@ jobs:
       matrix:
         include:
           - ros-distro: "rolling"
-            docker-image: "ubuntu:24.04"
+            docker-image: "ubuntu:26.04"
     container:
       image: ${{ matrix.docker-image }}
     steps:
@@ -17,6 +17,6 @@ jobs:
           required-ros-distributions: ${{ matrix.ros-distro }}
           use-ros2-testing: true
       - name: Build and test all packages
-        uses: ros-tooling/action-ros-ci@v0.3
+        uses: ros-tooling/action-ros-ci@v0.4
         with:
           target-ros2-distro: ${{ matrix.ros-distro }}
