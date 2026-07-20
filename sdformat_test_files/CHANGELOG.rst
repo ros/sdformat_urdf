@@ -2,6 +2,9 @@
 Changelog for package sdformat_test_files
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+
 2.1.0 (2026-02-17)
 ------------------
 
